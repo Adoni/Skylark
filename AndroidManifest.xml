@@ -20,6 +20,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PlanActivity"
+            android:label="@string/startButton">
+        </activity>
+        <activity
+            android:name=".BlackListActivity"
+            android:label="@string/blButton">
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="@string/settingButton">
+        </activity>
+        
     </application>
 
 </manifest>
