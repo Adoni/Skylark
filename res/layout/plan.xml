@@ -1,8 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1">
+	    <TextView 
+	        android:text="@string/label1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        />
+        <TimePicker
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+       		android:id="@+id/tp"
+       		android:layout_weight="2"
+        />
+    </LinearLayout>
+    
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView 
+	        android:text="@string/label2"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        />
+        <Spinner 
+        android:id="@+id/bl_sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        />
+    </LinearLayout>
+    
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView 
+	        android:text="@string/label3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="3"
+	        />
+        <Spinner 
+        android:id="@+id/sns_sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        />
+    </LinearLayout>
+    
+    <Button 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/saveButton"
+        android:text="@string/save"
+        android:layout_weight="1"/>
 </LinearLayout>

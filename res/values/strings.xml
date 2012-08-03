@@ -7,5 +7,9 @@
     <string name="startButton">开始规划吧！</string>
     <string name="blButton">黑名单~</string>
     <string name="settingButton">设置</string>
+    <string name="label1">时长：</string>
+    <string name="label2">使用黑名单：</string>
+    <string name="label3">发布到</string>
+    <string name="save">保存</string>
 
 </resources>
