@@ -121,6 +121,7 @@ public class PlanActivity extends Activity{
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
+		/*
 		sns_sp.setSelection(0, true);
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -135,6 +136,7 @@ public class PlanActivity extends Activity{
 			}
         	
 		});
+		*/
 	}
 	
 	/*

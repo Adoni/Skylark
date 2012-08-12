@@ -4,6 +4,8 @@ import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.skylark.MyAdapter.vHolder;
+
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -18,6 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,19 +37,32 @@ public class DefineBlackList extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.define);
-		
-		saveDefine=(Button)findViewById(R.id.saveButton);
-		/*
+		defineBL=(ListView)findViewById(R.id.defineBL);
+		saveDefine=(Button)findViewById(R.id.saveDefine);
 		saveDefine.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				/*
 				Intent intent=new Intent();
 				intent.setClass(DefineBlackList.this, PlanActivity.class);
 				DefineBlackList.this.startActivity(intent);
+				*/
+				
+				MyAdapter adapter=(MyAdapter)defineBL.getAdapter();
+				for(int i=0;i<adapter.getIsSelected().size();i++)
+				{
+					Log.v("aa",""+i);
+					if(adapter.getIsSelected().get(i))
+					{
+						Toast.makeText(DefineBlackList.this, adapter.getName(i), Toast.LENGTH_LONG).show();
+					}
+				}
+				//*/
+				//Toast.makeText(DefineBlackList.this, "a", Toast.LENGTH_LONG).show();
 			}
 		});
-		*/
+		
 		ActivityManager am= (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		List<RunningAppProcessInfo> runningProcess = am.getRunningAppProcesses();
 		PackageManager pm=this.getPackageManager();
@@ -53,18 +70,10 @@ public class DefineBlackList extends Activity {
 		int i=0;
 		Log.v("my","d");
 		for (PackageInfo p : pi) {
-			
-			//if(i>10) break;
             names[i]=p.applicationInfo.loadLabel(getPackageManager()).toString(); 
             i++;
             Log.v("my", "i="+i);
-            //try {
-				//icons.add(pm.getApplicationIcon(ti.processName));
-            	icons.add(p.applicationInfo.loadIcon(getPackageManager()));
-		//	} catch (NameNotFoundException e) {
-				// TODO Auto-generated catch block
-		//		e.printStackTrace();
-		//	}
+            icons.add(p.applicationInfo.loadIcon(getPackageManager()));
         }
         Log.v("myself","df");
 		Log.v("my", "e");
@@ -72,10 +81,22 @@ public class DefineBlackList extends Activity {
 	}
 	private void iniAppChoices()
 	{
-		defineBL=(ListView)findViewById(R.id.defineBL);
-		
 		MyAdapter adapter=new MyAdapter(this, icons, names, true);
 		
 		defineBL.setAdapter(adapter);
+		defineBL.setItemsCanFocus(true);
+		defineBL.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				MyAdapter adapter=((MyAdapter)defineBL.getAdapter());
+				adapter.setIsSelected(arg2);
+				Toast.makeText(DefineBlackList.this, ""+arg2, Toast.LENGTH_LONG).show();
+				vHolder vh=(vHolder)arg1.getTag();
+				//vh.cb.setChecked(true);
+			}
+			
+		});
 	}
 }
