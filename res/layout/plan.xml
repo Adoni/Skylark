@@ -12,6 +12,7 @@
 	    android:layout_weight="1">
 	    <TextView 
 	        android:text="@string/label1"
+	        android:textSize="25dp"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="3"
@@ -31,6 +32,7 @@
         android:layout_weight="1">
         <TextView 
 	        android:text="@string/label2"
+	        android:textSize="25dp"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="3"
@@ -50,6 +52,7 @@
         android:layout_weight="1">
         <TextView 
 	        android:text="@string/label3"
+	        android:textSize="25dp"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="3"
@@ -59,6 +62,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
+        android:text="SNS"
         />
     </LinearLayout>
     

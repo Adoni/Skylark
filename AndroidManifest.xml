@@ -32,6 +32,10 @@
             android:name=".SettingActivity"
             android:label="@string/settingButton">
         </activity>
+        <activity 
+            android:name=".DefineBlackList"
+            android:label="@string/diy">
+        </activity>
         
     </application>
 

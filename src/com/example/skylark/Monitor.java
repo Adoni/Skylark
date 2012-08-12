@@ -11,7 +11,7 @@ public class Monitor {
 	 */
 	boolean judgePlan(PlanActivity Plan)
 	{
-		
+		return true;
 	}
 	
 	/*
@@ -20,7 +20,7 @@ public class Monitor {
 	 */
 	boolean killProcess(String processName)
 	{
-		
+		return true;
 	}
 	
 	/*
@@ -29,6 +29,6 @@ public class Monitor {
 	 */
 	boolean publishAtSNS()
 	{
-		
+		return true;
 	}
 }
