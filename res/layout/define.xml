@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <ListView 
+
+    <ListView
         android:id="@+id/defineBL"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="360dp" >
     </ListView>
-    <Button 
+
+    <LinearLayout 
+        android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="请输入名字"
+            android:textSize="23dp" />
+
+	    <EditText
+	        android:id="@+id/nameEdit"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:freezesText="true" />
+
+	    </LinearLayout>
+
+    <Button
         android:id="@+id/saveDefine"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="67dp"
         android:text="@string/saveDefine"
-        android:layout_alignParentBottom="true"
-        android:textSize="23dp"
-        />
+        android:textSize="23dp" />
 
-</RelativeLayout>
+</LinearLayout>

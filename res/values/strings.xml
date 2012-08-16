@@ -7,10 +7,10 @@
     <string name="startButton">开始规划吧！</string>
     <string name="blButton">黑名单~</string>
     <string name="settingButton">设置</string>
-    <string name="label1">时长：</string>
+    <string name="label1">持续到：</string>
     <string name="label2">使用黑名单：</string>
     <string name="label3">发布到:</string>
-    <string name="save">保存</string>
+    <string name="start">开始</string>
     <string name="renren">人人网</string>
     <string name="tencent">腾讯微博</string>
     <string name="sina">新浪微博</string>
@@ -18,4 +18,6 @@
     <string name="manageBL">管理黑名单</string>
     <string name="diy">自定义</string>
     <string name="saveDefine">保存</string>
+    <string name="blListNames">ListOfBLList</string>
+    <string name="showBL">查看黑名单</string>
 </resources>

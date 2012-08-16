@@ -36,6 +36,9 @@
             android:name=".DefineBlackList"
             android:label="@string/diy">
         </activity>
+        <activity 
+            android:name="ShowBlackList"
+            android:label="@string/showBL"></activity>
         
     </application>
 

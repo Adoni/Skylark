@@ -25,10 +25,10 @@ import android.widget.Toast;
 public class MyAdapter extends BaseAdapter
 {
 	private Context context;
-	private int iconIDs[];
+	private int[] iconIDs=new int[1000];
 	private ArrayList<Drawable> icons=new ArrayList<Drawable>();
 	//private Drawable[] icons;
-	private String names[];
+	private String[] names=new String[1000];
 	private boolean haveACheckBox;
 	private HashMap<Integer, Boolean> isSelected=new HashMap<Integer, Boolean>();
 	private CheckBox check;
@@ -65,11 +65,22 @@ public class MyAdapter extends BaseAdapter
 	 */
 	public MyAdapter(Context context,ArrayList<Drawable> icons,String names[],boolean haveACheckBox)
 	{
-		Log.v("my","f");
 		this.context=context;
 		this.icons=icons;
 		this.names=names;
 		this.haveACheckBox=haveACheckBox;
+		iniData();
+	}
+	
+	public MyAdapter(Context context,ArrayList<String> names)
+	{
+		for(int i=0;i<names.size();i++)
+		{
+			this.names[i]=names.get(i);
+			this.icons.add(context.getResources().getDrawable(R.drawable.friends));
+		}
+		this.context=context;
+		this.haveACheckBox=false;
 		iniData();
 	}
 	
@@ -162,7 +173,7 @@ public class MyAdapter extends BaseAdapter
 	{
 		isSelected.put(position,isSelected.get(position) ^ true);
 		check.setChecked(true);
-		Toast.makeText(context, check.isChecked()+"", Toast.LENGTH_LONG).show();
+		//Toast.makeText(context, check.isChecked()+"", Toast.LENGTH_LONG).show();
 	}
 	public void add(int iconID,String name)
 	{

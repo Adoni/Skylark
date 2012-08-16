@@ -4,10 +4,15 @@
  */
 package com.example.skylark;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.util.EncodingUtils;
 
 
 import android.app.Activity;
@@ -32,7 +37,9 @@ import com.example.skylark.MyAdapter;
 public class PlanActivity extends Activity{
 	TimePicker tp;
 	Spinner sns_sp,bl_sp;
-	Button saveButton;
+	Button startButton;
+	String snsName="";
+	String blName="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -40,12 +47,17 @@ public class PlanActivity extends Activity{
 		setContentView(R.layout.plan);
 		tp=(TimePicker)findViewById(R.id.tp);
 		tp.setIs24HourView(true);
+		
 		sns_sp=(Spinner)findViewById(R.id.sns_sp);
 		bl_sp=(Spinner)findViewById(R.id.bl_sp);
-		findViewById(R.id.saveButton).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.start).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				savePlan();
+				Intent intent=new Intent();
+				intent.putExtra("blName", blName);
+				intent.putExtra("snsName", snsName);
+				intent.putExtra("Hour", tp.getCurrentHour());
+				intent.putExtra("Min", tp.getCurrentMinute());
 			}
 		});
 		iniSNS();
@@ -76,13 +88,12 @@ public class PlanActivity extends Activity{
 		//snsAdapter.setDropDownViewResource(R.layout.sns_item);
 		sns_sp.setAdapter(snsAdapter);
 		*/
-		
 	}
 	
 	/*
 	 * 用以初始化SNS Spinner
 	 */
-	void iniSNS()
+	private void iniSNS()
 	{
 		/*
 		ArrayList<Map<String, Object>> anslist = new ArrayList<Map<String, Object>>();
@@ -121,14 +132,13 @@ public class PlanActivity extends Activity{
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
-		/*
-		sns_sp.setSelection(0, true);
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				Toast.makeText(PlanActivity.this, "你选择的是第"+arg3+"项", Toast.LENGTH_LONG).show();
+				String[] snsNames={"renren","tencent","sina"};
+				snsName=snsNames[arg2];
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -136,17 +146,41 @@ public class PlanActivity extends Activity{
 			}
         	
 		});
-		*/
 	}
 	
 	/*
 	 * 用以初始化BL Spinner
 	 */
-	void iniBL()
+	private void iniBL()
 	{
-		MyAdapter adapter=new MyAdapter(this, 
-				new int[]{0,0},
-				new String[]{"","自定义"},false);
+		final ArrayList<String> names=new ArrayList<String>();
+		names.add("");
+		String blNames = "";
+		FileInputStream fin;
+		try {
+			fin = openFileInput(getResources().getString(R.string.blListNames));
+			int length = fin.available();   
+        byte [] buffer = new byte[length];   
+        fin.read(buffer);       
+        blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
+        fin.close();  
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Toast.makeText(this, blNames, Toast.LENGTH_LONG).show();
+		while(blNames.length()>0)
+		{
+			String name=blNames.substring(0,blNames.indexOf(" "));
+			names.add(name);
+			blNames=blNames.substring(blNames.indexOf(" ")+1);
+		}
+		names.add("自定义");
+		MyAdapter adapter=new MyAdapter(this, names);
 		bl_sp.setAdapter(adapter);
 		bl_sp.setSelection(0, true);
         bl_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -154,12 +188,13 @@ public class PlanActivity extends Activity{
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				if(arg3==0)
+				if(arg2==arg0.getCount()-1)
 				{
 					Intent intent=new Intent();
 					intent.setClass(PlanActivity.this, DefineBlackList.class);
 					PlanActivity.this.startActivity(intent);
 				}
+				else snsName=names.get(arg2);
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
@@ -170,37 +205,5 @@ public class PlanActivity extends Activity{
 			}
         	
 		});
-	}
-	
-	/*
-	 * 返回一个int值表示当前Plan中规划的分钟数。
-	 */
-	int getTimeLenth()
-	{
-		return 0;
-	}
-	
-	/*
-	 * 用于得到当前Plan当中的黑名单，返回一个包名的list
-	 */
-	ArrayList<String> getBlackList()
-	{
-		return null;
-	}
-	
-	/*
-	 * 返回一个String的SNS网站名称。
-	 */
-	String getSNS()
-	{
-		return null;
-	}
-	
-	/*
-	 * 用于保存当前Plan到文件中。
-	 */
-	void savePlan()
-	{
-		
 	}
 }
