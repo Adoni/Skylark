@@ -38,7 +38,16 @@
         </activity>
         <activity 
             android:name="ShowBlackList"
-            android:label="@string/showBL"></activity>
+            android:label="@string/showBL">
+        </activity>
+        
+        <service 
+            android:name=".MonitorService">
+            <intent-filter>
+                <action android:name="com.example.skylark.monitorservice"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
         
     </application>
 

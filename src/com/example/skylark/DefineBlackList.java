@@ -1,11 +1,14 @@
 package com.example.skylark;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.util.EncodingUtils;
 
 import com.example.skylark.MyAdapter.vHolder;
 
@@ -101,13 +104,34 @@ public class DefineBlackList extends Activity {
 	 */
 	private void saveDefine()
 	{
+		String blName=((EditText)findViewById(R.id.nameEdit)).getText().toString();
+		if(blName.equals(""))
+		{
+			blName="Default";
+		}
+		String blNames="";
+		FileInputStream fin;
 		try {
-			String blName=((EditText)findViewById(R.id.nameEdit)).getText().toString();
-			if(blName.equals(""))
-			{
-				blName="Default";
-			}
-			FileOutputStream fout=openFileOutput(blName+"bl",Context.MODE_APPEND);//用用户输入的黑名单名称建立文件
+			fin = openFileInput(getResources().getString(R.string.blListNames));
+			int length = fin.available();   
+        byte [] buffer = new byte[length];   
+        fin.read(buffer);       
+        blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
+        if(blNames.contains(blName) && (! blName.equals("Default")))
+        {
+        	Toast.makeText(DefineBlackList.this, "黑名单"+blName+"已经存在,请重新输入黑名单名字", Toast.LENGTH_LONG).show();
+        }
+        fin.close();  
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			FileOutputStream fout=openFileOutput(blName+"bl",Context.MODE_PRIVATE);//用用户输入的黑名单名称建立文件
 			MyAdapter adapter=(MyAdapter)defineBL.getAdapter();
 			for(int i=0;i<adapter.getIsSelected().size();i++)
 			{
@@ -121,8 +145,12 @@ public class DefineBlackList extends Activity {
 			/*
 			 * 保存黑名单名称
 			 */
-			fout=openFileOutput(getResources().getString(R.string.blListNames),Context.MODE_APPEND);
-			fout.write((blName+" ").getBytes());
+			fout=openFileOutput(getResources().getString(R.string.blListNames),Context.MODE_PRIVATE);
+			if(!blNames.contains("Default"))
+			{
+				blNames=blNames+blName+" ";
+			}
+			fout.write(blNames.getBytes());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

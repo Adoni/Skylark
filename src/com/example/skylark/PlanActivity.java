@@ -50,18 +50,20 @@ public class PlanActivity extends Activity{
 		
 		sns_sp=(Spinner)findViewById(R.id.sns_sp);
 		bl_sp=(Spinner)findViewById(R.id.bl_sp);
+		iniSNS();
+		iniBL();
 		findViewById(R.id.start).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent();
+				Intent intent=new Intent("com.example.skylark.monitorservice");
 				intent.putExtra("blName", blName);
 				intent.putExtra("snsName", snsName);
-				intent.putExtra("Hour", tp.getCurrentHour());
-				intent.putExtra("Min", tp.getCurrentMinute());
+				intent.putExtra("hour", tp.getCurrentHour());
+				intent.putExtra("min", tp.getCurrentMinute());
+				startService(intent);
 			}
 		});
-		iniSNS();
-		iniBL();
+		
 		/*
 		ArrayAdapter<String> snsAdapter=new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item,SNS){
@@ -137,7 +139,7 @@ public class PlanActivity extends Activity{
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				String[] snsNames={"renren","tencent","sina"};
+				String[] snsNames={"","renren","tencent","sina"};
 				snsName=snsNames[arg2];
 			}
 
@@ -194,7 +196,7 @@ public class PlanActivity extends Activity{
 					intent.setClass(PlanActivity.this, DefineBlackList.class);
 					PlanActivity.this.startActivity(intent);
 				}
-				else snsName=names.get(arg2);
+				else blName=names.get(arg2);
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {

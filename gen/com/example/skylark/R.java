@@ -26,8 +26,8 @@ public final class R {
         public static final int bl_sp=0x7f07000a;
         public static final int defineBL=0x7f070006;
         public static final int manageBL=0x7f070005;
-        public static final int menu_settings=0x7f07000e;
         public static final int nameEdit=0x7f070007;
+        public static final int quit=0x7f07000e;
         public static final int saveDefine=0x7f070008;
         public static final int settingButton=0x7f070002;
         public static final int showBL=0x7f07000d;
@@ -60,7 +60,7 @@ public final class R {
         public static final int label2=0x7f040008;
         public static final int label3=0x7f040009;
         public static final int manageBL=0x7f04000f;
-        public static final int menu_settings=0x7f040002;
+        public static final int quit=0x7f040002;
         public static final int renren=0x7f04000b;
         public static final int saveDefine=0x7f040011;
         public static final int settingButton=0x7f040006;

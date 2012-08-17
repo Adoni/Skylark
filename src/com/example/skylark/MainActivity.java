@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -48,6 +50,29 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
+        /*
+        MenuItem myMenu=(MenuItem)findViewById(R.id.quit);
+        myMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			public boolean onMenuItemClick(MenuItem item) {
+				// TODO Auto-generated method stub
+				Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show()
+				return false;
+			}
+		});
+		*/
         return true;
     }
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
+		Intent intent=new Intent("com.example.skylark.monitorservice");
+		stopService(intent);
+		finish();
+		return super.onOptionsItemSelected(item);
+	}
+	
+    
 }
