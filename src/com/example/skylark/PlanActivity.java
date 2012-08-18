@@ -1,5 +1,5 @@
 /*
- * 主功能界面，但部分的用户体验在此。
+ * 主功能界面，大部分的用户体验在此。
  * 其界面包括规划时长，规划黑名单，是否发布到SNS等，其中两个菜单还可以连接到其他界面。
  */
 package com.example.skylark;
@@ -55,6 +55,10 @@ public class PlanActivity extends Activity{
 		findViewById(R.id.start).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				if(blName.equals(""))
+				{
+					Toast.makeText(PlanActivity.this, "请选择黑名单", Toast.LENGTH_SHORT).show();
+				}
 				Intent intent=new Intent("com.example.skylark.monitorservice");
 				intent.putExtra("blName", blName);
 				intent.putExtra("snsName", snsName);
@@ -63,33 +67,6 @@ public class PlanActivity extends Activity{
 				startService(intent);
 			}
 		});
-		
-		/*
-		ArrayAdapter<String> snsAdapter=new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item,SNS){
-		            @Override
-		            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		                View view = getLayoutInflater().inflate(R.layout.sns_item, parent, false);
-		                TextView label = (TextView) view.findViewById(R.id.snsLable);
-		                label.setText(getItem(position));
-		                if (sns_sp.getSelectedItemPosition() == position) {
-		                    //label.setTextColor(getResources().getColor(R.color.selected_fg));
-		                    //view.setBackgroundColor(getResources().getColor(R.color.selected_bg));
-		                    view.findViewById(R.id.onclickicon).setVisibility(View.VISIBLE);
-		                    //label.setTextColor(17170437);
-		                }
-		                return view;
-		            }
-		            Drawable getIcon(int position)
-		            {
-		            	Drawable snsIcon;
-		            	int[] iconIds={R.drawable.renren,R.drawable.tencent,R.drawable.sina};
-		            	return getResources().getDrawable(iconIds[position]);
-		            }
-		        };
-		//snsAdapter.setDropDownViewResource(R.layout.sns_item);
-		sns_sp.setAdapter(snsAdapter);
-		*/
 	}
 	
 	/*
@@ -97,42 +74,9 @@ public class PlanActivity extends Activity{
 	 */
 	private void iniSNS()
 	{
-		/*
-		ArrayList<Map<String, Object>> anslist = new ArrayList<Map<String, Object>>();
-    	Map<String, Object> map = new HashMap<String, Object>();
-        map.put("snsIcon", R.drawable.renren);
-        map.put("snsName", "人人网");
-        map.put("snsRadio",false);
-        anslist.add(map);
- 
-        map = new HashMap<String, Object>();
-        map.put("snsIcon", R.drawable.tencent);
-        map.put("snsName", "腾讯微博");
-        map.put("snsRadio",false);
-        anslist.add(map);
- 
-        map = new HashMap<String, Object>();
-        map.put("snsIcon", R.drawable.sina);
-        map.put("snsName", "新浪微博");
-        map.put("snsRadio",false);
-        anslist.add(map);
-        */
-        /*
-        SimpleAdapter adapter=new SimpleAdapter(this, anslist, R.layout.snsitem,
-        		new String[]{"snsIcon","snsName","snsRadio"}, 
-        		new int[]{R.id.snsIcon,R.id.snsName,R.id.snsRadio});
-        */
-		/*
-        String[] s={"1","2","3"};
-        ArrayList ss=new ArrayList<String>();
-        ss.add(s[0]);
-        ss.add(s[1]);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(PlanActivity.this, android.R.layout.simple_spinner_item,ss);
-        sns_sp.setAdapter(adapter);
-        */
 		MyAdapter adapter=new MyAdapter(this, 
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
-				new String[]{"","人人网","腾讯微博","新浪微博"},false);
+				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -174,7 +118,6 @@ public class PlanActivity extends Activity{
 			e.printStackTrace();
 		}
 		
-		//Toast.makeText(this, blNames, Toast.LENGTH_LONG).show();
 		while(blNames.length()>0)
 		{
 			String name=blNames.substring(0,blNames.indexOf(" "));
@@ -182,7 +125,7 @@ public class PlanActivity extends Activity{
 			blNames=blNames.substring(blNames.indexOf(" ")+1);
 		}
 		names.add("自定义");
-		MyAdapter adapter=new MyAdapter(this, names);
+		MyAdapter adapter=new MyAdapter(this, names,false);
 		bl_sp.setAdapter(adapter);
 		bl_sp.setSelection(0, true);
         bl_sp.setOnItemSelectedListener(new OnItemSelectedListener() {

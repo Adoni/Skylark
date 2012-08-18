@@ -9,6 +9,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.opengl.Visibility;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -31,7 +32,7 @@ public class MyAdapter extends BaseAdapter
 	private String[] names=new String[1000];
 	private boolean haveACheckBox;
 	private HashMap<Integer, Boolean> isSelected=new HashMap<Integer, Boolean>();
-	private CheckBox check;
+	//private CheckBox check;
 	/*
 	 * 用于使用Resources进行构造的构造函数。
 	 */
@@ -72,7 +73,7 @@ public class MyAdapter extends BaseAdapter
 		iniData();
 	}
 	
-	public MyAdapter(Context context,ArrayList<String> names)
+	public MyAdapter(Context context,ArrayList<String> names, boolean haveACheckBox)
 	{
 		for(int i=0;i<names.size();i++)
 		{
@@ -80,7 +81,7 @@ public class MyAdapter extends BaseAdapter
 			this.icons.add(context.getResources().getDrawable(R.drawable.friends));
 		}
 		this.context=context;
-		this.haveACheckBox=false;
+		this.haveACheckBox=haveACheckBox;
 		iniData();
 	}
 	
@@ -128,38 +129,54 @@ public class MyAdapter extends BaseAdapter
 	public View getView(int position,View convertView,ViewGroup parent)
 	{
 		LinearLayout ll=new LinearLayout(context);
-		vHolder vholder=new vHolder();
+		ViewHolder viewHolder=null;
 		ll.setOrientation(LinearLayout.HORIZONTAL);
 		ll.setGravity(Gravity.CENTER_VERTICAL);
 		
-		ImageView icon=new ImageView(context);
-		//icon.setImageResource(iconIDs[position]);
-		icon.setImageDrawable(icons.get(position));
-		icon.setLayoutParams(new ViewGroup.LayoutParams(60,60));
-		ll.addView(icon);
-		vholder.img=icon;
-		
-		TextView name=new TextView(context);
-		name.setText(names[position]);
-		name.setTextSize(20);
-		name.setTextColor(Color.BLUE);
-		ll.addView(name);
-		vholder.txt=name;
-		
-		if(haveACheckBox)
+		if(convertView==null)
 		{
+			viewHolder=new ViewHolder();
+			ImageView icon=new ImageView(context);
+			//icon.setImageResource(iconIDs[position]);
+			icon.setImageDrawable(icons.get(position));
+			icon.setLayoutParams(new ViewGroup.LayoutParams(60,60));
+			ll.addView(icon);
+			viewHolder.img=icon;
+			
+			TextView name=new TextView(context);
+			name.setText(names[position]);
+			name.setTextSize(20);
+			name.setTextColor(Color.BLUE);
+			ll.addView(name);
+			viewHolder.text=name;
+			
 			CheckBox check=new CheckBox(context);
 			check.setChecked(isSelected.get(position));
 			check.setGravity(Gravity.CENTER_HORIZONTAL);
 			//check.setClickable(false);
-			check.setFocusable(false);
-			this.check=check;
+			check.setFocusable(isSelected.get(position));
+			check.setClickable(false);
+			if(!haveACheckBox)
+			{
+				check.setVisibility(8);
+			}
+			//this.check=check;
 			//check.setPadding(0, 0, 100, 0);
 			ll.addView(check);
-			vholder.cb=check;
+			viewHolder.cb=check;
+			
+			ll.setTag(viewHolder);
+			convertView=ll;
 		}
-		//convertView.setTag(vholder)
-		return ll;
+		else
+		{
+			viewHolder=(ViewHolder)convertView.getTag();
+			viewHolder.img.setImageDrawable(icons.get(position));
+			viewHolder.text.setText(names[position]);
+			//viewHolder.cb.setChecked(isSelected.get(position));
+		}
+		
+		return convertView;
 	}
 	public HashMap<Integer,Boolean> getIsSelected()
 	{
@@ -172,29 +189,13 @@ public class MyAdapter extends BaseAdapter
 	public void setIsSelected(int position)
 	{
 		isSelected.put(position,isSelected.get(position) ^ true);
-		check.setChecked(true);
+		//check.setChecked(true);
 		//Toast.makeText(context, check.isChecked()+"", Toast.LENGTH_LONG).show();
 	}
-	public void add(int iconID,String name)
+	class ViewHolder
 	{
-		iconIDs[icons.size()]=iconID;
-		names[icons.size()]=name;
-		icons.add(context.getResources().getDrawable(iconID));
-	}
-	public void add(Drawable icon,String name)
-	{
-		icons.add(icon);
-		names[icons.size()]=name;
-	}
-	public String getName(int position)
-	{
-		return names[position];
-	}
-	
-	public final class vHolder
-	{
-		public ImageView img;
-		public TextView txt;
-		public CheckBox cb;
+		ImageView img;
+		TextView text;
+		CheckBox cb;
 	}
 }

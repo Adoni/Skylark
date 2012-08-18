@@ -10,7 +10,8 @@ import java.util.List;
 
 import org.apache.http.util.EncodingUtils;
 
-import com.example.skylark.MyAdapter.vHolder;
+import com.example.skylark.MyAdapter.ViewHolder;
+
 
 
 import android.app.Activity;
@@ -25,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -52,7 +54,10 @@ public class DefineBlackList extends Activity {
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				saveDefine();
+				if(!saveDefine())
+				{
+					return;
+				}
 				Intent intent=new Intent();
 				intent.setClass(DefineBlackList.this, PlanActivity.class);
 				DefineBlackList.this.startActivity(intent);
@@ -63,15 +68,21 @@ public class DefineBlackList extends Activity {
 		
 		iniAppChoices();
 	}
+	
+	/*
+	 * 初始化应用列表，显示安装的应用的icon，name以及一个CheckBox
+	 */
 	private void iniAppChoices()
 	{
-		ActivityManager am= (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		List<RunningAppProcessInfo> runningProcess = am.getRunningAppProcesses();
 		PackageManager pm=this.getPackageManager();
 		List<PackageInfo>pi=pm.getInstalledPackages(0);
+		
+		/*
+		 * 获取icon的list以及name的list，构造adapter
+		 */
 		int i=0;
 		for (PackageInfo p : pi) {
-			if(p.packageName.contains("android"))
+			if(p.packageName.contains("android"))//除去系统应用
 			{
 				continue;
 			}
@@ -80,6 +91,7 @@ public class DefineBlackList extends Activity {
             i++;
             icons.add(p.applicationInfo.loadIcon(getPackageManager()));
         }
+		
 		MyAdapter adapter=new MyAdapter(this, icons, names, true);
 		
 		defineBL.setAdapter(adapter);
@@ -89,6 +101,12 @@ public class DefineBlackList extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
+				/*
+				 * 对于每一个被点击的item，设置isSelected属性，以便在save方法中获取多选的项目
+				 * 具体察看MyAdapter类
+				 */
+				ViewHolder viewHolder=(ViewHolder)arg1.getTag();
+				viewHolder.cb.toggle();
 				MyAdapter adapter=((MyAdapter)defineBL.getAdapter());
 				adapter.setIsSelected(arg2);
 				//Toast.makeText(DefineBlackList.this, ""+arg2, Toast.LENGTH_LONG).show();
@@ -100,10 +118,15 @@ public class DefineBlackList extends Activity {
 	}
 	
 	/*
-	 * 保存选中的选项。
+	 * 保存选中的选项。包括黑名单，黑名单名称。
+	 * 主要设计文件操作
 	 */
-	private void saveDefine()
+	private boolean saveDefine()
 	{
+		/*
+		 * 首先得到黑名单的名字，判断是否为临时（即为”“）
+		 * 然后得到已存在的黑名单的全部，判断需保存的黑名单中是否已经存在
+		 */
 		String blName=((EditText)findViewById(R.id.nameEdit)).getText().toString();
 		if(blName.equals(""))
 		{
@@ -119,7 +142,12 @@ public class DefineBlackList extends Activity {
         blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
         if(blNames.contains(blName) && (! blName.equals("Default")))
         {
-        	Toast.makeText(DefineBlackList.this, "黑名单"+blName+"已经存在,请重新输入黑名单名字", Toast.LENGTH_LONG).show();
+        	Toast t=new Toast(DefineBlackList.this);
+        	t.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        	t=Toast.makeText(DefineBlackList.this, "黑名单"+blName+"已经存在,\n请重新输入黑名单名字", Toast.LENGTH_LONG);
+        	t.show();
+        	((EditText)findViewById(R.id.nameEdit)).setText("");
+        	return false;
         }
         fin.close();  
 		} catch (FileNotFoundException e) {
@@ -130,6 +158,9 @@ public class DefineBlackList extends Activity {
 			e.printStackTrace();
 		}
 		
+		/*
+		 * 创建黑名单文件，从adapter中获取被选项的信息，保存包名，以便以后查找
+		 */
 		try {
 			FileOutputStream fout=openFileOutput(blName+"bl",Context.MODE_PRIVATE);//用用户输入的黑名单名称建立文件
 			MyAdapter adapter=(MyAdapter)defineBL.getAdapter();
@@ -142,8 +173,9 @@ public class DefineBlackList extends Activity {
 				}
 			}
 			fout.close();
+			
 			/*
-			 * 保存黑名单名称
+			 * 保存黑名单名称到黑名单的大集合列表中
 			 */
 			fout=openFileOutput(getResources().getString(R.string.blListNames),Context.MODE_PRIVATE);
 			if(!blNames.contains("Default"))
@@ -158,5 +190,6 @@ public class DefineBlackList extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return true;
 	}
 }

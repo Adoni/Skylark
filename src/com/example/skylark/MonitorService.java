@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 public class MonitorService extends Service{
 	private static final String TAG="MonitorService";
+	private int hour;
+	private int min;
 	private Timer timer;
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -47,9 +49,8 @@ public class MonitorService extends Service{
 		super.onStart(intent, startId);
 		String blName=""+intent.getStringExtra("blName");
 		String snsName=""+intent.getStringExtra("snsName");
-		int hour=intent.getIntExtra("hour", 0);
-		int min=intent.getIntExtra("min", 0);
-		final Time t=new Time();
+		hour=intent.getIntExtra("hour", 0);
+		min=intent.getIntExtra("min", 0);
 		timer=new Timer();
 		final String appNames=getAppNames(blName);
 		timer.schedule(new TimerTask() {
@@ -57,13 +58,31 @@ public class MonitorService extends Service{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				t.setToNow();
-				monitor(appNames);
+				if(timeover())
+				{
+					timer.cancel();
+					stopService(new Intent("com.example.skylark.monitorservice"));
+				}
+				if(!monitor(appNames))
+				{
+					timer.cancel();
+					stopService(new Intent("com.example.skylark.monitorservice"));
+				}
 			}
 		}, 0,60000);
 		
 	}
-	
+	boolean timeover()
+	{
+		final Time t=new Time();
+		t.setToNow();
+		int nowHour=t.hour;
+		int nowMin=t.minute;
+		if(nowHour>hour) return true;
+		if(nowHour<hour) return false;
+		if(nowMin>=min) return true;
+		return false;
+	}
 	String getAppNames(String blName)
 	{
 		String appNames="";
@@ -87,20 +106,25 @@ public class MonitorService extends Service{
 	/*
 	 * 用于判断当前Plan的执行情况。
 	 */
-	void monitor(String appNames)
+	boolean monitor(String appNames)
 	{
 		ActivityManager am=(ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
-		List<ActivityManager.RunningAppProcessInfo> runningProcess=am.getRunningAppProcesses();
+		List<ActivityManager.RunningServiceInfo> runningProcess=am.getRunningServices(1000);
+		String processName="";
+		Log.v("myservice",appNames);
 		for(int i=0;i<runningProcess.size();i++)
 		{
 			//Log.v("myservice",runningProcess.get(i).processName);
-			if(appNames.contains(runningProcess.get(i).processName))
+			processName=runningProcess.get(i).process;
+			//Log.v("myservice","+"+processName);
+			if(appNames.contains(processName))
 			{
-				Log.v("myservice","false"+runningProcess.get(i).processName);
-				
+				fail();
+				am.killBackgroundProcesses(processName);
+				return false;
 			}
 		}
-		Log.v("myservice", "succeed");
+		return true;
 	}
 	
 	/*
@@ -109,6 +133,7 @@ public class MonitorService extends Service{
 	 */
 	boolean killProcess(String processName)
 	{
+		
 		return true;
 	}
 	
@@ -121,4 +146,12 @@ public class MonitorService extends Service{
 		return true;
 	}
 	
+	void success()
+	{
+		Log.v("myservice","success");
+	}
+	void fail()
+	{
+		Log.v("myservice","fail");
+	}
 }

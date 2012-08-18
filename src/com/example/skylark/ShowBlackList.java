@@ -57,7 +57,6 @@ public class ShowBlackList extends Activity {
 				String name=appNames.substring(0,appNames.indexOf(" "));
 				names.add(name);
 				appNames=appNames.substring(appNames.indexOf(" ")+1);
-				
 			}
 	        fin.close();  
 		} catch (FileNotFoundException e) {
