@@ -41,8 +41,10 @@ public class DefineBlackList extends Activity {
 	Button saveDefine;
 	ListView defineBL;
 	ArrayList<Drawable> icons=new ArrayList<Drawable>();
-	String names[]=new String[1000];
-	String packageNames[]=new String[1000];
+	//String names[]=new String[1000];
+	ArrayList<String> names=new ArrayList<String>();
+	//String packageNames[]=new String[1000];
+	ArrayList<String> packageNames=new ArrayList<String>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -86,9 +88,11 @@ public class DefineBlackList extends Activity {
 			{
 				continue;
 			}
-            names[i]=p.applicationInfo.loadLabel(getPackageManager()).toString();
-            packageNames[i]=p.packageName;
-            i++;
+            //names[i]=p.applicationInfo.loadLabel(getPackageManager()).toString();
+			names.add(p.applicationInfo.loadLabel(getPackageManager()).toString());
+            //packageNames[i]=p.packageName;
+			packageNames.add(p.packageName);
+            //i++;
             icons.add(p.applicationInfo.loadIcon(getPackageManager()));
         }
 		
@@ -168,7 +172,7 @@ public class DefineBlackList extends Activity {
 			{
 				if(adapter.getIsSelected().get(i))
 				{
-					fout.write((packageNames[i]+" ").getBytes());
+					fout.write((packageNames.get(i)+" ").getBytes());
 					//Toast.makeText(DefineBlackList.this, packageNames[i], Toast.LENGTH_SHORT).show();
 				}
 			}

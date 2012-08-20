@@ -73,14 +73,14 @@ public class ShowBlackList extends Activity {
     {
     	ArrayList<String> names=getNamesFromFile(BLName);
         ArrayList<Drawable> icons=new ArrayList<Drawable>();
-        String[] appNames =new String[1000];
+        ArrayList<String> appNames =new ArrayList<String>();
         for(int i=0;i<names.size();i++)
         {
         	String name=names.get(i);
         	PackageManager pm=this.getPackageManager();
         	try {
 				icons.add(pm.getApplicationIcon(name));
-				appNames[i]=pm.getApplicationInfo(name, 0).loadLabel(pm).toString();
+				appNames.add(pm.getApplicationInfo(name, 0).loadLabel(pm).toString());
 			} catch (NameNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -29,7 +29,8 @@ public class MyAdapter extends BaseAdapter
 	private int[] iconIDs=new int[1000];
 	private ArrayList<Drawable> icons=new ArrayList<Drawable>();
 	//private Drawable[] icons;
-	private String[] names=new String[1000];
+	//private String[] names=new String[1000];
+	private ArrayList<String> names=new ArrayList<String>();
 	private boolean haveACheckBox;
 	private HashMap<Integer, Boolean> isSelected=new HashMap<Integer, Boolean>();
 	//private CheckBox check;
@@ -56,15 +57,16 @@ public class MyAdapter extends BaseAdapter
 			}
 			else icons.add(context.getResources().getDrawable(R.drawable.friends));
 			//Toast.makeText(context, icons.size()+"", Toast.LENGTH_LONG).show();
+			this.names.add(names[i]);
 		}
-		this.names=names;
+		//this.names=names;
 		this.haveACheckBox=haveACheckBox;
 		iniData();
 	}
 	/*
 	 * 用于使用drawable数组进行构造的构造函数
 	 */
-	public MyAdapter(Context context,ArrayList<Drawable> icons,String names[],boolean haveACheckBox)
+	public MyAdapter(Context context,ArrayList<Drawable> icons,ArrayList<String> names,boolean haveACheckBox)
 	{
 		this.context=context;
 		this.icons=icons;
@@ -77,9 +79,9 @@ public class MyAdapter extends BaseAdapter
 	{
 		for(int i=0;i<names.size();i++)
 		{
-			this.names[i]=names.get(i);
 			this.icons.add(context.getResources().getDrawable(R.drawable.friends));
 		}
+		this.names=names;
 		this.context=context;
 		this.haveACheckBox=haveACheckBox;
 		iniData();
@@ -144,7 +146,7 @@ public class MyAdapter extends BaseAdapter
 			viewHolder.img=icon;
 			
 			TextView name=new TextView(context);
-			name.setText(names[position]);
+			name.setText(names.get(position));
 			name.setTextSize(20);
 			name.setTextColor(Color.BLUE);
 			ll.addView(name);
@@ -172,7 +174,7 @@ public class MyAdapter extends BaseAdapter
 		{
 			viewHolder=(ViewHolder)convertView.getTag();
 			viewHolder.img.setImageDrawable(icons.get(position));
-			viewHolder.text.setText(names[position]);
+			viewHolder.text.setText(names.get(position));
 			//viewHolder.cb.setChecked(isSelected.get(position));
 		}
 		

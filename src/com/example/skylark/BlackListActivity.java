@@ -116,7 +116,7 @@ public class BlackListActivity extends Activity{
 	public void MultiDeleteBL()
 	{
 		MyAdapter adapter=(MyAdapter)blList.getAdapter();
-		for(int i=0;i<adapter.getIsSelected().size();i++)
+		for(int i=0;i<names.size();i++)
 		{
 			if(adapter.getIsSelected().get(i))
 			{
