@@ -11,8 +11,13 @@ import java.util.TimerTask;
 import org.apache.http.util.EncodingUtils;
 
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.IBinder;
 import android.text.format.Time;
 import android.util.Log;
@@ -39,6 +44,7 @@ public class MonitorService extends Service{
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		timer.cancel();
 		Log.v("myservice","stop");
 		timer.cancel();
 	}
@@ -53,28 +59,33 @@ public class MonitorService extends Service{
 		min=intent.getIntExtra("min", 0);
 		timer=new Timer();
 		final String appNames=getAppNames(blName);
+		//showNotification(R.drawable.icon,"name","name1","name2");
 		timer.schedule(new TimerTask() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				Time t=new Time();
+				t.setToNow();
+				//((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+				//showNotification(R.drawable.icon, "name", "name1", ""+t.second);
+				//Log.v("mytime", ""+t.second);
 				if(timeover())
 				{
-					timer.cancel();
-					stopService(new Intent("com.example.skylark.monitorservice"));
+					success();
+					
 				}
 				if(!monitor(appNames))
 				{
-					timer.cancel();
-					stopService(new Intent("com.example.skylark.monitorservice"));
+					fail(appNames);
 				}
 			}
-		}, 0,60000);
+		}, 0,1000);
 		
 	}
 	boolean timeover()
 	{
-		final Time t=new Time();
+		Time t=new Time();
 		t.setToNow();
 		int nowHour=t.hour;
 		int nowMin=t.minute;
@@ -109,21 +120,36 @@ public class MonitorService extends Service{
 	boolean monitor(String appNames)
 	{
 		ActivityManager am=(ActivityManager)this.getSystemService(ACTIVITY_SERVICE);
-		List<ActivityManager.RunningServiceInfo> runningProcess=am.getRunningServices(1000);
-		String processName="";
-		Log.v("myservice",appNames);
+		//List<ActivityManager.RunningAppProcessInfo> runningProcess=am.getRunningAppProcesses();
+		List<ActivityManager.RunningTaskInfo> runningProcess=am.getRunningTasks(1);
+		String packageName="";
+		/*
 		for(int i=0;i<runningProcess.size();i++)
 		{
 			//Log.v("myservice",runningProcess.get(i).processName);
-			processName=runningProcess.get(i).process;
-			//Log.v("myservice","+"+processName);
-			if(appNames.contains(processName))
+			packageName=runningProcess.get(i).topActivity.getPackageName();
+			//Log.v("myservice","+"+this.getPackageManager().getApplicationInfo(processName, 0).loadLabel(this.getP).toString());
+			if(appNames.contains(packageName))
 			{
-				fail();
-				am.killBackgroundProcesses(processName);
+				fail(packageName);
+				//showNotification(R.drawable.icon, "Skylark", "计划失败！！", "被禁应用："+processName);
+				//Toast.makeText(getApplicationContext(), "fail"+" "+processName, Toast.LENGTH_LONG).show();
+				//am.killBackgroundProcesses(packageName);
 				return false;
 			}
 		}
+		*/
+		packageName=runningProcess.get(0).topActivity.getPackageName();
+		if(appNames.contains(packageName))
+		{
+			fail(packageName);
+			//showNotification(R.drawable.icon, "Skylark", "计划失败！！", "被禁应用："+processName);
+			//Toast.makeText(getApplicationContext(), "fail"+" "+processName, Toast.LENGTH_LONG).show();
+			am.killBackgroundProcesses(packageName);
+			
+			return false;
+		}
+		//Log.v("myservice",packageName);
 		return true;
 	}
 	
@@ -149,9 +175,40 @@ public class MonitorService extends Service{
 	void success()
 	{
 		Log.v("myservice","success");
+		timer.cancel();
+		stopService(new Intent("com.example.skylark.monitorservice"));
 	}
-	void fail()
+	void fail(String packageName)
 	{
+		timer.cancel();
+		stopService(new Intent("com.example.skylark.monitorservice"));
 		Log.v("myservice","fail");
+    	PackageManager pm=this.getPackageManager();
+    	try {
+    		showNotification(R.drawable.icon, "Skylark", "计划失败！！", 
+    				"被禁应用："+pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString());
+			//appNames[i]=pm.getApplicationInfo(name, 0).loadLabel(pm).toString();
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
+
+	/*
+	 * 显示notification
+	 */
+    public void showNotification(int icon,String tickerText,String title,String content)
+    {
+    	NotificationManager nm;
+    	nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+    	Notification notification=new Notification(icon, tickerText, System.currentTimeMillis());
+    	notification.defaults=Notification.DEFAULT_ALL;
+    	Intent intent= new Intent(MonitorService.this,MainActivity.class);
+    	//intent.setAction(Intent.ACTION_MAIN);
+    	//intent.addCategory(Intent.CATEGORY_LAUNCHER);
+    	PendingIntent pt=PendingIntent.getActivity(MonitorService.this, 0,intent,0);
+    	notification.setLatestEventInfo(MonitorService.this, title, content,pt);
+    	nm.notify(0,notification);
+    	//Toast.makeText(MonitorService.this, "asdf", Toast.LENGTH_LONG).show();
+    }
 }

@@ -6,6 +6,9 @@ package com.example.skylark;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,11 +20,13 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	Button startButton,blButton,settingButton;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        ((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
         startButton=(Button)findViewById(R.id.startButton);
         blButton=(Button)findViewById(R.id.blButton);
         settingButton=(Button)findViewById(R.id.settingButton);
@@ -29,6 +34,9 @@ public class MainActivity extends Activity {
         startButton.setOnClickListener(new myOnClickListener());
         blButton.setOnClickListener(new myOnClickListener());
         settingButton.setOnClickListener(new myOnClickListener());
+        
+        
+        //showNotification(R.drawable.icon,"name","name1","name2");
     }
     private class myOnClickListener implements OnClickListener{
 		public void onClick(View v) {
@@ -67,12 +75,14 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
+		//Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
 		Intent intent=new Intent("com.example.skylark.monitorservice");
 		stopService(intent);
 		finish();
+		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+		//nm.cancelAll();
+		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
 		return super.onOptionsItemSelected(item);
 	}
 	
-    
 }

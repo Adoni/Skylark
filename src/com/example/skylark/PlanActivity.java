@@ -16,6 +16,9 @@ import org.apache.http.util.EncodingUtils;
 
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -58,6 +61,7 @@ public class PlanActivity extends Activity{
 				if(blName.equals(""))
 				{
 					Toast.makeText(PlanActivity.this, "请选择黑名单", Toast.LENGTH_SHORT).show();
+					return;
 				}
 				Intent intent=new Intent("com.example.skylark.monitorservice");
 				intent.putExtra("blName", blName);
@@ -67,8 +71,9 @@ public class PlanActivity extends Activity{
 				startService(intent);
 			}
 		});
+		
 	}
-	
+
 	/*
 	 * 用以初始化SNS Spinner
 	 */

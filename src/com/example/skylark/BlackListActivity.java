@@ -68,7 +68,6 @@ public class BlackListActivity extends Activity{
 		 */
 		manageButton=(Button)findViewById(R.id.manageBL);
 		manageButton.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Toast.makeText(BlackListActivity.this, manageButton.getText().toString(), Toast.LENGTH_LONG).show();
@@ -82,8 +81,11 @@ public class BlackListActivity extends Activity{
 				}
 			}
 		});
-		
 	}
+	
+	/*
+	 * 显示CheckBox，用于多选以便批量删除
+	 */
 	public void showCheckBox()
 	{
 		manageButton.setText("删除");
@@ -108,9 +110,11 @@ public class BlackListActivity extends Activity{
 		});
 	}
 	
+	/*
+	 * 批量删除
+	 */
 	public void MultiDeleteBL()
 	{
-		
 		MyAdapter adapter=(MyAdapter)blList.getAdapter();
 		for(int i=0;i<adapter.getIsSelected().size();i++)
 		{
@@ -121,6 +125,10 @@ public class BlackListActivity extends Activity{
 		}
 		updateList();
 	}
+	
+	/*
+	 * 用于更新list
+	 */
 	public void updateList()
 	{
 		String nowBlNames="";
@@ -208,6 +216,9 @@ public class BlackListActivity extends Activity{
 			}
 		});
 		
+		/*
+		 * 长按list_item，可以删除相应的name
+		 */
 		blList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					final int arg2, long arg3) {
@@ -219,7 +230,9 @@ public class BlackListActivity extends Activity{
 				viewHolder.cb.setChecked(true);
 				adapter.setIsSelected(arg2);
 				*/
-				
+				/*
+				 * 弹出对话框，确定是否选择。
+				 */
 				new AlertDialog.Builder(BlackListActivity.this)
 					.setTitle("删除")
 					.setMessage("确定删除吗？")
