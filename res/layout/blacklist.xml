@@ -13,19 +13,22 @@
 	    android:layout_height="match_parent"
 	    android:orientation="horizontal"
 	    android:gravity="bottom" >
+
         <Button
-	        android:id="@+id/addBL"
-	        android:text="@string/addBL"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        />
+            android:id="@+id/addBL"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:text="@string/addBL"
+            android:textSize="23dip" 
+            android:layout_weight="1"/>
+
 	    <Button
 	        android:id="@+id/manageBL"
-	        android:text="@string/manageBL" 
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        />
+	        android:layout_height="75dp"
+	        android:text="@string/manageBL"
+	        android:textSize="23dip" 
+	        android:layout_weight="1"/>
+
     </LinearLayout>
 </RelativeLayout>

@@ -9,20 +9,12 @@ import org.apache.http.util.EncodingUtils;
 
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.example.skylark.MyAdapter;
 
 public class ShowBlackList extends Activity {

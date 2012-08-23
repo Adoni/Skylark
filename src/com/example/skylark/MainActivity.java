@@ -3,20 +3,16 @@
  * By Adoni
  */
 package com.example.skylark;
-
+/*
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	Button startButton,blButton,settingButton;
@@ -58,17 +54,6 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        /*
-        MenuItem myMenu=(MenuItem)findViewById(R.id.quit);
-        myMenu.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-			
-			public boolean onMenuItemClick(MenuItem item) {
-				// TODO Auto-generated method stub
-				Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show()
-				return false;
-			}
-		});
-		*/
         return true;
     }
     
@@ -85,4 +70,65 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+}
+*/
+
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
+
+public class MainActivity extends BaseSampleActivity {
+	TimePicker tp;
+	Spinner sns_sp,bl_sp;
+	Button startButton;
+	String snsName="";
+	String blName="";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.themed_titles);
+
+        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
+        
+        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(1);
+        TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(mPager);
+        indicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
+        //mIndicator = indicator;
+        
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+    
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		//Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
+		Intent intent=new Intent("com.example.skylark.monitorservice");
+		stopService(intent);
+		finish();
+		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+		return super.onOptionsItemSelected(item);
+	}
+    
 }

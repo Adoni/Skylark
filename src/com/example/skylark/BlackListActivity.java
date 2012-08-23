@@ -17,20 +17,16 @@ import com.example.skylark.MyAdapter.ViewHolder;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -70,7 +66,7 @@ public class BlackListActivity extends Activity{
 		manageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(BlackListActivity.this, manageButton.getText().toString(), Toast.LENGTH_LONG).show();
+				//Toast.makeText(BlackListActivity.this, manageButton.getText().toString(), Toast.LENGTH_LONG).show();
 				if(manageButton.getText().toString().contains("管理"))
 				{
 					showCheckBox();
@@ -234,7 +230,7 @@ public class BlackListActivity extends Activity{
 				 * 弹出对话框，确定是否选择。
 				 */
 				new AlertDialog.Builder(BlackListActivity.this)
-					.setTitle("删除")
+					.setTitle("删除所选的黑名单")
 					.setMessage("确定删除吗？")
 					.setPositiveButton("是", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {

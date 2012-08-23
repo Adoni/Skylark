@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +14,12 @@ import com.example.skylark.MyAdapter.ViewHolder;
 
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -82,7 +75,6 @@ public class DefineBlackList extends Activity {
 		/*
 		 * 获取icon的list以及name的list，构造adapter
 		 */
-		int i=0;
 		for (PackageInfo p : pi) {
 			if(p.packageName.contains("android"))//除去系统应用
 			{

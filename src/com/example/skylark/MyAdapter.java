@@ -9,24 +9,18 @@ import java.util.HashMap;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.opengl.Visibility;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyAdapter extends BaseAdapter
 {
 	private Context context;
-	private int[] iconIDs=new int[1000];
 	private ArrayList<Drawable> icons=new ArrayList<Drawable>();
 	//private Drawable[] icons;
 	//private String[] names=new String[1000];
@@ -41,7 +35,6 @@ public class MyAdapter extends BaseAdapter
 	{
 		Drawable d;
 		this.context=context;
-		this.iconIDs=iconIDs;
 		for(int i=0;i<iconIDs.length;i++)
 		{
 			//icons[i]=context.getResources().getDrawable(iconIDs[i]);
@@ -194,10 +187,10 @@ public class MyAdapter extends BaseAdapter
 		//check.setChecked(true);
 		//Toast.makeText(context, check.isChecked()+"", Toast.LENGTH_LONG).show();
 	}
-	class ViewHolder
+	public class ViewHolder
 	{
-		ImageView img;
-		TextView text;
-		CheckBox cb;
+		public ImageView img;
+		public TextView text;
+		public CheckBox cb;
 	}
 }
