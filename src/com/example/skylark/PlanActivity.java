@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -15,6 +16,7 @@ import org.apache.http.util.EncodingUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -24,6 +26,10 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.skylark.MyAdapter;
+import com.example.ui.MyApplication;
+import com.umeng.api.exp.UMSNSException;
+import com.umeng.api.sns.UMSnsService;
+import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 public class PlanActivity extends Activity{
 	TimePicker tp;
@@ -56,6 +62,9 @@ public class PlanActivity extends Activity{
 				intent.putExtra("snsName", snsName);
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
+				
+				Log.v("my",snsName);
+				
 				startService(intent);
 			}
 		});
@@ -78,6 +87,7 @@ public class PlanActivity extends Activity{
 				// TODO Auto-generated method stub
 				String[] snsNames={"","renren","tencent","sina"};
 				snsName=snsNames[arg2];
+				Log.v("my",snsName);
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {

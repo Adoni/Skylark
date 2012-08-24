@@ -1,5 +1,13 @@
 package com.example.skylark;
 
+import java.util.HashMap;
+
+import com.example.ui.MyApplication;
+import com.umeng.api.common.SnsParams;
+import com.umeng.api.exp.UMSNSException;
+import com.umeng.api.sns.UMSnsService;
+import com.umeng.api.sns.UMSnsService.SHARE_TO;
+
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
@@ -23,7 +31,12 @@ public class WhenFail extends Activity{
 				// TODO Auto-generated method stub
 				finish();
 				((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
-				publishInSNS();
+				try {
+					publishInSNS();
+				} catch (UMSNSException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		text.setText(getHowLong());
@@ -52,8 +65,37 @@ public class WhenFail extends Activity{
 		ans="计划失败，距完成计划还有"+ans;
 		return ans;
 	}
-	public void publishInSNS()
+	public void publishInSNS() throws UMSNSException
 	{
+		String snsName=getIntent().getStringExtra("snsName");
+		if(snsName.equals(""))
+		{
+			return;
+		}
+		if(snsName.equals("renren"))
+		{
+			UMSnsService.shareToRenr(this, getHowLong(), null);
+		}
+		if(snsName.equals("tencent"))
+		{
+			UMSnsService.shareToTenc(this, getHowLong(), null);
+		}
+		if(snsName.equals("sina"))
+		{
+			UMSnsService.shareToSina(this, getHowLong(), null);
+		}
 		
+	//	UMSnsService.share(this, getHowLong());
+		/*
+	    UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+	        public void onComplete(Bundle value, SHARE_TO platform) {
+	        	//Toast.
+	        }
+	        public void onError(UMSNSException e, SHARE_TO platform) {
+	   
+	        }
+		};
+		UMSnsService.oauthSina(this, listener);
+*/
 	}
 }

@@ -217,7 +217,6 @@ public class BLInitialize{
 				//Toast.makeText(BlackListActivity.this, names.get(arg2), Toast.LENGTH_SHORT).show();
 				fragment.startActivity(intent);
 				
-				Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
 			}
 		});
 		
@@ -238,7 +237,7 @@ public class BLInitialize{
 				/*
 				 * 弹出对话框，确定是否选择。
 				 */
-				new AlertDialog.Builder(context)
+				new AlertDialog.Builder(MyApplication.getInstance())
 					.setTitle("删除所选的黑名单")
 					.setMessage("确定删除吗？")
 					.setPositiveButton("是", new DialogInterface.OnClickListener() {

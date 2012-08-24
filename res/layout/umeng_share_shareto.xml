@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:id="@+id/shareto">
+    
+    <LinearLayout android:layout_width="304dip" 
+        android:layout_height="wrap_content" android:background="@drawable/umeng_share_shareto"> 
+
+     <LinearLayout android:layout_width="286dip" android:orientation="vertical"
+        android:layout_height="wrap_content" android:background="@drawable/umeng_share_shareto_stroke"
+        android:layout_margin="9dip"> 
+
+            <TextView android:layout_width="284dip" android:layout_height="42dip"
+                android:background="@drawable/umeng_share_shareto_title" android:textColor="#FFFFFF"
+                android:textSize="15sp" android:gravity="center_vertical"
+                android:text="@string/umeng_share_shareto_top" android:paddingLeft="20dip"
+                android:id="@+id/shareto_top" android:layout_gravity="center_horizontal">   
+            </TextView>
+    
+            <RelativeLayout
+                android:layout_width="282dip" android:layout_height="64dip"
+                android:background="@drawable/umeng_share_shareitem" android:layout_gravity="center_horizontal"
+                android:clickable="true" android:id="@+id/btnToTenc">
+            
+                <ImageView
+                  android:id="@+id/btn" android:background="@drawable/umeng_share_logo_tenc"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="19dip" android:layout_centerVertical="true">
+                </ImageView>
+            
+                <TextView
+                  android:id="@+id/tvtenc" android:text="@string/umeng_share_shareto_tenc"
+                  android:textColor="#3e3e3e" android:textSize="20sp"
+                  android:layout_centerInParent="true" android:layout_toRightOf="@+id/btn"
+                  android:layout_marginLeft="48dip" android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:textStyle="bold">
+                </TextView>
+            </RelativeLayout>
+            
+            <ImageView
+                  android:background="#b2b2b2" android:layout_gravity="center_horizontal"
+                  android:layout_width="278dip" android:layout_height="1dip">
+            </ImageView>
+            
+            <RelativeLayout
+                android:layout_width="282dip" android:layout_height="64dip"
+                android:fadingEdge="horizontal" android:id="@+id/btnToSina"
+                android:layout_gravity="center_horizontal" android:background="@drawable/umeng_share_shareitem">
+            
+                <ImageView
+                  android:id="@+id/btn" android:background="@drawable/umeng_share_logo_sina"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="19dip" android:layout_centerVertical="true">
+                </ImageView>
+            
+                <TextView
+                  android:id="@+id/tvsina" android:text="@string/umeng_share_shareto_sina"
+                  android:textColor="#3e3e3e" android:textSize="20sp"
+                  android:layout_centerInParent="true" android:layout_toRightOf="@+id/btn"
+                  android:layout_marginLeft="48dip" android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:textStyle="bold">
+                </TextView>
+
+            </RelativeLayout>
+            
+            <ImageView
+                  android:background="#b2b2b2" android:layout_gravity="center_horizontal"
+                  android:layout_width="278dip" android:layout_height="1dip">
+            </ImageView>
+            
+            <RelativeLayout
+                android:layout_width="282dip" android:layout_height="64dip"
+                android:background="@drawable/umeng_share_shareitem" android:clickable="true"
+                android:id="@+id/btnToRenR" android:layout_gravity="center_horizontal">
+            
+                <ImageView
+                  android:id="@+id/btn" android:background="@drawable/umeng_share_logo_renren"
+                  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:layout_marginLeft="19dip" android:layout_centerVertical="true">
+                </ImageView>
+            
+                <TextView
+                  android:id="@+id/tvrenr" android:text="@string/umeng_share_shareto_renr"
+                  android:textColor="#3e3e3e" android:textSize="20sp"
+                  android:layout_centerInParent="true" android:layout_toRightOf="@+id/btn"
+                  android:layout_marginLeft="48dip" android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" android:textStyle="bold">
+                </TextView>
+
+            </RelativeLayout>
+            
+         </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

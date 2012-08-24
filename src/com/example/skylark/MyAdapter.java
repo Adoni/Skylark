@@ -6,12 +6,14 @@ package com.example.skylark;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -121,6 +123,7 @@ public class MyAdapter extends BaseAdapter
 	 * (non-Javadoc)
 	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
 	 */
+	@SuppressLint("NewApi")
 	public View getView(int position,View convertView,ViewGroup parent)
 	{
 		LinearLayout ll=new LinearLayout(context);
@@ -142,6 +145,7 @@ public class MyAdapter extends BaseAdapter
 			name.setText(names.get(position));
 			name.setTextSize(20);
 			name.setTextColor(Color.BLUE);
+			name.setPadding(30, 0, 0, 0);
 			ll.addView(name);
 			viewHolder.text=name;
 			
@@ -151,6 +155,7 @@ public class MyAdapter extends BaseAdapter
 			//check.setClickable(false);
 			check.setFocusable(isSelected.get(position));
 			check.setClickable(false);
+			//check.setRight(0);
 			if(!haveACheckBox)
 			{
 				check.setVisibility(8);
@@ -170,7 +175,10 @@ public class MyAdapter extends BaseAdapter
 			viewHolder.text.setText(names.get(position));
 			//viewHolder.cb.setChecked(isSelected.get(position));
 		}
-		
+		//convertView.setBackgroundColor(Color.LTGRAY);
+		convertView.setPadding(0, 10, 0, 10);
+//		convertView.setLeft();
+		//convertView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
 		return convertView;
 	}
 	public HashMap<Integer,Boolean> getIsSelected()

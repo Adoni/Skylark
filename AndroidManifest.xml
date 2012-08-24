@@ -3,12 +3,12 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission 
-        android:name="android.permission.GET_TASKS">
-    </uses-permission>
-    <uses-permission 
-        android:name="android.permission.KILL_BACKGROUND_PROCESSES">
-    </uses-permission>
+    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"></uses-permission>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -69,6 +69,20 @@
             </intent-filter>
         </service>
         
+        <activity android:name="com.umeng.api.activity.OauthActivity"
+                  android:screenOrientation="unspecified"
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|keyboardHidden">
+        </activity>
+        
+        <activity android:name="com.umeng.api.activity.UpdateStatusActivity"
+                  android:theme="@style/Theme.IOSched"
+                   android:windowSoftInputMode="stateVisible|adjustResize"
+                   android:screenOrientation="unspecified"
+                   android:configChanges="orientation|keyboardHidden">
+        </activity>
+
+    <meta-data android:value="4f7046375270156912000011" android:name="UMENG_APPKEY"></meta-data>
     </application>
 
 </manifest>

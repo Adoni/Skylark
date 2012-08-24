@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+          android:orientation="vertical" 
+          android:background="#FFFFFF" android:layout_width="fill_parent" 
+          android:id="@+id/background" android:layout_height="fill_parent" >
+     
+     <RelativeLayout 
+          android:id="@+id/title_bar" android:layout_width="fill_parent" 
+          android:layout_height="44dip" android:layout_alignParentTop="true" 
+          android:background="@drawable/umeng_share_shareto_title" >
+          
+          <TextView android:id="@+id/title"  
+          android:layout_width="wrap_content" android:layout_height="wrap_content" 
+          android:textColor="#FFFFFF" android:text="热门话题" android:gravity="center"
+          android:layout_centerInParent="true" android:textSize="18sp"/>     
+          
+     </RelativeLayout>
+     
+     <ListView android:id="@+id/topic_listview"  android:layout_width="fill_parent"     
+          android:layout_height="wrap_content"  android:drawSelectorOnTop="false" 
+          android:scrollbars="vertical" android:layout_below="@+id/title_bar"/> 
+    
+</RelativeLayout>

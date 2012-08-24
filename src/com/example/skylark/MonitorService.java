@@ -3,11 +3,18 @@ package com.example.skylark;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.http.util.EncodingUtils;
+
+import com.example.ui.MyApplication;
+import com.umeng.api.common.SnsParams;
+import com.umeng.api.exp.UMSNSException;
+import com.umeng.api.sns.UMSnsService;
+import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -19,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.text.format.Time;
 import android.util.Log;
@@ -27,6 +35,7 @@ import android.view.WindowManager;
 public class MonitorService extends Service{
 	private int hour;
 	private int min;
+	String snsName;
 	private Timer timer;
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -54,7 +63,7 @@ public class MonitorService extends Service{
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 		String blName=""+intent.getStringExtra("blName");
-		String snsName=""+intent.getStringExtra("snsName");
+		snsName=""+intent.getStringExtra("snsName");
 		hour=intent.getIntExtra("hour", 0);
 		min=intent.getIntExtra("min", 0);
 		timer=new Timer();
@@ -197,28 +206,12 @@ public class MonitorService extends Service{
     	intent.putExtra("hour", hour);
     	intent.putExtra("min", min);
     	intent.putExtra("appName", packageName);
+    	intent.putExtra("snsName", snsName);
     	intent.setClass(MonitorService.this, WhenFail.class);
     	startActivity(intent);
-    	//new AlertDialog.Builder(MonitorService.this)
-	//	.setTitle("删除所选的黑名单")
-		//.setMessage("确定删除吗？")
-		//.setPositiveButton("是", null)
-		//.setNegativeButton("否", null)
-		//.show();
-    	//showDialog();
+    	
 	}
 
-	public void showDialog(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(MonitorService.this);
-		builder.setTitle("Test!");
-		builder.setMessage("Close!");
-		builder.setPositiveButton("離開", null);
-		builder.setNegativeButton("關掉鈴聲", null);
-		AlertDialog alert = builder.create();
-		alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);//
-		alert.show();
-	}
-	
 	/*
 	 * 显示notification
 	 */

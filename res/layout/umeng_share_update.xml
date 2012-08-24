@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+          android:orientation="vertical" 
+          android:background="#FFFFFF" android:layout_width="fill_parent" 
+          android:id="@+id/background" android:layout_height="fill_parent" >
+     
+     <RelativeLayout 
+          android:id="@+id/title_bar" android:layout_width="fill_parent" 
+          android:layout_height="44dip" android:layout_alignParentTop="true" 
+          android:background="@drawable/umeng_share_shareto_title" >
+          
+          <TextView android:id="@+id/title" android:layout_alignParentLeft="true" 
+          android:layout_width="wrap_content" android:layout_height="wrap_content" 
+          android:textColor="#FFFFFF" android:text="分享到" android:gravity="center"
+          android:paddingLeft="15dip" android:layout_centerVertical="true"
+          android:textSize="18sp"/>   
+          
+          <TextView android:id="@+id/wordCount" android:layout_alignParentRight="true" 
+          android:layout_width="wrap_content" android:layout_height="wrap_content" 
+          android:textColor="#FFFFFF" android:text="140" android:gravity="center"
+          android:paddingRight="15dip" android:layout_centerVertical="true"
+          android:textSize="15sp"/>   
+          
+     </RelativeLayout>
+     
+     <RelativeLayout 
+          android:id="@+id/main" android:layout_width="fill_parent" android:layout_height="fill_parent"
+          android:layout_below="@+id/title_bar" android:background="@drawable/umeng_share_update_main" 
+          android:layout_above="@+id/bottom" android:layout_margin="4dip" android:layout_marginBottom="0dip">               
+          
+          <EditText android:layout_width="fill_parent" android:layout_height="fill_parent"
+          android:textSize="15sp" android:textColor="#000000" 
+          android:clickable="true" android:focusable="true" android:autoLink="all"
+          android:hint="@string/umeng_share_update_edittext_hint" android:gravity="top" 
+          android:linksClickable="false" android:textColorLink="#0000ff"  
+          android:padding="5dip" android:background="#ffffff" 
+          android:id="@+id/edit" android:layout_margin="5dip"
+          android:layout_above="@+id/image" android:scrollbars="vertical"/>
+          
+          <TextView android:layout_width="wrap_content" android:layout_height="20dip" 
+          android:layout_alignParentBottom="true" android:id="@+id/nickName" 
+          android:layout_marginBottom="10dip" android:layout_alignParentLeft="true"
+          android:layout_marginLeft="10dip" android:textColor="#000000"/> 
+          
+          <ImageView android:adjustViewBounds="true" android:layout_width="60dip" 
+          android:layout_height="40dip" android:maxHeight="40dip"
+          android:layout_alignParentBottom="true" android:id="@+id/image" 
+          android:layout_marginBottom="5dip" android:layout_alignParentRight="true"
+          android:layout_marginRight="10dip" android:visibility="gone"/>   
+          
+          <GridView android:id="@+id/gridView" android:layout_width="fill_parent" 
+          android:layout_height="120dip" android:layout_alignParentBottom="true"
+          android:background="@drawable/umeng_share_bg_gridview" android:numColumns="6" 
+          android:columnWidth="70dip" android:stretchMode="columnWidth"
+          android:padding="15dip" android:layout_centerHorizontal="true"  
+          android:verticalSpacing="10dip" android:visibility="gone" 
+          android:gravity="center" android:layout_margin="4dip"
+          android:listSelector="@drawable/umeng_share_gridview_item" />           
+     </RelativeLayout>
+     
+     <RelativeLayout
+          android:id="@+id/bottom" android:layout_width="fill_parent" 
+          android:layout_height="44dip" android:layout_alignParentBottom="true" 
+          android:layout_centerInParent="true" android:background="@drawable/umeng_share_update_bottom">
+          
+          <Button android:layout_width="38dip" android:layout_height="34dip" 
+               android:background="@drawable/umeng_share_update_button" 
+               android:layout_alignParentLeft="true" android:text=":)" android:gravity="center"
+               android:textColor="#35a1ce" android:textStyle="bold" android:textSize="20sp"
+               android:layout_marginLeft="20dip" android:layout_alignParentBottom="true" 
+               android:layout_marginBottom="7dip" android:id="@+id/btnFaces"/>
+             
+          <Button android:layout_width="38dip" android:layout_height="34dip" 
+               android:background="@drawable/umeng_share_update_button" 
+               android:layout_toRightOf="@+id/btnFaces" android:text="#" 
+               android:textColor="#35a1ce" android:textStyle="bold" android:textSize="23sp"
+               android:layout_marginLeft="12dip" android:layout_alignParentBottom="true" 
+               android:layout_marginBottom="5dip" android:id="@+id/btnTopic"/> 
+                
+          <Button android:layout_width="38dip" android:layout_height="34dip" 
+               android:background="@drawable/umeng_share_update_button" 
+               android:layout_toRightOf="@+id/btnTopic" android:text="\@"
+               android:textColor="#35a1ce" android:textStyle="bold" android:textSize="23sp"
+               android:layout_marginLeft="12dip" android:layout_alignParentBottom="true" 
+               android:layout_marginBottom="5dip" android:id="@+id/btnFrom"/> 
+                    
+          <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+               android:background="@drawable/umeng_share_send" android:text="@string/umeng_share_update_send" 
+               android:textColor="#FFFFFF" android:layout_alignParentBottom="true" 
+               android:layout_alignParentRight="true" android:layout_marginRight="8dip" 
+               android:id="@+id/btnSend" />             
+     </RelativeLayout>
+    
+</RelativeLayout>

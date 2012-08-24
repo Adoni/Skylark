@@ -8,14 +8,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.util.EncodingUtils;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -25,6 +29,9 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.skylark.*;
+import com.umeng.api.exp.UMSNSException;
+import com.umeng.api.sns.UMSnsService;
+import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 public class PlanInitialize{
 	TimePicker tp;
@@ -51,7 +58,10 @@ public class PlanInitialize{
 		bl_sp=(Spinner)view.findViewById(R.id.bl_sp);
 		iniSNS();
 		iniBL();
-		view.findViewById(R.id.start).setOnClickListener(new OnClickListener() {
+		startButton=(Button)view.findViewById(R.id.start);
+		startButton.setClickable(false);
+		startButton.setOnClickListener(new OnClickListener() {
+			@SuppressLint("NewApi")
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if(blName.equals(""))
@@ -59,11 +69,41 @@ public class PlanInitialize{
 					Toast.makeText(context, "请选择黑名单", Toast.LENGTH_SHORT).show();
 					return;
 				}
+				//startButton.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.friends));
 				Intent intent=new Intent("com.example.skylark.monitorservice");
 				intent.putExtra("blName", blName);
 				intent.putExtra("snsName", snsName);
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
+				HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
+				Name.put("renren", SHARE_TO.RENR);
+				Name.put("tencent", SHARE_TO.TENC);
+				Name.put("sina",SHARE_TO.SINA);
+				if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
+				{
+					UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+				        public void onComplete(Bundle value, SHARE_TO platform) {
+				        }
+				        public void onError(UMSNSException e, SHARE_TO platform) {
+				        	//
+				        }
+					};
+					Log.v("my","fore");
+					if(snsName.equals("renren"))
+					{
+						//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+						//UMSnsService.oauthRenr(context, listener);
+						Log.v("my","renren");
+					}
+					if(snsName.equals("tencent"))
+					{
+						//UMSnsService.oauthTenc(context, listener);
+					}
+					if(snsName.equals("sina"))
+					{
+						//UMSnsService.oauthSina(context, listener);
+					}
+				}
 				MyApplication.getInstance().startService(intent);
 			}
 		});
