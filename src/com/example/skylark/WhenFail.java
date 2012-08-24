@@ -42,7 +42,7 @@ public class WhenFail extends Activity{
 			}
 		});
 		text.setText(getHowLong());
-		
+		//stopService(new Intent())
 	}
 	public String getHowLong()
 	{
@@ -74,56 +74,7 @@ public class WhenFail extends Activity{
 		{
 			return;
 		}
-		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
-		Name.put("renren", SHARE_TO.RENR);
-		Name.put("tencent", SHARE_TO.TENC);
-		Name.put("sina",SHARE_TO.SINA);
-		if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
-		{
-			UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
-		        public void onComplete(Bundle value, SHARE_TO platform) {
-		        	publish(snsName);
-		        }
-		        public void onError(UMSNSException e, SHARE_TO platform) {
-		        	Toast.makeText(WhenFail.this, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
-		        	//
-		        }
-			};
-			
-			Log.v("my","fore");
-			if(snsName.equals("renren"))
-			{
-				//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
-				UMSnsService.oauthRenr(this, listener);
-				Log.v("my","renren");
-			}
-			if(snsName.equals("tencent"))
-			{
-				UMSnsService.oauthTenc(this, listener);
-			}
-			if(snsName.equals("sina"))
-			{
-				UMSnsService.oauthSina(this, listener);
-			}
-			return ;
-		}
-		publish(snsName);
 		
-	//	UMSnsService.share(this, getHowLong());
-		/*
-	    UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
-	        public void onComplete(Bundle value, SHARE_TO platform) {
-	        	//Toast.
-	        }
-	        public void onError(UMSNSException e, SHARE_TO platform) {
-	   
-	        }
-		};
-		UMSnsService.oauthSina(this, listener);
-*/
-	}
-	public void publish(String snsName)
-	{
 		if(snsName.equals("renren"))
 		{
 			UMSnsService.shareToRenr(this, getHowLong(), null);

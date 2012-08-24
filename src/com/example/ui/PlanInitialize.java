@@ -76,7 +76,39 @@ public class PlanInitialize{
 				intent.putExtra("snsName", snsName);
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
-				
+				HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
+				Name.put("renren", SHARE_TO.RENR);
+				Name.put("tencent", SHARE_TO.TENC);
+				Name.put("sina",SHARE_TO.SINA);
+				if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
+				{
+					UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+				        public void onComplete(Bundle value, SHARE_TO platform) {
+				        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
+				        }
+				        public void onError(UMSNSException e, SHARE_TO platform) {
+				        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
+				        	//
+				        }
+					};
+					
+					Log.v("my","fore");
+					if(snsName.equals("renren"))
+					{
+						//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+						UMSnsService.oauthRenr(context, listener);
+						Log.v("my","renren");
+					}
+					if(snsName.equals("tencent"))
+					{
+						UMSnsService.oauthTenc(context, listener);
+					}
+					if(snsName.equals("sina"))
+					{
+						UMSnsService.oauthSina(context, listener);
+					}
+					return ;
+				}
 				MyApplication.getInstance().startService(intent);
 			}
 		});
