@@ -1,10 +1,11 @@
 package com.example.skylark;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 class TestTitleFragmentAdapter extends TestFragmentAdapter {
-    public TestTitleFragmentAdapter(FragmentManager fm) {
-        super(fm);
+    public TestTitleFragmentAdapter(FragmentManager fm,Context context) {
+        super(fm,context);
     }
 
     @Override

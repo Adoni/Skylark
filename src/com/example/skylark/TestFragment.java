@@ -4,6 +4,7 @@ import com.example.ui.BLInitialize;
 import com.example.ui.PlanInitialize;
 
 import junit.framework.TestResult;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -21,10 +22,12 @@ import android.widget.TextView;
 public final class TestFragment extends Fragment {
     private static final String KEY_CONTENT = "TestFragment:Content";
     private int layout;
+    private Context context;
     
-    public void setLayout(int layout)
+    public void setLayout(int layout,Context context)
     {
     	this.layout=layout;
+    	this.context=context;
     }
     public TestFragment newLayout(int layout)
     {
@@ -53,12 +56,12 @@ public final class TestFragment extends Fragment {
         //return inflater.inflate(layout,container,false);
 		if(layout==R.layout.plan)
 		{
-			PlanInitialize plan=new PlanInitialize(ans,this);
+			PlanInitialize plan=new PlanInitialize(ans,this,context);
 			plan.iniPlan();
 		}
 		if(layout==R.layout.blacklist)
 		{
-			BLInitialize bl=new BLInitialize(ans,this);
+			BLInitialize bl=new BLInitialize(ans,this,context);
 			bl.initial();
 		}
         return ans;

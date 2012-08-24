@@ -18,6 +18,7 @@ import com.example.skylark.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,11 +42,12 @@ public class BLInitialize{
 	private View view;
 	private ArrayList<String> names=new ArrayList<String>();
 	
-	public BLInitialize(View view,TestFragment fragment)
+	public BLInitialize(View view,TestFragment fragment,Context context)
 	{
 		this.view=view;
 		this.fragment=fragment;
-		context=MyApplication.getInstance();
+		//context=MyApplication.getInstance();
+		this.context=context;
 	}
 	public void initial(){
 		
@@ -237,7 +239,8 @@ public class BLInitialize{
 				/*
 				 * 弹出对话框，确定是否选择。
 				 */
-				new AlertDialog.Builder(MyApplication.getInstance())
+				
+				Builder alert= new AlertDialog.Builder(context)
 					.setTitle("删除所选的黑名单")
 					.setMessage("确定删除吗？")
 					.setPositiveButton("是", new DialogInterface.OnClickListener() {
@@ -247,8 +250,14 @@ public class BLInitialize{
 							updateList();
 						}
 					})
-					.setNegativeButton("否", null)
-					.show();
+					.setNegativeButton("否", null);
+				AlertDialog ad=alert.create();
+				ad.show();
+				
+				//Intent intent=new Intent();
+				//intent.setClass(context, WhenFail.class);
+				//context.startActivity(intent);
+				
 				return true;
 			}
 		});

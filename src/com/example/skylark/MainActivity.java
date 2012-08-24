@@ -103,7 +103,7 @@ public class MainActivity extends BaseSampleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.themed_titles);
 
-        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager());
+        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager(),MainActivity.this);
         
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);

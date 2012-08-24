@@ -2,6 +2,7 @@ package com.example.skylark;
 
 import com.example.skylark.R;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,9 +14,11 @@ class TestFragmentAdapter extends FragmentPagerAdapter {
     protected static final String[] CONTENT = new String[] { "黑名单", "开始规划", "设置",};
     private int[] layout=new int[]{R.layout.blacklist,R.layout.plan,R.layout.setting};
     private int mCount = CONTENT.length;
+    private Context context;
 
-    public TestFragmentAdapter(FragmentManager fm) {
+    public TestFragmentAdapter(FragmentManager fm,Context context) {
         super(fm);
+        this.context=context;
     }
     //主要的设定界面的方法
     @Override
@@ -23,8 +26,7 @@ class TestFragmentAdapter extends FragmentPagerAdapter {
         //return TestFragment.newInstance("god ");
         TestFragment fragment=new TestFragment();
         //return null;
-    	fragment.setLayout(layout[position]);
-    	
+    	fragment.setLayout(layout[position],context);
     	return fragment;
     }
 

@@ -42,11 +42,12 @@ public class PlanInitialize{
 	TestFragment fragment;
 	Context context;
 	View view;
-	public PlanInitialize(View view, TestFragment fragment)
+	public PlanInitialize(View view, TestFragment fragment,Context context)
 	{
 		this.view=view;
 		this.fragment=fragment;
-		this.context=MyApplication.getInstance();
+		//this.context=MyApplication.getInstance();
+		this.context=context;
 	}
 	public void iniPlan() {
 		// TODO Auto-generated method stub
@@ -75,35 +76,7 @@ public class PlanInitialize{
 				intent.putExtra("snsName", snsName);
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
-				HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
-				Name.put("renren", SHARE_TO.RENR);
-				Name.put("tencent", SHARE_TO.TENC);
-				Name.put("sina",SHARE_TO.SINA);
-				if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
-				{
-					UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
-				        public void onComplete(Bundle value, SHARE_TO platform) {
-				        }
-				        public void onError(UMSNSException e, SHARE_TO platform) {
-				        	//
-				        }
-					};
-					Log.v("my","fore");
-					if(snsName.equals("renren"))
-					{
-						//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
-						//UMSnsService.oauthRenr(context, listener);
-						Log.v("my","renren");
-					}
-					if(snsName.equals("tencent"))
-					{
-						//UMSnsService.oauthTenc(context, listener);
-					}
-					if(snsName.equals("sina"))
-					{
-						//UMSnsService.oauthSina(context, listener);
-					}
-				}
+				
 				MyApplication.getInstance().startService(intent);
 			}
 		});

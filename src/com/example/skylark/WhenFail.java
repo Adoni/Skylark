@@ -12,10 +12,12 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WhenFail extends Activity{
 	@Override
@@ -67,23 +69,45 @@ public class WhenFail extends Activity{
 	}
 	public void publishInSNS() throws UMSNSException
 	{
-		String snsName=getIntent().getStringExtra("snsName");
+		final String snsName=getIntent().getStringExtra("snsName");
 		if(snsName.equals(""))
 		{
 			return;
 		}
-		if(snsName.equals("renren"))
+		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
+		Name.put("renren", SHARE_TO.RENR);
+		Name.put("tencent", SHARE_TO.TENC);
+		Name.put("sina",SHARE_TO.SINA);
+		if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
 		{
-			UMSnsService.shareToRenr(this, getHowLong(), null);
+			UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+		        public void onComplete(Bundle value, SHARE_TO platform) {
+		        	publish(snsName);
+		        }
+		        public void onError(UMSNSException e, SHARE_TO platform) {
+		        	Toast.makeText(WhenFail.this, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
+		        	//
+		        }
+			};
+			
+			Log.v("my","fore");
+			if(snsName.equals("renren"))
+			{
+				//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+				UMSnsService.oauthRenr(this, listener);
+				Log.v("my","renren");
+			}
+			if(snsName.equals("tencent"))
+			{
+				UMSnsService.oauthTenc(this, listener);
+			}
+			if(snsName.equals("sina"))
+			{
+				UMSnsService.oauthSina(this, listener);
+			}
+			return ;
 		}
-		if(snsName.equals("tencent"))
-		{
-			UMSnsService.shareToTenc(this, getHowLong(), null);
-		}
-		if(snsName.equals("sina"))
-		{
-			UMSnsService.shareToSina(this, getHowLong(), null);
-		}
+		publish(snsName);
 		
 	//	UMSnsService.share(this, getHowLong());
 		/*
@@ -97,5 +121,20 @@ public class WhenFail extends Activity{
 		};
 		UMSnsService.oauthSina(this, listener);
 */
+	}
+	public void publish(String snsName)
+	{
+		if(snsName.equals("renren"))
+		{
+			UMSnsService.shareToRenr(this, getHowLong(), null);
+		}
+		if(snsName.equals("tencent"))
+		{
+			UMSnsService.shareToTenc(this, getHowLong(), null);
+		}
+		if(snsName.equals("sina"))
+		{
+			UMSnsService.shareToSina(this, getHowLong(), null);
+		}
 	}
 }
