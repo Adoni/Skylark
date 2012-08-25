@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 import org.apache.http.util.EncodingUtils;
 
-import com.example.skylark.MyAdapter.ViewHolder;
+import com.example.ui.MyAdapter;
+import com.example.ui.MyAdapter.ViewHolder;
 
 
 import android.app.Activity;

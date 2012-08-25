@@ -25,7 +25,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import com.example.skylark.MyAdapter;
+
+import com.example.ui.MyAdapter;
 import com.example.ui.MyApplication;
 import com.umeng.api.exp.UMSNSException;
 import com.umeng.api.sns.UMSnsService;

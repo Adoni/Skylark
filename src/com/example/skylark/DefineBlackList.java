@@ -9,7 +9,8 @@ import java.util.List;
 
 import org.apache.http.util.EncodingUtils;
 
-import com.example.skylark.MyAdapter.ViewHolder;
+import com.example.ui.MyAdapter;
+import com.example.ui.MyAdapter.ViewHolder;
 
 
 

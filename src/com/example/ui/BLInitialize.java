@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 import org.apache.http.util.EncodingUtils;
 
-import com.example.skylark.MyAdapter.ViewHolder;
 import com.example.skylark.*;
+import com.example.ui.MyAdapter.ViewHolder;
 
 
 import android.app.Activity;
@@ -26,6 +26,8 @@ import android.content.res.Resources.NotFoundException;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -64,7 +66,13 @@ public class BLInitialize{
 				// TODO Auto-generated method stub
 				Intent intent=new Intent();
 				intent.setClass(context, DefineBlackList.class);
+				AnimationSet animationSet = new AnimationSet(true);//创建一个AnimationSet对象
+				AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);//创建一个AlphaAnimation对象
+				alphaAnimation.setDuration(1000);//设置动画执行的时间（单位：毫秒）
+				animationSet.addAnimation(alphaAnimation);//将AlphaAnimation对象添加到AnimationSet当中
+				view.startAnimation(animationSet);//使用view的startAnimation方法开始执行动画
 				fragment.startActivity(intent);
+				
 			}
 		});
 		
@@ -253,7 +261,6 @@ public class BLInitialize{
 					.setNegativeButton("否", null);
 				AlertDialog ad=alert.create();
 				ad.show();
-				
 				//Intent intent=new Intent();
 				//intent.setClass(context, WhenFail.class);
 				//context.startActivity(intent);

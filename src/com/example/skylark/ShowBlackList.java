@@ -15,7 +15,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ListView;
-import com.example.skylark.MyAdapter;
+
+import com.example.ui.MyAdapter;
 
 public class ShowBlackList extends Activity {
 	ListView showBL;

@@ -10,6 +10,7 @@ import java.util.TimerTask;
 
 import org.apache.http.util.EncodingUtils;
 
+import com.example.ui.MainActivity;
 import com.example.ui.MyApplication;
 import com.umeng.api.common.SnsParams;
 import com.umeng.api.exp.UMSNSException;
@@ -70,7 +71,6 @@ public class MonitorService extends Service{
 		final String appNames=getAppNames(blName);
 		//showNotification(R.drawable.icon,"name","name1","name2");
 		timer.schedule(new TimerTask() {
-			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -132,33 +132,13 @@ public class MonitorService extends Service{
 		//List<ActivityManager.RunningAppProcessInfo> runningProcess=am.getRunningAppProcesses();
 		List<ActivityManager.RunningTaskInfo> runningProcess=am.getRunningTasks(1);
 		String packageName="";
-		/*
-		for(int i=0;i<runningProcess.size();i++)
-		{
-			//Log.v("myservice",runningProcess.get(i).processName);
-			packageName=runningProcess.get(i).topActivity.getPackageName();
-			//Log.v("myservice","+"+this.getPackageManager().getApplicationInfo(processName, 0).loadLabel(this.getP).toString());
-			if(appNames.contains(packageName))
-			{
-				fail(packageName);
-				//showNotification(R.drawable.icon, "Skylark", "计划失败！！", "被禁应用："+processName);
-				//Toast.makeText(getApplicationContext(), "fail"+" "+processName, Toast.LENGTH_LONG).show();
-				//am.killBackgroundProcesses(packageName);
-				return false;
-			}
-		}
-		*/
 		packageName=runningProcess.get(0).topActivity.getPackageName();
 		if(appNames.contains(packageName))
 		{
 			fail(packageName);
-			//showNotification(R.drawable.icon, "Skylark", "计划失败！！", "被禁应用："+processName);
-			//Toast.makeText(getApplicationContext(), "fail"+" "+processName, Toast.LENGTH_LONG).show();
-			am.killBackgroundProcesses(packageName);
-			
+			//am.killBackgroundProcesses(packageName);
 			return false;
 		}
-		//Log.v("myservice",packageName);
 		return true;
 	}
 	
@@ -168,24 +148,20 @@ public class MonitorService extends Service{
 	 */
 	boolean killProcess(String processName)
 	{
-		
-		return true;
-	}
-	
-	/*
-	 * 用于在SNS上发布状态，使用的是泽辰提供的API
-	 * 若成功则返回真，否则返回假
-	 */
-	boolean publishAtSNS()
-	{
 		return true;
 	}
 	
 	void success()
 	{
-		Log.v("myservice","success");
 		timer.cancel();
 		stopService(new Intent("com.example.skylark.monitorservice"));
+    	Intent intent=new Intent(Intent.ACTION_VIEW);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	intent.putExtra("hour", hour);
+    	intent.putExtra("min", min);
+    	intent.putExtra("snsName", snsName);
+    	intent.setClass(MonitorService.this, WhenSucceed.class);
+    	startActivity(intent);
 	}
 	void fail(String packageName)
 	{
@@ -209,9 +185,8 @@ public class MonitorService extends Service{
     	intent.putExtra("snsName", snsName);
     	intent.setClass(MonitorService.this, WhenFail.class);
     	startActivity(intent);
-    	
 	}
-
+	
 	/*
 	 * 显示notification
 	 */
@@ -222,11 +197,8 @@ public class MonitorService extends Service{
     	Notification notification=new Notification(icon, tickerText, System.currentTimeMillis());
     	notification.defaults=Notification.DEFAULT_ALL;
     	Intent intent= new Intent(MonitorService.this,MainActivity.class);
-    	//intent.setAction(Intent.ACTION_MAIN);
-    	//intent.addCategory(Intent.CATEGORY_LAUNCHER);
     	PendingIntent pt=PendingIntent.getActivity(MonitorService.this, 0,intent,0);
     	notification.setLatestEventInfo(MonitorService.this, title, content,pt);
     	nm.notify(0,notification);
-    	//Toast.makeText(MonitorService.this, "asdf", Toast.LENGTH_LONG).show();
     }
 }
