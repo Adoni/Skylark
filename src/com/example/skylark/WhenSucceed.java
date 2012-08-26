@@ -45,7 +45,7 @@ public class WhenSucceed extends Activity{
 		});
 		text.setText(getHowLong());
 		stopService(new Intent("com.example.skylark.monitorservice"));
-	}
+	}  
 	public String getHowLong()
 	{
 		String ans="";
