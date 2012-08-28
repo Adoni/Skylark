@@ -17,9 +17,10 @@ import android.util.Log;
 
 public class RecordTool {
 	private Context context;
-	private String failName="fail.re";
-	private String succeedName="succeed.re";
-	private String continuousName="continuous.re";
+	public static String failName="fail.re";
+	public static String succeedName="succeed.re";
+	public static String continuousName="continuous.re";
+	public static String totalName="total.re";
 	
 	public RecordTool(Context context,boolean isSucceed)
 	{
@@ -34,7 +35,11 @@ public class RecordTool {
 			write_in(failName);
 			clearContinuous();
 		}
-		
+		write_in(totalName);
+	}
+	public RecordTool(Context context)
+	{
+		this.context=context;
 	}
 	public void clearContinuous()
 	{
@@ -85,6 +90,7 @@ public class RecordTool {
 	        	Log.v("ssd",ans+"");
 	        	fileContent=fileContent.substring(fileContent.indexOf(';')+1);
 	        }
+	        fin.close();
 	        return ans;
 		} catch (FileNotFoundException e) {
 			return 0;
@@ -93,5 +99,25 @@ public class RecordTool {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	public String getRecord(String name)
+	{
+		FileInputStream fin;
+		String fileContet="";
+		try {
+			fin =context.openFileInput(name);
+			int length = fin.available();   
+	        byte [] buffer = new byte[length];   
+	        fin.read(buffer);       
+	        String fileContent = ""+EncodingUtils.getString(buffer, "UTF-8");
+	        fin.close();
+	        return fileContent; 
+		} catch (FileNotFoundException e) {
+			return "";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fileContet;
 	}
 }

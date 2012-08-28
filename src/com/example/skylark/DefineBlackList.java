@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.http.util.EncodingUtils;
 
+import com.example.ui.MainActivity;
 import com.example.ui.MyAdapter;
 import com.example.ui.MyAdapter.ViewHolder;
 
@@ -55,7 +56,7 @@ public class DefineBlackList extends Activity {
 					return;
 				}
 				Intent intent=new Intent();
-				intent.setClass(DefineBlackList.this, PlanActivity.class);
+				intent.setClass(DefineBlackList.this, MainActivity.class);
 				DefineBlackList.this.startActivity(intent);
 				
 			}

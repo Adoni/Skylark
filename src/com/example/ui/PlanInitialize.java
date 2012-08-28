@@ -124,6 +124,7 @@ public class PlanInitialize{
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
+		
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -197,5 +198,6 @@ public class PlanInitialize{
 			}
         	
 		});
+        //bl_sp.set
 	}
 }

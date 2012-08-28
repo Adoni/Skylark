@@ -22,6 +22,7 @@
         	android:layout_height="wrap_content"
        		android:id="@+id/tp"
        		android:layout_weight="2"
+       		
         />
     </LinearLayout>
     

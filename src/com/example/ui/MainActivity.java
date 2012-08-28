@@ -11,10 +11,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -33,20 +36,31 @@ public class MainActivity extends BaseSampleActivity {
 	Button startButton;
 	String snsName="";
 	String blName="";
+	PopupWindow pop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.simple_titles);
-        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager(),MainActivity.this);
-        
+        mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager(),MainActivity.this,pop);
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);
+        mPager.setOnTouchListener(new OnTouchListener() {
+			
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				if(pop!=null && pop.isShowing())
+				{
+					pop.dismiss();
+				}
+				return false;
+			}
+		});
         TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
         indicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
         mIndicator = indicator;
-        
+        pop=new PopupWindow(MainActivity.this.getLayoutInflater().inflate(R.layout.pop_layout, null));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -64,5 +78,10 @@ public class MainActivity extends BaseSampleActivity {
 		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
 		return super.onOptionsItemSelected(item);
 	}
-    
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+    	Toast.makeText(this,"sf" ,Toast.LENGTH_LONG).show();
+		return super.onTouchEvent(event);
+	}
 }

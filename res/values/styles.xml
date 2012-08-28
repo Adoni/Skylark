@@ -60,4 +60,9 @@
         <item name="fadeLength">1000</item>
         <item name="fadeDelay">1000</item>
     </style>
+    
+    <style name="AnimationPreview">  
+        <item name="android:windowEnterAnimation">@anim/umeng_share_popup_enter</item>  
+        <item name="android:windowExitAnimation">@anim/umeng_share_popup_exit</item>  
+    </style>  
 </resources>

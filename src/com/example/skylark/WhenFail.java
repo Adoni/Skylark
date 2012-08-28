@@ -41,6 +41,7 @@ public class WhenFail extends Activity{
 				}
 			}
 		});
+		RecordTool re=new RecordTool(this, false);
 		text.setText(getHowLong());
 		//stopService(new Intent())
 	}
@@ -64,6 +65,7 @@ public class WhenFail extends Activity{
 		{
 			ans=ans+min+"分钟";
 		}
+		
 		ans="计划失败，距完成计划还有"+ans;
 		return ans;
 	}

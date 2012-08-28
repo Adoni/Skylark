@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
@@ -23,18 +24,15 @@ public final class TestFragment extends Fragment {
     private static final String KEY_CONTENT = "TestFragment:Content";
     private int layout;
     private Context context;
+    private PopupWindow pop;
     
-    public void setLayout(int layout,Context context)
+    public void setLayout(int layout,Context context, PopupWindow pop)
     {
     	this.layout=layout;
     	this.context=context;
+    	this.pop=pop;
     }
-    public TestFragment newLayout(int layout)
-    {
-    	TestFragment myfragment=new TestFragment();
-    	this.layout=layout;
-    	return myfragment;
-    }
+    
     private String mContent = "???";
 
     @Override
@@ -63,6 +61,11 @@ public final class TestFragment extends Fragment {
 		{
 			BLInitialize bl=new BLInitialize(ans,this,context);
 			bl.initial();
+		}
+		if(layout==R.layout.setting)
+		{
+			SettingInitialize si=new SettingInitialize(ans, this, context,pop);
+			si.iniSetting();
 		}
         return ans;
     }
