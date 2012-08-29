@@ -454,28 +454,30 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int default_underline_indicator_fade_length=0x7f080003;
     }
     public static final class layout {
-        public static final int blacklist=0x7f030000;
-        public static final int blacknamesitem=0x7f030001;
-        public static final int blitem=0x7f030002;
-        public static final int define=0x7f030003;
-        public static final int plan=0x7f030004;
-        public static final int pop_layout=0x7f030005;
-        public static final int setting=0x7f030006;
-        public static final int showbl=0x7f030007;
-        public static final int simple_lines=0x7f030008;
-        public static final int simple_titles=0x7f030009;
-        public static final int themed_titles=0x7f03000a;
-        public static final int umeng_common_download_notification=0x7f03000b;
-        public static final int umeng_share_shareto=0x7f03000c;
-        public static final int umeng_share_topics=0x7f03000d;
-        public static final int umeng_share_update=0x7f03000e;
-        public static final int whenfail=0x7f03000f;
+        public static final int aboutus=0x7f030000;
+        public static final int blacklist=0x7f030001;
+        public static final int blacknamesitem=0x7f030002;
+        public static final int blitem=0x7f030003;
+        public static final int define=0x7f030004;
+        public static final int plan=0x7f030005;
+        public static final int pop_layout=0x7f030006;
+        public static final int setting=0x7f030007;
+        public static final int showbl=0x7f030008;
+        public static final int simple_lines=0x7f030009;
+        public static final int simple_titles=0x7f03000a;
+        public static final int themed_titles=0x7f03000b;
+        public static final int umeng_common_download_notification=0x7f03000c;
+        public static final int umeng_share_shareto=0x7f03000d;
+        public static final int umeng_share_topics=0x7f03000e;
+        public static final int umeng_share_update=0x7f03000f;
+        public static final int whenfail=0x7f030010;
     }
     public static final class menu {
         public static final int activity_main=0x7f0c0000;
         public static final int menu=0x7f0c0001;
     }
     public static final class string {
+        public static final int aboutus=0x7f0b0013;
         public static final int addBL=0x7f0b000d;
         public static final int app_name=0x7f0b0000;
         public static final int blButton=0x7f0b0004;
@@ -495,32 +497,32 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int start=0x7f0b0009;
         public static final int startButton=0x7f0b0003;
         public static final int tencent=0x7f0b000b;
-        public static final int umeng_share_oauth_linkserver=0x7f0b0025;
-        public static final int umeng_share_renr=0x7f0b002a;
-        public static final int umeng_share_shareto_renr=0x7f0b0014;
-        public static final int umeng_share_shareto_sina=0x7f0b0015;
-        public static final int umeng_share_shareto_tenc=0x7f0b0016;
-        public static final int umeng_share_shareto_top=0x7f0b0013;
-        public static final int umeng_share_sina=0x7f0b002b;
-        public static final int umeng_share_snsservice_linkServer=0x7f0b0026;
-        public static final int umeng_share_snsservice_noNetwork=0x7f0b0029;
-        public static final int umeng_share_snsservice_oauthFailed=0x7f0b0028;
-        public static final int umeng_share_snsservice_oauthSuccessed=0x7f0b0027;
-        public static final int umeng_share_tenc=0x7f0b002c;
-        public static final int umeng_share_update_appBlocked=0x7f0b0024;
-        public static final int umeng_share_update_contentEmpty=0x7f0b001a;
-        public static final int umeng_share_update_edittext_hint=0x7f0b0017;
-        public static final int umeng_share_update_extendsSendLimit=0x7f0b0022;
-        public static final int umeng_share_update_fileNotExist=0x7f0b001f;
-        public static final int umeng_share_update_fileToLarge=0x7f0b001e;
-        public static final int umeng_share_update_imgLoadFailed=0x7f0b0019;
-        public static final int umeng_share_update_msgLengthExtendsLimit=0x7f0b0020;
-        public static final int umeng_share_update_networkUnavailable=0x7f0b0021;
-        public static final int umeng_share_update_repeated=0x7f0b001d;
-        public static final int umeng_share_update_send=0x7f0b0018;
-        public static final int umeng_share_update_uidNotExist=0x7f0b0023;
-        public static final int umeng_share_update_uneditTopic=0x7f0b001b;
-        public static final int umeng_share_update_updated=0x7f0b001c;
+        public static final int umeng_share_oauth_linkserver=0x7f0b0026;
+        public static final int umeng_share_renr=0x7f0b002b;
+        public static final int umeng_share_shareto_renr=0x7f0b0015;
+        public static final int umeng_share_shareto_sina=0x7f0b0016;
+        public static final int umeng_share_shareto_tenc=0x7f0b0017;
+        public static final int umeng_share_shareto_top=0x7f0b0014;
+        public static final int umeng_share_sina=0x7f0b002c;
+        public static final int umeng_share_snsservice_linkServer=0x7f0b0027;
+        public static final int umeng_share_snsservice_noNetwork=0x7f0b002a;
+        public static final int umeng_share_snsservice_oauthFailed=0x7f0b0029;
+        public static final int umeng_share_snsservice_oauthSuccessed=0x7f0b0028;
+        public static final int umeng_share_tenc=0x7f0b002d;
+        public static final int umeng_share_update_appBlocked=0x7f0b0025;
+        public static final int umeng_share_update_contentEmpty=0x7f0b001b;
+        public static final int umeng_share_update_edittext_hint=0x7f0b0018;
+        public static final int umeng_share_update_extendsSendLimit=0x7f0b0023;
+        public static final int umeng_share_update_fileNotExist=0x7f0b0020;
+        public static final int umeng_share_update_fileToLarge=0x7f0b001f;
+        public static final int umeng_share_update_imgLoadFailed=0x7f0b001a;
+        public static final int umeng_share_update_msgLengthExtendsLimit=0x7f0b0021;
+        public static final int umeng_share_update_networkUnavailable=0x7f0b0022;
+        public static final int umeng_share_update_repeated=0x7f0b001e;
+        public static final int umeng_share_update_send=0x7f0b0019;
+        public static final int umeng_share_update_uidNotExist=0x7f0b0024;
+        public static final int umeng_share_update_uneditTopic=0x7f0b001c;
+        public static final int umeng_share_update_updated=0x7f0b001d;
     }
     public static final class style {
         public static final int AnimationPreview=0x7f0a000a;

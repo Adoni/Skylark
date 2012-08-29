@@ -46,6 +46,11 @@ public class SettingInitialize {
 				// TODO Auto-generated method stub
 				if(arg2==0)
 				{
+					if(pop!=null && pop.isShowing())
+					{
+						pop.dismiss();
+						return;
+					}
 					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 					View popView=inflater.inflate(R.layout.pop_layout,null);
 					ListView popList=(ListView)popView.findViewById(R.id.popList);
@@ -114,6 +119,18 @@ public class SettingInitialize {
 					ListView popList=(ListView)popView.findViewById(R.id.popList);
 					MyAdapter adapter=new MyAdapter(context, iconIDs, names, false);
 					popList.setAdapter(adapter);
+					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					pop.showAsDropDown(arg1);
+				}
+				if(arg2==2)
+				{
+					if(pop!=null && pop.isShowing())
+					{
+						pop.dismiss();
+						return;
+					}
+					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+					View popView=inflater.inflate(R.layout.aboutus,null);
 					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 					pop.showAsDropDown(arg1);
 				}
