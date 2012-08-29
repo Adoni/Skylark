@@ -75,6 +75,11 @@ public class SettingInitialize {
 				}
 				if(arg2==1)
 				{
+					if(pop!=null && pop.isShowing())
+					{
+						pop.dismiss();
+						return;
+					}
 					ArrayList<Integer> icons=new ArrayList<Integer>();
 					ArrayList<String> items=new ArrayList<String>();
 					RecordTool re=new RecordTool(context);
@@ -88,11 +93,26 @@ public class SettingInitialize {
 						String item=total.substring(0, total.indexOf(';'));
 						total=total.substring(total.indexOf(';')+1);
 						items.add(item);
+						if(success.contains(item))
+						{
+							icons.add(R.drawable.ok);
+						}
+						else
+						{
+							icons.add(R.drawable.fail);
+						}
+					}
+					int[] iconIDs=new int[icons.size()];
+					String[] names=new String[icons.size()];
+					for(int i=0;i<icons.size();i++)
+					{
+						iconIDs[i]=icons.get(i);
+						names[i]=items.get(i);
 					}
 					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 					View popView=inflater.inflate(R.layout.pop_layout,null);
 					ListView popList=(ListView)popView.findViewById(R.id.popList);
-					MyAdapter adapter=new MyAdapter(context, items, false);
+					MyAdapter adapter=new MyAdapter(context, iconIDs, names, false);
 					popList.setAdapter(adapter);
 					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 					pop.showAsDropDown(arg1);

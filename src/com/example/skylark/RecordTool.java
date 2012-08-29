@@ -21,10 +21,12 @@ public class RecordTool {
 	public static String succeedName="succeed.re";
 	public static String continuousName="continuous.re";
 	public static String totalName="total.re";
+	private String blName="";
 	
-	public RecordTool(Context context,boolean isSucceed)
+	public RecordTool(Context context,boolean isSucceed, String blName)
 	{
 		this.context=context;
+		this.blName=blName;
 		if(isSucceed)
 		{
 			write_in(succeedName);
@@ -61,7 +63,7 @@ public class RecordTool {
 			String times="";
 			Time t=new Time();
 			t.setToNow();
-			times=t.year+"/"+t.month+"/"+t.monthDay+" "+t.hour+":"+t.minute+";";
+			times=blName+t.year+"/"+t.month+"/"+t.monthDay+" "+t.hour+":"+t.minute+";";
 			fout.write(times.getBytes());
 			fout.close();
 		} catch (FileNotFoundException e) {

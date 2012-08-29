@@ -84,7 +84,33 @@ public class MyAdapter extends BaseAdapter
 		this.haveACheckBox=haveACheckBox;
 		iniData();
 	}
-	
+	/*
+	public MyAdapter(Context context,ArrayList<Integer> iconIDs, ArrayList<String> names, boolean haveACheckBox)
+	{
+		Drawable d;
+		this.context=context;
+		for(int i=0;i<iconIDs.size();i++)
+		{
+			//icons[i]=context.getResources().getDrawable(iconIDs[i]);
+			//icons[i]=context.getResources().getDrawable(R.drawable.friends);
+			//Toast.makeText(context, ""+R.drawable.renren, Toast.LENGTH_LONG).show();
+			
+			int s=iconIDs.get(i);
+			
+			if(s!=0)
+			{
+				d=context.getResources().getDrawable(s);
+				icons.add(d);
+			}
+			else icons.add(context.getResources().getDrawable(R.drawable.friends));
+			//Toast.makeText(context, icons.size()+"", Toast.LENGTH_LONG).show();
+			this.names=names;
+		}
+		//this.names=names;
+		this.haveACheckBox=haveACheckBox;
+		iniData();
+	}
+	*/
 	/*
 	 * 初始化多选数组。
 	 */

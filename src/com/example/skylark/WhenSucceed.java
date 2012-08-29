@@ -66,7 +66,7 @@ public class WhenSucceed extends Activity{
 		{
 			ans=ans+min+"分钟";
 		}
-		RecordTool re=new RecordTool(WhenSucceed.this, true);
+		RecordTool re=new RecordTool(WhenSucceed.this, true, getIntent().getStringExtra("blName"));
 		ans="计划完成，本次我坚持了"+ans+"。我一共成功了"+re.getTimes("succeed.re")+"次！";
 		return ans;
 	}

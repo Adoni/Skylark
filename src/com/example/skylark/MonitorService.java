@@ -37,6 +37,7 @@ public class MonitorService extends Service{
 	private int hour;
 	private int min;
 	String snsName;
+	String blName;
 	private Timer timer;
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -59,11 +60,12 @@ public class MonitorService extends Service{
 		timer.cancel();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
-		String blName=""+intent.getStringExtra("blName");
+		blName=""+intent.getStringExtra("blName");
 		snsName=""+intent.getStringExtra("snsName");
 		hour=intent.getIntExtra("hour", 0);
 		min=intent.getIntExtra("min", 0);
@@ -160,6 +162,7 @@ public class MonitorService extends Service{
     	intent.putExtra("hour", hour);
     	intent.putExtra("min", min);
     	intent.putExtra("snsName", snsName);
+    	intent.putExtra("blName", blName);
     	intent.setClass(MonitorService.this, WhenSucceed.class);
     	startActivity(intent);
 	}
@@ -183,6 +186,7 @@ public class MonitorService extends Service{
     	intent.putExtra("min", min);
     	intent.putExtra("appName", packageName);
     	intent.putExtra("snsName", snsName);
+    	intent.putExtra("blName", blName);
     	intent.setClass(MonitorService.this, WhenFail.class);
     	startActivity(intent);
 	}

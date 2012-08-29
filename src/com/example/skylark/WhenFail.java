@@ -41,7 +41,7 @@ public class WhenFail extends Activity{
 				}
 			}
 		});
-		RecordTool re=new RecordTool(this, false);
+		RecordTool re=new RecordTool(this, false,getIntent().getStringExtra("blName"));
 		text.setText(getHowLong());
 		//stopService(new Intent())
 	}
