@@ -14,6 +14,7 @@ public abstract class BaseSampleActivity extends FragmentActivity {
     private static final Random RANDOM = new Random();
 
     TestFragmentAdapter mAdapter;
+    MyFragmentAdapter myAdapter;
     ViewPager mPager;
     PageIndicator mIndicator;
     @Override

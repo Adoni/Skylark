@@ -60,6 +60,11 @@
             android:label="@string/showBL"
             android:theme="@android:style/Theme.Dialog">
         </activity>
+        <activity 
+            android:name="com.example.ui.HelpPager"
+            android:label="Help"
+            ></activity>
+        
         <activity
             android:name=".SampleTitlesDefault"
             android:label="Titles/Triangle Style">

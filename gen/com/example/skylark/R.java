@@ -409,7 +409,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int edit=0x7f050029;
         public static final int gridView=0x7f05002c;
         public static final int image=0x7f05002a;
-        public static final int indicator=0x7f050010;
+        public static final int indicator=0x7f050011;
         public static final int main=0x7f050027;
         public static final int manageBL=0x7f050005;
         public static final int messageWhenFail=0x7f050031;
@@ -417,7 +417,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int nickName=0x7f05002b;
         public static final int none=0x7f050000;
         public static final int ok=0x7f050032;
-        public static final int pager=0x7f050011;
+        public static final int pager=0x7f050010;
         public static final int popList=0x7f05000d;
         public static final int quit=0x7f050033;
         public static final int random=0x7f050034;
@@ -462,13 +462,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pop_layout=0x7f030005;
         public static final int setting=0x7f030006;
         public static final int showbl=0x7f030007;
-        public static final int simple_titles=0x7f030008;
-        public static final int themed_titles=0x7f030009;
-        public static final int umeng_common_download_notification=0x7f03000a;
-        public static final int umeng_share_shareto=0x7f03000b;
-        public static final int umeng_share_topics=0x7f03000c;
-        public static final int umeng_share_update=0x7f03000d;
-        public static final int whenfail=0x7f03000e;
+        public static final int simple_lines=0x7f030008;
+        public static final int simple_titles=0x7f030009;
+        public static final int themed_titles=0x7f03000a;
+        public static final int umeng_common_download_notification=0x7f03000b;
+        public static final int umeng_share_shareto=0x7f03000c;
+        public static final int umeng_share_topics=0x7f03000d;
+        public static final int umeng_share_update=0x7f03000e;
+        public static final int whenfail=0x7f03000f;
     }
     public static final class menu {
         public static final int activity_main=0x7f0c0000;

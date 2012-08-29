@@ -1,12 +1,12 @@
 package com.example.ui;
 
 import java.util.ArrayList;
-
 import com.example.skylark.R;
 import com.example.skylark.RecordTool;
 
 import android.R.fraction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -116,6 +116,12 @@ public class SettingInitialize {
 					popList.setAdapter(adapter);
 					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 					pop.showAsDropDown(arg1);
+				}
+				if(arg2==3)
+				{
+					Intent intent=new Intent();
+					intent.setClass(context, HelpPager.class);
+					context.startActivity(intent);
 				}
 			}
 		});
