@@ -4,6 +4,7 @@ import android.app.Application;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
+    private static int i;
 
     public static MyApplication getInstance() {
         return instance;

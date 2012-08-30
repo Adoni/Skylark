@@ -17,6 +17,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -124,7 +125,9 @@ public class PlanInitialize{
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		
+		sns_sp.setSelection(setting.getInt("SNS", 0));
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -132,6 +135,10 @@ public class PlanInitialize{
 				// TODO Auto-generated method stub
 				String[] snsNames={"","renren","tencent","sina"};
 				snsName=snsNames[arg2];
+				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+				SharedPreferences.Editor editor=setting.edit();
+				editor.putInt("SNS", arg2);
+				editor.commit();
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {

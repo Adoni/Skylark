@@ -7,6 +7,7 @@ import com.example.skylark.RecordTool;
 import android.R.fraction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -72,6 +73,7 @@ public class SettingInitialize {
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
 							// TODO Auto-generated method stub
+								saveSetting(arg2+1);
 								pop.dismiss();
 								//pop.update();
 						}
@@ -142,6 +144,29 @@ public class SettingInitialize {
 				}
 			}
 		});
+		
+	}
+	public void saveSetting(int sns)
+	{
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		SharedPreferences.Editor editor=setting.edit();
+		editor.putInt("SNS", sns);
+		editor.commit();
+	}
+	public void showSNSSetting()
+	{
+		
+	}
+	public void showHistory()
+	{
+		
+	}
+	public void showAboutUs()
+	{
+		
+	}
+	public void showHelp()
+	{
 		
 	}
 	
