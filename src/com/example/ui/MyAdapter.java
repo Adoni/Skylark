@@ -182,10 +182,8 @@ public class MyAdapter extends BaseAdapter
 			CheckBox check=new CheckBox(context);
 			check.setChecked(isSelected.get(position));
 			check.setGravity(Gravity.CENTER_HORIZONTAL);
-			//check.setClickable(false);
 			check.setFocusable(false);
 			check.setClickable(false);
-			//check.setRight(0);
 			if(!haveACheckBox)
 			{
 				check.setVisibility(8);
