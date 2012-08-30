@@ -183,7 +183,7 @@ public class MyAdapter extends BaseAdapter
 			check.setChecked(isSelected.get(position));
 			check.setGravity(Gravity.CENTER_HORIZONTAL);
 			//check.setClickable(false);
-			check.setFocusable(isSelected.get(position));
+			check.setFocusable(false);
 			check.setClickable(false);
 			//check.setRight(0);
 			if(!haveACheckBox)
@@ -221,6 +221,10 @@ public class MyAdapter extends BaseAdapter
 	}
 	public void setIsSelected(int position)
 	{
+		if(position<0 || position>getCount())
+		{
+			return;
+		}
 		isSelected.put(position,isSelected.get(position) ^ true);
 		//check.setChecked(true);
 		//Toast.makeText(context, check.isChecked()+"", Toast.LENGTH_LONG).show();

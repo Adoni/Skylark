@@ -3,6 +3,7 @@ package com.example.ui;
 import java.util.ArrayList;
 import com.example.skylark.R;
 import com.example.skylark.RecordTool;
+import com.example.ui.MyAdapter.ViewHolder;
 
 import android.R.fraction;
 import android.content.Context;
@@ -54,28 +55,31 @@ public class SettingInitialize {
 					}
 					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 					View popView=inflater.inflate(R.layout.pop_layout,null);
-					ListView popList=(ListView)popView.findViewById(R.id.popList);
+					final ListView popList=(ListView)popView.findViewById(R.id.popList);
 					int[] icons=new int[]{R.drawable.renren,R.drawable.tencent,R.drawable.sina};
 					String[] names=new String[]{"人人网","腾讯微薄","新浪微波"};
 					MyAdapter adapter=new MyAdapter(context, icons, names, true);
+					adapter.setIsSelected(context.getSharedPreferences("Setting", 0)
+							.getInt("SNS", 0)-1);
 					popList.setAdapter(adapter);
+					popList.setItemsCanFocus(true);
 					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 					pop.showAsDropDown(arg1);
-					pop.setBackgroundDrawable(new BitmapDrawable());
+					//pop.setBackgroundDrawable(new BitmapDrawable());
 					pop.setFocusable(true);
-					pop.setOutsideTouchable(true);
+					//pop.setOutsideTouchable(true);
 					//pop.showAtLocation(arg0, 10, 100, 100);
-					Toast.makeText(context, "sdf",Toast.LENGTH_LONG).show();
-					popList.setFocusable(true);
+					//Toast.makeText(context, "sdf",Toast.LENGTH_LONG).show();
+					//popList.setFocusable(true);
 					pop.update();
 					popList.setOnItemClickListener(new OnItemClickListener() {
 
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
 							// TODO Auto-generated method stub
+							Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
 								saveSetting(arg2+1);
 								pop.dismiss();
-								//pop.update();
 						}
 					});
 					

@@ -93,7 +93,7 @@ public class DefineBlackList extends Activity {
 		MyAdapter adapter=new MyAdapter(this, icons, names, true);
 		
 		defineBL.setAdapter(adapter);
-		defineBL.setItemsCanFocus(true);
+		//defineBL.setItemsCanFocus(true);
 		defineBL.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
