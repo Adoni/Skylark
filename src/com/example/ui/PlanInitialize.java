@@ -15,6 +15,7 @@ import org.apache.http.util.EncodingUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -111,6 +112,7 @@ public class PlanInitialize{
 					return ;
 				}
 				MyApplication.getInstance().startService(intent);
+				//android.os.Process.killProcess(android.os.Process.myPid());
 			}
 		});
 		
@@ -205,6 +207,5 @@ public class PlanInitialize{
 			}
         	
 		});
-        //bl_sp.set
 	}
 }

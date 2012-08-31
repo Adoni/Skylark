@@ -137,7 +137,7 @@ public class MonitorService extends Service{
 		packageName=runningProcess.get(0).topActivity.getPackageName();
 		if(appNames.contains(packageName))
 		{
-			fail(packageName);
+			//fail(packageName);
 			//am.killBackgroundProcesses(packageName);
 			return false;
 		}

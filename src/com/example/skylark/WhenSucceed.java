@@ -41,6 +41,7 @@ public class WhenSucceed extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				WhenSucceed.this.finish();
 			}
 		});
 		text.setText(getHowLong());

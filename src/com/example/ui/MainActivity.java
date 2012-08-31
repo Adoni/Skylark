@@ -74,8 +74,9 @@ public class MainActivity extends BaseSampleActivity {
 		//Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
 		Intent intent=new Intent("com.example.skylark.monitorservice");
 		stopService(intent);
-		finish();
+		
 		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+		finish();
 		return super.onOptionsItemSelected(item);
 	}
 	@Override

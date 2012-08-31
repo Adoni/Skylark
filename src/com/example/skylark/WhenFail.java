@@ -39,7 +39,9 @@ public class WhenFail extends Activity{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				WhenFail.this.finish();
 			}
+			
 		});
 		RecordTool re=new RecordTool(this, false,getIntent().getStringExtra("blName"));
 		text.setText(getHowLong());
