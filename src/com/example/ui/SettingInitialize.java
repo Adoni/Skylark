@@ -1,16 +1,23 @@
 package com.example.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.example.skylark.R;
 import com.example.skylark.RecordTool;
 import com.example.ui.MyAdapter.ViewHolder;
+import com.umeng.api.exp.UMSNSException;
+import com.umeng.api.sns.UMSnsService;
+import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 import android.R.fraction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -73,13 +80,50 @@ public class SettingInitialize {
 					//popList.setFocusable(true);
 					pop.update();
 					popList.setOnItemClickListener(new OnItemClickListener() {
-
+						
 						public void onItemClick(AdapterView<?> arg0, View arg1,
 								int arg2, long arg3) {
 							// TODO Auto-generated method stub
 							Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
-								saveSetting(arg2+1);
-								pop.dismiss();
+							saveSetting(arg2+1);
+							pop.dismiss();
+							//HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
+							ArrayList<SHARE_TO> Name=new ArrayList<UMSnsService.SHARE_TO>();
+							Name.add(SHARE_TO.RENR);
+							Name.add(SHARE_TO.TENC);
+							Name.add(SHARE_TO.SINA);
+						//	Name.put("renren", SHARE_TO.RENR);
+						//	Name.put("tencent", SHARE_TO.TENC);
+						//	Name.put("sina",SHARE_TO.SINA);
+							if(!UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(arg2)))
+							{
+								UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+							        public void onComplete(Bundle value, SHARE_TO platform) {
+							        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
+							        }
+							        public void onError(UMSNSException e, SHARE_TO platform) {
+							        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
+							        	//
+							        }
+								};
+								
+								Log.v("my","fore");
+								if(arg2==0)
+								{
+									//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+									UMSnsService.oauthRenr(context, listener);
+									Log.v("my","renren");
+								}
+								if(arg2==1)
+								{
+									UMSnsService.oauthTenc(context, listener);
+								}
+								if(arg2==2)
+								{
+									UMSnsService.oauthSina(context, listener);
+								}
+								return ;
+							}
 						}
 					});
 					
