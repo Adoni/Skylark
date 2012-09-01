@@ -185,18 +185,29 @@ public class PlanInitialize{
 		MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), names,false);
 		bl_sp.setAdapter(adapter);
 		bl_sp.setSelection(0, true);
+		//bl_sp.setSelection(2);
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		bl_sp.setSelection(setting.getInt("BL", 0));
         bl_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
+				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+					SharedPreferences.Editor editor=setting.edit();
+					editor.putInt("BL", arg2);
+					editor.commit();
 				if(arg2==arg0.getCount()-1)
 				{
 					Intent intent=new Intent();
 					intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
 					fragment.startActivity(intent);
 				}
-				else blName=names.get(arg2);
+				else 
+				{
+					blName=names.get(arg2);
+					
+				}
 			}
 
 			public void onNothingSelected(AdapterView<?> arg0) {
