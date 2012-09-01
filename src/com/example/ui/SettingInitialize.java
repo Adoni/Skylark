@@ -18,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -55,140 +56,19 @@ public class SettingInitialize {
 				// TODO Auto-generated method stub
 				if(arg2==0)
 				{
-					if(pop!=null && pop.isShowing())
-					{
-						pop.dismiss();
-						return;
-					}
-					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-					View popView=inflater.inflate(R.layout.pop_layout,null);
-					final ListView popList=(ListView)popView.findViewById(R.id.popList);
-					int[] icons=new int[]{R.drawable.renren,R.drawable.tencent,R.drawable.sina};
-					String[] names=new String[]{"人人网","腾讯微薄","新浪微波"};
-					MyAdapter adapter=new MyAdapter(context, icons, names, true);
-					adapter.setIsSelected(context.getSharedPreferences("Setting", 0)
-							.getInt("SNS", 0)-1);
-					popList.setAdapter(adapter);
-					popList.setItemsCanFocus(true);
-					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					pop.showAsDropDown(arg1);
-					//pop.setBackgroundDrawable(new BitmapDrawable());
-					pop.setFocusable(true);
-					//pop.setOutsideTouchable(true);
-					//pop.showAtLocation(arg0, 10, 100, 100);
-					//Toast.makeText(context, "sdf",Toast.LENGTH_LONG).show();
-					//popList.setFocusable(true);
-					pop.update();
-					popList.setOnItemClickListener(new OnItemClickListener() {
-						
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
-							saveSetting(arg2+1);
-							pop.dismiss();
-							//HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
-							ArrayList<SHARE_TO> Name=new ArrayList<UMSnsService.SHARE_TO>();
-							Name.add(SHARE_TO.RENR);
-							Name.add(SHARE_TO.TENC);
-							Name.add(SHARE_TO.SINA);
-						//	Name.put("renren", SHARE_TO.RENR);
-						//	Name.put("tencent", SHARE_TO.TENC);
-						//	Name.put("sina",SHARE_TO.SINA);
-							if(!UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(arg2)))
-							{
-								UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
-							        public void onComplete(Bundle value, SHARE_TO platform) {
-							        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
-							        }
-							        public void onError(UMSNSException e, SHARE_TO platform) {
-							        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
-							        	//
-							        }
-								};
-								
-								Log.v("my","fore");
-								if(arg2==0)
-								{
-									//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
-									UMSnsService.oauthRenr(context, listener);
-									Log.v("my","renren");
-								}
-								if(arg2==1)
-								{
-									UMSnsService.oauthTenc(context, listener);
-								}
-								if(arg2==2)
-								{
-									UMSnsService.oauthSina(context, listener);
-								}
-								return ;
-							}
-						}
-					});
-					
+					showSNSSetting(arg1, arg2);
 				}
 				if(arg2==1)
 				{
-					if(pop!=null && pop.isShowing())
-					{
-						pop.dismiss();
-						return;
-					}
-					ArrayList<Integer> icons=new ArrayList<Integer>();
-					ArrayList<String> items=new ArrayList<String>();
-					RecordTool re=new RecordTool(context);
-					String total=""+re.getRecord(RecordTool.totalName);
-					String success=re.getRecord(RecordTool.succeedName);
-					String fail=re.getRecord(RecordTool.failName);
-				//	Toast.makeText(context, total+success, Toast.LENGTH_LONG).show();
-					
-					while(total.length()>0)
-					{
-						String item=total.substring(0, total.indexOf(';'));
-						total=total.substring(total.indexOf(';')+1);
-						items.add(item);
-						if(success.contains(item))
-						{
-							icons.add(R.drawable.ok);
-						}
-						else
-						{
-							icons.add(R.drawable.fail);
-						}
-					}
-					int[] iconIDs=new int[icons.size()];
-					String[] names=new String[icons.size()];
-					for(int i=0;i<icons.size();i++)
-					{
-						iconIDs[i]=icons.get(i);
-						names[i]=items.get(i);
-					}
-					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-					View popView=inflater.inflate(R.layout.pop_layout,null);
-					ListView popList=(ListView)popView.findViewById(R.id.popList);
-					MyAdapter adapter=new MyAdapter(context, iconIDs, names, false);
-					popList.setAdapter(adapter);
-					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					pop.showAsDropDown(arg1);
+					showHistory(arg1, arg2);
 				}
 				if(arg2==2)
 				{
-					if(pop!=null && pop.isShowing())
-					{
-						pop.dismiss();
-						return;
-					}
-					LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-					View popView=inflater.inflate(R.layout.aboutus,null);
-					pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					pop.showAsDropDown(arg1);
+					showAboutUs(arg1, arg2);
 				}
 				if(arg2==3)
 				{
-					Intent intent=new Intent();
-					intent.setClass(context, HelpPager.class);
-					context.startActivity(intent);
+					showHelp(arg1, arg2);
 				}
 			}
 		});
@@ -201,21 +81,142 @@ public class SettingInitialize {
 		editor.putInt("SNS", sns);
 		editor.commit();
 	}
-	public void showSNSSetting()
+	public void showSNSSetting(View arg1, int arg2)
 	{
-		
+		if(pop!=null && pop.isShowing())
+		{
+			pop.dismiss();
+			return;
+		}
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		View popView=inflater.inflate(R.layout.pop_layout,null);
+		final ListView popList=(ListView)popView.findViewById(R.id.popList);
+		int[] icons=new int[]{R.drawable.renren,R.drawable.tencent,R.drawable.sina};
+		String[] names=new String[]{"人人网","腾讯微薄","新浪微波"};
+		MyAdapter adapter=new MyAdapter(context, icons, names, true);
+		adapter.setIsSelected(context.getSharedPreferences("Setting", 0)
+				.getInt("SNS", 0)-1);
+		popList.setAdapter(adapter);
+		popList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
+				saveSetting(arg2+1);
+				pop.dismiss();
+				ArrayList<SHARE_TO> Name=new ArrayList<UMSnsService.SHARE_TO>();
+				Name.add(SHARE_TO.RENR);
+				Name.add(SHARE_TO.TENC);
+				Name.add(SHARE_TO.SINA);
+				if(!UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(arg2)))
+				{
+					UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+				        public void onComplete(Bundle value, SHARE_TO platform) {
+				        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
+				        }
+				        public void onError(UMSNSException e, SHARE_TO platform) {
+				        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
+				        	//
+				        }
+					};
+					
+					Log.v("my","fore");
+					if(arg2==0)
+					{
+						//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+						UMSnsService.oauthRenr(context, listener);
+						Log.v("my","renren");
+					}
+					if(arg2==1)
+					{
+						UMSnsService.oauthTenc(context, listener);
+					}
+					if(arg2==2)
+					{
+						UMSnsService.oauthSina(context, listener);
+					}
+					return ;
+				}
+			}
+		});
+		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		pop.showAsDropDown(arg1);
+		pop.setBackgroundDrawable(new BitmapDrawable());
+		pop.setFocusable(true);
 	}
-	public void showHistory()
+	public void showHistory(View arg1, int arg2)
 	{
+		if(pop!=null && pop.isShowing())
+		{
+			pop.dismiss();
+			return;
+		}
+		ArrayList<Integer> icons=new ArrayList<Integer>();
+		ArrayList<String> items=new ArrayList<String>();
+		RecordTool re=new RecordTool(context);
+		String total=""+re.getRecord(RecordTool.totalName);
+		String success=re.getRecord(RecordTool.succeedName);
+		String fail=re.getRecord(RecordTool.failName);
+	//	Toast.makeText(context, total+success, Toast.LENGTH_LONG).show();
 		
+		while(total.length()>0)
+		{
+			String item=total.substring(0, total.indexOf(';'));
+			total=total.substring(total.indexOf(';')+1);
+			items.add(item);
+			if(success.contains(item))
+			{
+				icons.add(R.drawable.ok);
+			}
+			else
+			{
+				icons.add(R.drawable.fail);
+			}
+		}
+		int[] iconIDs=new int[icons.size()];
+		String[] names=new String[icons.size()];
+		for(int i=0;i<icons.size();i++)
+		{
+			iconIDs[i]=icons.get(i);
+			names[i]=items.get(i);
+		}
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		View popView=inflater.inflate(R.layout.pop_layout,null);
+		ListView popList=(ListView)popView.findViewById(R.id.popList);
+		MyAdapter adapter=new MyAdapter(context, iconIDs, names, false);
+		popList.setAdapter(adapter);
+		popList.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				pop.dismiss();
+			}
+		});
+		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		pop.setBackgroundDrawable(new BitmapDrawable());
+		pop.setFocusable(true);
+		pop.setOutsideTouchable(true);
+		pop.showAsDropDown(arg1);
 	}
-	public void showAboutUs()
+	public void showAboutUs(View arg1, int arg2)
 	{
-		
+		if(pop!=null && pop.isShowing())
+		{
+			pop.dismiss();
+			return;
+		}
+		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		View popView=inflater.inflate(R.layout.aboutus,null);
+		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		//pop.showAsDropDown(arg1);
+		pop.showAtLocation(view, Gravity.CENTER, 0, 0);
 	}
-	public void showHelp()
+	public void showHelp(View arg1, int arg2)
 	{
-		
+		Intent intent=new Intent();
+		intent.setClass(context, HelpPager.class);
+		context.startActivity(intent);
 	}
 	
 }
