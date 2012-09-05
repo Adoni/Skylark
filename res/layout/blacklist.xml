@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     <ListView 
         android:id="@+id/BLList"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:divider="@drawable/divider"
         android:dividerHeight="12px"

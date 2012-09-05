@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -140,9 +141,10 @@ public class SettingInitialize {
 			}
 		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		pop.showAsDropDown(arg1);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
+		pop.setOutsideTouchable(true);
+		pop.showAsDropDown(arg1);
 	}
 	public void showHistory(View arg1, int arg2)
 	{
@@ -208,8 +210,17 @@ public class SettingInitialize {
 		}
 		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View popView=inflater.inflate(R.layout.aboutus,null);
+		popView.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				pop.dismiss();
+			}
+		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		//pop.showAsDropDown(arg1);
+		pop.setBackgroundDrawable(new BitmapDrawable());
+		pop.setFocusable(true);
+		pop.setOutsideTouchable(true);
 		pop.showAtLocation(view, Gravity.CENTER, 0, 0);
 	}
 	public void showHelp(View arg1, int arg2)

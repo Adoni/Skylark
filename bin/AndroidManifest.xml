@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
+    <uses-permission android:name="android.permission.DEVICE_POWER"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -70,6 +72,10 @@
             android:label="Titles/Triangle Style">
         </activity>
         
+        <activity 
+            android:name=".SilenceMode"
+            ></activity>
+        
         <service 
             android:name=".MonitorService">
             <intent-filter>
@@ -90,7 +96,20 @@
                    android:screenOrientation="unspecified"
                    android:configChanges="orientation|keyboardHidden">
         </activity>
-
+		<receiver
+            android:name=".AdminReceiver"
+            android:description="@string/description"
+            android:label="@string/labelValue"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            >
+             <meta-data 
+                android:name="android.app.device_admin"
+				android:resource="@xml/lock_screen"/>
+			<intent-filter>
+				<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+			</intent-filter>
+            
+        </receiver>
     <meta-data android:value="4f7046375270156912000011" android:name="UMENG_APPKEY"></meta-data>
     </application>
 

@@ -16,11 +16,17 @@ import org.apache.http.util.EncodingUtils;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,68 +73,105 @@ public class PlanInitialize{
 			@SuppressLint("NewApi")
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(blName.equals(""))
-				{
-					Toast.makeText(context, "请选择黑名单", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				//startButton.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.friends));
-				Intent intent=new Intent("com.example.skylark.monitorservice");
-				intent.putExtra("blName", blName);
-				intent.putExtra("snsName", snsName);
-				intent.putExtra("hour", tp.getCurrentHour());
-				intent.putExtra("min", tp.getCurrentMinute());
-				HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
-				Name.put("renren", SHARE_TO.RENR);
-				Name.put("tencent", SHARE_TO.TENC);
-				Name.put("sina",SHARE_TO.SINA);
-				if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
-				{
-					UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
-				        public void onComplete(Bundle value, SHARE_TO platform) {
-				        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
-				        }
-				        public void onError(UMSNSException e, SHARE_TO platform) {
-				        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
-				        	//
-				        }
-					};
-					
-					Log.v("my","fore");
-					if(snsName.equals("renren"))
-					{
-						//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
-						UMSnsService.oauthRenr(context, listener);
-						Log.v("my","renren");
-					}
-					if(snsName.equals("tencent"))
-					{
-						UMSnsService.oauthTenc(context, listener);
-					}
-					if(snsName.equals("sina"))
-					{
-						UMSnsService.oauthSina(context, listener);
-					}
-					return ;
-				}
-				MyApplication.getInstance().startService(intent);
-				//android.os.Process.killProcess(android.os.Process.myPid());
+				startMonitor();
 			}
 		});
-		
+		((Button)view.findViewById(R.id.silenceMode)).setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				startSilenceMode();
+			}
+		});
 	}
-
+	private void startMonitor()
+	{
+		if(blName.equals(""))
+		{
+			Toast.makeText(context, "请选择黑名单", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		//startButton.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.friends));
+		Intent intent=new Intent("com.example.skylark.monitorservice");
+		intent.putExtra("blName", blName);
+		intent.putExtra("snsName", snsName);
+		intent.putExtra("hour", tp.getCurrentHour());
+		intent.putExtra("min", tp.getCurrentMinute());
+		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
+		Name.put("renren", SHARE_TO.RENR);
+		Name.put("tencent", SHARE_TO.TENC);
+		Name.put("sina",SHARE_TO.SINA);
+		if(!snsName.equals("") && !UMSnsService.isAuthorized(MyApplication.getInstance(), Name.get(snsName)))
+		{
+			UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
+		        public void onComplete(Bundle value, SHARE_TO platform) {
+		        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
+		        }
+		        public void onError(UMSNSException e, SHARE_TO platform) {
+		        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
+		        	//
+		        }
+			};
+			
+			Log.v("my","fore");
+			if(snsName.equals("renren"))
+			{
+				//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
+				UMSnsService.oauthRenr(context, listener);
+				Log.v("my","renren");
+			}
+			if(snsName.equals("tencent"))
+			{
+				UMSnsService.oauthTenc(context, listener);
+			}
+			if(snsName.equals("sina"))
+			{
+				UMSnsService.oauthSina(context, listener);
+			}
+			return ;
+		}
+		MyApplication.getInstance().startService(intent);
+		//android.os.Process.killProcess(android.os.Process.myPid());
+	}
+	
+	private void startSilenceMode()
+	{
+		new AlertDialog.Builder(context)
+		.setTitle("静默模式")
+		.setMessage("确定要开始静默模式吗？静默模式下你将无法使用手机，否则此次尝试就会失败")
+		.setPositiveButton("是", new DialogInterface.OnClickListener() {
+			
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+				ComponentName componentName = new ComponentName(context, AdminReceiver.class);
+				if(dpm.isAdminActive(componentName))
+				{
+					dpm.lockNow();
+				}
+				else
+				{
+					Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+			        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+			        ((Activity) context).startActivityForResult(intent, 0);
+				}
+			}
+		})
+		.setNegativeButton("否",null)
+		.show();
+	}
 	/*
 	 * 用以初始化SNS Spinner
 	 */
 	private void iniSNS()
 	{
+		String[] snsNames={"","renren","tencent","sina"};
+		int position=context.getSharedPreferences("Setting", 0).getInt("SNS", 0);
+		snsName=snsNames[position];
 		MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), 
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
 		sns_sp.setAdapter(adapter);
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-		
 		sns_sp.setSelection(setting.getInt("SNS", 0));
         sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -187,7 +230,12 @@ public class PlanInitialize{
 		bl_sp.setSelection(0, true);
 		//bl_sp.setSelection(2);
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-		bl_sp.setSelection(setting.getInt("BL", 0));
+		
+		if(!(setting.getInt("BL",0)==names.size()-1))
+		{
+			bl_sp.setSelection(setting.getInt("BL", 0));
+			blName=names.get(setting.getInt("BL",0));
+		}
         bl_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			public void onItemSelected(AdapterView<?> arg0, View arg1,

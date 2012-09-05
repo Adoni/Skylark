@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -52,6 +53,7 @@ public class MainActivity extends BaseSampleActivity {
 				if(pop!=null && pop.isShowing())
 				{
 					pop.dismiss();
+					Toast.makeText(MainActivity.this, "fafa", Toast.LENGTH_LONG).show();
 				}
 				return false;
 			}
@@ -60,7 +62,6 @@ public class MainActivity extends BaseSampleActivity {
         indicator.setViewPager(mPager);
         indicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
         mIndicator = indicator;
-        pop=new PopupWindow(MainActivity.this.getLayoutInflater().inflate(R.layout.pop_layout, null));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
