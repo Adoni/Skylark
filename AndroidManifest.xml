@@ -75,7 +75,8 @@
         <activity 
             android:name=".SilenceMode"
             ></activity>
-        
+        <activity 
+            android:name=".StartCountdown"></activity>
         <service 
             android:name=".MonitorService">
             <intent-filter>

@@ -59,12 +59,9 @@ public class PlanInitialize{
 	}
 	public void iniPlan() {
 		// TODO Auto-generated method stub
-		
-		tp=(TimePicker)view.findViewById(R.id.tp);
-		tp.setIs24HourView(true);
-		
 		sns_sp=(Spinner)view.findViewById(R.id.sns_sp);
 		bl_sp=(Spinner)view.findViewById(R.id.bl_sp);
+		iniTime();
 		iniSNS();
 		iniBL();
 		startButton=(Button)view.findViewById(R.id.start);
@@ -83,6 +80,7 @@ public class PlanInitialize{
 			}
 		});
 	}
+	
 	private void startMonitor()
 	{
 		if(blName.equals(""))
@@ -96,6 +94,12 @@ public class PlanInitialize{
 		intent.putExtra("snsName", snsName);
 		intent.putExtra("hour", tp.getCurrentHour());
 		intent.putExtra("min", tp.getCurrentMinute());
+		
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		SharedPreferences.Editor editor=setting.edit();
+		editor.putInt("Hour", tp.getCurrentHour());
+		editor.putInt("Min",tp.getCurrentMinute());
+		editor.commit();
 		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
 		Name.put("renren", SHARE_TO.RENR);
 		Name.put("tencent", SHARE_TO.TENC);
@@ -158,6 +162,15 @@ public class PlanInitialize{
 		})
 		.setNegativeButton("否",null)
 		.show();
+	}
+	
+	private void iniTime()
+	{
+		tp=(TimePicker)view.findViewById(R.id.tp);
+		tp.setIs24HourView(true);
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		tp.setCurrentHour(setting.getInt("Hour", tp.getCurrentHour()));
+		tp.setCurrentMinute(setting.getInt("Min", tp.getCurrentMinute()));
 	}
 	/*
 	 * 用以初始化SNS Spinner
