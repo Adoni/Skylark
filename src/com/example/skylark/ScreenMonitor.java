@@ -1,3 +1,6 @@
+/*
+ * 检测屏幕状态
+ */
 package com.example.skylark;
 import java.lang.reflect.Method;  
 

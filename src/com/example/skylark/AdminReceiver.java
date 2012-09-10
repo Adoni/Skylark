@@ -1,3 +1,6 @@
+/*
+ * 用于获取设备使用权限
+ */
 package com.example.skylark;
 
 import android.app.admin.DeviceAdminReceiver;

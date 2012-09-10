@@ -133,7 +133,7 @@ public class PlanInitialize{
 			}
 			return ;
 		}
-		MyApplication.getInstance().startService(intent);
+		context.startService(intent);
 		//android.os.Process.killProcess(android.os.Process.myPid());
 	}
 	
@@ -148,16 +148,16 @@ public class PlanInitialize{
 				// TODO Auto-generated method stub
 				DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 				ComponentName componentName = new ComponentName(context, AdminReceiver.class);
-				if(dpm.isAdminActive(componentName))
-				{
-					dpm.lockNow();
-				}
-				else
+				if(!dpm.isAdminActive(componentName))
 				{
 					Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
 			        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
 			        ((Activity) context).startActivityForResult(intent, 0);
+					
 				}
+				dpm.lockNow();
+				Intent intent=new Intent("com.example.skylark.silencemode");
+				context.startService(intent);
 			}
 		})
 		.setNegativeButton("否",null)

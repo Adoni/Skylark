@@ -84,6 +84,13 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
+        <service 
+            android:name=".SilenceMode">
+            <intent-filter>
+                <action android:name="com.example.skylark.silencemode"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
         
         <activity android:name="com.umeng.api.activity.OauthActivity"
                   android:screenOrientation="unspecified"
