@@ -116,7 +116,11 @@
 			<intent-filter>
 				<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
 			</intent-filter>
-            
+        </receiver>
+        <receiver android:name="AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.alarm.demo.action" />
+            </intent-filter>
         </receiver>
     <meta-data android:value="4f7046375270156912000011" android:name="UMENG_APPKEY"></meta-data>
     </application>

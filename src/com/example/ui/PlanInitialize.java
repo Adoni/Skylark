@@ -157,7 +157,16 @@ public class PlanInitialize{
 				}
 				dpm.lockNow();
 				Intent intent=new Intent("com.example.skylark.silencemode");
+				intent.putExtra("hour", tp.getCurrentHour());
+				intent.putExtra("min", tp.getCurrentMinute());
+				
+				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+				SharedPreferences.Editor editor=setting.edit();
+				editor.putInt("Hour", tp.getCurrentHour());
+				editor.putInt("Min",tp.getCurrentMinute());
+				editor.commit();
 				context.startService(intent);
+				
 			}
 		})
 		.setNegativeButton("否",null)
