@@ -243,6 +243,7 @@ public class PlanInitialize{
 					}
 				});
 				pop=new PopupWindow(snsPopView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				pop.setAnimationStyle(R.style.myAnimationPreview);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);
@@ -328,7 +329,7 @@ public class PlanInitialize{
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
 				pop=new PopupWindow(blPopView,width*6/7, height*5/7);
-//				pop=new PopupWindow(blPopView, 100, 100);
+				pop.setAnimationStyle(R.style.myAnimationPreview);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);

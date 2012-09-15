@@ -9,8 +9,9 @@ package com.viewpagerindicator;
 
 public final class R {
     public static final class anim {
-        public static final int umeng_share_popup_enter=0x7f040000;
-        public static final int umeng_share_popup_exit=0x7f040001;
+        public static final int my_anim_enter=0x7f040000;
+        public static final int umeng_share_popup_enter=0x7f040001;
+        public static final int umeng_share_popup_exit=0x7f040002;
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -545,7 +546,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int umeng_share_update_updated=0x7f0c0020;
     }
     public static final class style {
-        public static final int AnimationPreview=0x7f0b000a;
         public static final int CustomCirclePageIndicator=0x7f0b0007;
         public static final int CustomLinePageIndicator=0x7f0b0006;
         public static final int CustomTabPageIndicator=0x7f0b0008;
@@ -558,6 +558,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Theme_PageIndicatorDefaults=0x7f0b0000;
         public static final int Widget=0x7f0b0001;
         public static final int Widget_TabPageIndicator=0x7f0b0002;
+        public static final int myAnimationPreview=0x7f0b000a;
     }
     public static final class xml {
         public static final int lock_screen=0x7f050000;

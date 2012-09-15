@@ -219,6 +219,7 @@ public class SettingInitialize {
 			}
 		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		pop.setAnimationStyle(R.style.myAnimationPreview);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);
