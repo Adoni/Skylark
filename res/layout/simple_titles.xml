@@ -18,19 +18,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" xmlns:app="http://schemas.android.com/apk/res/com.example.skylark">
 
     <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/indicator"
         android:padding="10dip"
         android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
+        android:textSize="18dp"
+        android:background="@drawable/main_bg"
+        app:footerLineHeight="2dp"
+        app:footerIndicatorHeight="6dp"
         />
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/main_bg"
         />
 
 </LinearLayout>

@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    >
     <ListView 
         android:id="@+id/BLList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="@drawable/divider"
-        android:dividerHeight="12px"
         android:layout_weight="1"
+        android:cacheColorHint="#00000000"
         ></ListView>
     <LinearLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +21,7 @@
         <Button
 	         android:id="@+id/addBL"
 	         android:layout_width="wrap_content"
-	         android:layout_height="wrap_content"
+	         android:layout_height="fill_parent"
 	         android:text="@string/addBL"
 	         android:textSize="23dip" 
 	         android:layout_weight="1"/>
@@ -29,7 +29,7 @@
 		 <Button
 		     android:id="@+id/manageBL"
 		     android:layout_width="wrap_content"
-		     android:layout_height="wrap_content"
+		     android:layout_height="fill_parent"
 		     android:text="@string/manageBL"
 		     android:textSize="23dip" 
 		     android:layout_weight="1"/>

@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/main_bg">
 
     <ListView
         android:id="@+id/defineBL"
         android:layout_width="fill_parent"
-        android:layout_height="360dp" >
+        android:layout_height="360dp" 
+        android:cacheColorHint="#00000000">
     </ListView>
 
     <LinearLayout 
@@ -27,8 +29,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:freezesText="true" />
-
-	    </LinearLayout>
+	 </LinearLayout>
 
     <Button
         android:id="@+id/saveDefine"

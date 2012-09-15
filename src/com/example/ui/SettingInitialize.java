@@ -193,6 +193,7 @@ public class SettingInitialize {
 					long arg3) {
 				// TODO Auto-generated method stub
 				pop.dismiss();
+				Toast.makeText(context, "asdfg", Toast.LENGTH_SHORT).show();
 			}
 		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

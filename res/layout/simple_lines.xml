@@ -25,6 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/main_bg"
         />
     <com.viewpagerindicator.LinePageIndicator
         android:id="@+id/indicator"

@@ -54,7 +54,7 @@ public final class TestFragment extends Fragment {
         //return inflater.inflate(layout,container,false);
 		if(layout==R.layout.plan)
 		{
-			PlanInitialize plan=new PlanInitialize(ans,this,context);
+			PlanInitialize plan=new PlanInitialize(ans,this,context,pop);
 			plan.iniPlan();
 		}
 		if(layout==R.layout.blacklist)

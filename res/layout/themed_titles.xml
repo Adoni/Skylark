@@ -19,7 +19,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" xmlns:app1="http://schemas.android.com/apk/res/com.example.skylark">
 
     <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/indicator"
@@ -32,8 +32,9 @@
         app:footerLineHeight="1dp"
         app:footerIndicatorHeight="3dp"
         app:footerIndicatorStyle="underline"
-        app:selectedColor="#FF000000"
+        app:selectedColor="#FFeeeeee"
         app:selectedBold="true"
+        
         />
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

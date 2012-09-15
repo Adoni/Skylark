@@ -24,15 +24,24 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -43,24 +52,31 @@ import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 public class PlanInitialize{
 	TimePicker tp;
-	Spinner sns_sp,bl_sp;
+//	Spinner sns_sp,bl_sp;
+	Button sns_sp,bl_sp;
 	Button startButton;
 	String snsName="";
 	String blName="";
 	TestFragment fragment;
 	Context context;
 	View view;
-	public PlanInitialize(View view, TestFragment fragment,Context context)
+	private PopupWindow pop;
+	public PlanInitialize(View view, TestFragment fragment,Context context,PopupWindow pop)
 	{
 		this.view=view;
 		this.fragment=fragment;
 		//this.context=MyApplication.getInstance();
 		this.context=context;
+		this.pop=pop;
 	}
 	public void iniPlan() {
 		// TODO Auto-generated method stub
+		/*
 		sns_sp=(Spinner)view.findViewById(R.id.sns_sp);
 		bl_sp=(Spinner)view.findViewById(R.id.bl_sp);
+		*/
+		sns_sp=(Button)view.findViewById(R.id.sns_sp);
+		bl_sp=(Button)view.findViewById(R.id.bl_sp);
 		iniTime();
 		iniSNS();
 		iniBL();
@@ -186,33 +202,58 @@ public class PlanInitialize{
 	 */
 	private void iniSNS()
 	{
+		if(pop!=null && pop.isShowing())
+		{
+			pop.dismiss();
+			return;
+		}
 		String[] snsNames={"","renren","tencent","sina"};
 		int position=context.getSharedPreferences("Setting", 0).getInt("SNS", 0);
 		snsName=snsNames[position];
-		MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), 
+		sns_sp.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(pop!=null && pop.isShowing())
+				{
+					pop.dismiss();
+					return;
+				}
+				LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+				View snsPopView=inflater.inflate(R.layout.sns_pop,null);
+				ListView snsList=(ListView)snsPopView.findViewById(R.id.sns_list);
+				MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), 
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
 				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
-		sns_sp.setAdapter(adapter);
-		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-		sns_sp.setSelection(setting.getInt("SNS", 0));
-        sns_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
+				snsList.setAdapter(adapter);
+				snsList.setOnItemClickListener(new OnItemClickListener() {
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				String[] snsNames={"","renren","tencent","sina"};
-				snsName=snsNames[arg2];
-				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-				SharedPreferences.Editor editor=setting.edit();
-				editor.putInt("SNS", arg2);
-				editor.commit();
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						String[] snsNames={"","renren","tencent","sina"};
+						snsName=snsNames[arg2];
+						SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+						SharedPreferences.Editor editor=setting.edit();
+						editor.putInt("SNS", arg2);
+						editor.commit();
+						pop.dismiss();
+						int[] snsBgs=new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina};
+						sns_sp.setBackgroundResource(snsBgs[setting.getInt("SNS", 0)]);
+					}
+				});
+				pop=new PopupWindow(snsPopView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				pop.setBackgroundDrawable(new BitmapDrawable());
+				pop.setFocusable(true);
+				pop.setOutsideTouchable(true);
+				//pop.showAsDropDown(v);
+				pop.showAtLocation(view, Gravity.CENTER, 0, 0);
 			}
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-			}
-        	
 		});
+		int[] snsBgs=new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina};
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		sns_sp.setBackgroundResource(snsBgs[setting.getInt("SNS", 0)]);
+        
 	}
 	
 	/*
@@ -228,18 +269,18 @@ public class PlanInitialize{
 		try {
 			fin = MyApplication.getInstance().openFileInput(MyApplication.getInstance().getResources().getString(R.string.blListNames));
 			int length = fin.available();   
-        byte [] buffer = new byte[length];   
-        fin.read(buffer);       
-        blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
-        fin.close();  
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    byte [] buffer = new byte[length];   
+		    fin.read(buffer);       
+		    blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
+		    fin.close();  
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 		}
-		
+				
 		while(blNames.length()>0)
 		{
 			String name=blNames.substring(0,blNames.indexOf(" "));
@@ -247,46 +288,57 @@ public class PlanInitialize{
 			blNames=blNames.substring(blNames.indexOf(" ")+1);
 		}
 		names.add("自定义");
-		MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), names,false);
-		bl_sp.setAdapter(adapter);
-		bl_sp.setSelection(0, true);
+				
+		bl_sp.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				
+				MyAdapter adapter=new MyAdapter(context, names,false);
+				LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+				View blPopView=inflater.inflate(R.layout.sns_pop,null);
+				ListView blList=(ListView)blPopView.findViewById(R.id.sns_list);
+				blList.setAdapter(adapter);
+				blList.setOnItemClickListener(new OnItemClickListener() {
+					
+					public void onItemClick(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						// TODO Auto-generated method stub
+						SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+						SharedPreferences.Editor editor=setting.edit();
+						editor.putInt("BL", arg2);
+						editor.commit();
+						if(arg2==arg0.getCount()-1)
+						{
+							Intent intent=new Intent();
+							intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
+							fragment.startActivity(intent);
+						}
+						else 
+						{
+							blName=names.get(arg2);
+							
+						}
+						pop.dismiss();
+						bl_sp.setText(blName);
+					}
+				});
+				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
+				int height = wm.getDefaultDisplay().getHeight();
+				pop=new PopupWindow(blPopView,width*6/7, height*5/7);
+//				pop=new PopupWindow(blPopView, 100, 100);
+				pop.setBackgroundDrawable(new BitmapDrawable());
+				pop.setFocusable(true);
+				pop.setOutsideTouchable(true);
+				pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+			}
+		});
+		
 		//bl_sp.setSelection(2);
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-		
-		if(!(setting.getInt("BL",0)==names.size()-1))
-		{
-			bl_sp.setSelection(setting.getInt("BL", 0));
-			blName=names.get(setting.getInt("BL",0));
-		}
-        bl_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-					SharedPreferences.Editor editor=setting.edit();
-					editor.putInt("BL", arg2);
-					editor.commit();
-				if(arg2==arg0.getCount()-1)
-				{
-					Intent intent=new Intent();
-					intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
-					fragment.startActivity(intent);
-				}
-				else 
-				{
-					blName=names.get(arg2);
-					
-				}
-			}
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				Intent intent=new Intent();
-				intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
-				fragment.startActivity(intent);
-			}
-        	
-		});
+		bl_sp.setText(names.get(setting.getInt("BL", 0)));
+		blName=names.get(setting.getInt("BL", 0));
 	}
 }

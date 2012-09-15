@@ -168,6 +168,8 @@ public class MyAdapter extends BaseAdapter
 			icon.setImageDrawable(icons.get(position));
 			icon.setLayoutParams(new ViewGroup.LayoutParams(60,60));
 			ll.addView(icon);
+//			icon.setLeft(100);
+//			icon.setRight(1);
 			viewHolder.img=icon;
 			
 			TextView name=new TextView(context);
@@ -176,6 +178,7 @@ public class MyAdapter extends BaseAdapter
 			name.setTextColor(Color.BLUE);
 			name.setPadding(30, 0, 0, 0);
 			name.setGravity(Gravity.CENTER);
+			name.setTextColor(Color.WHITE);
 			ll.addView(name);
 			viewHolder.text=name;
 			

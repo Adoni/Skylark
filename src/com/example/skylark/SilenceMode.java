@@ -43,11 +43,11 @@ public class SilenceMode extends Service{
 	private void doSomethingOnScreenOn() {  
         Log.i("mysilence", "Screen is on");
         Toast.makeText(this, "Fail", Toast.LENGTH_LONG).show();
+        
         this.stopSelf();
     }  
   
     private void doSomethingOnScreenOff() {  
         Log.i("mysilence", "Screen is off");  
-    }  
-    
+    }
 }  

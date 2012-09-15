@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
     android:orientation="vertical">
-
+	<!--  
     <LinearLayout
         android:orientation="horizontal"
 	    android:layout_width="fill_parent"
@@ -74,10 +74,12 @@
         android:layout_weight="1">
         <Button 
             android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
+	        android:layout_height="wrap_content"
 	        android:id="@+id/silenceMode"
 	        android:text="@string/silence"
+	        android:textColor="@android:color/white"
 	        android:layout_weight="1"
+	        android:background="@drawable/start_button"
             />
         <Button 
 	        android:layout_width="fill_parent"
@@ -86,5 +88,75 @@
 	        android:text="@string/start"
 	        android:layout_weight="1"/>
     </LinearLayout>
+    -->
+    <LinearLayout
+        android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1">
+	    <TextView 
+	        android:text="@string/label1"
+	        android:textSize="25dp"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="2"
+	        />
+        <TimePicker
+        	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"
+       		android:id="@+id/tp"
+       		android:layout_weight="2"
+       		
+        />
+    </LinearLayout>
     
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+        android:id="@+id/bl_sp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:textColor="@android:color/white"
+        android:background="@android:color/darker_gray"
+        />
+        <Button
+        android:id="@+id/sns_sp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:text="SNS"
+        android:textColor="@android:color/white"
+        
+        />
+    </LinearLayout>
+   
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" 
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button 
+            android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:id="@+id/silenceMode"
+	        android:text="@string/silence"
+	        android:textColor="@android:color/white"
+	        android:layout_weight="1"
+	        android:background="@drawable/silencemode"
+            />
+        <Button 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:id="@+id/start"
+	        android:text="@string/start"
+	        android:layout_weight="1"
+	        android:background="@drawable/start_button"
+	        android:textColor="@android:color/white"
+	        
+	        />
+    </LinearLayout>
 </LinearLayout>

@@ -57,6 +57,26 @@ public class MainActivity extends BaseSampleActivity {
         setContentView(R.layout.simple_titles);
         mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager(),MainActivity.this,pop);
         mPager = (ViewPager)findViewById(R.id.pager);
+        mPager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				TitlePageIndicator indicator=(TitlePageIndicator)findViewById(R.id.indicator);
+				indicator.setBackground(getResources().getDrawable(R.drawable.icon));
+			}
+			
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				TitlePageIndicator indicator=(TitlePageIndicator)findViewById(R.id.indicator);
+				indicator.setBackground(getResources().getDrawable(R.drawable.icon));
+				Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_SHORT).show();
+			}
+		});
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);
         mPager.setOnTouchListener(new OnTouchListener() {
@@ -75,6 +95,28 @@ public class MainActivity extends BaseSampleActivity {
         indicator.setViewPager(mPager);
         indicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
         mIndicator = indicator;
+        mIndicator.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			public void onPageSelected(int arg0) {
+				// TODO Auto-generated method stub
+				Log.v("myscroll","sdf");
+				//TitlePageIndicator indicator=(TitlePageIndicator)findViewById(R.id.indicator);
+				//indicator.setBackground(getResources().getDrawable(R.drawable.icon));
+			}
+			
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+			//	TitlePageIndicator indicator=(TitlePageIndicator)findViewById(R.id.indicator);
+				//indicator.setBackground(getResources().getDrawable(R.drawable.icon));
+				//Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_SHORT).show();
+				
+			}
+			
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
