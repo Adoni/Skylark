@@ -46,7 +46,7 @@ public class SettingInitialize {
 	public void iniSetting()
 	{
 		settingList=(ListView)view.findViewById(R.id.settingList);
-		int[] icons=new int[]{R.drawable.friends,R.drawable.friends,R.drawable.friends,R.drawable.friends};
+		int[] icons=new int[]{R.drawable.account,R.drawable.history,R.drawable.aboutus,R.drawable.help};
 		String[] names=new String[]{"选择账户","历史记录","关于我们","帮助"};
 		MyAdapter adapter=new MyAdapter(context, icons, names, false);
 		settingList.setAdapter(adapter);
@@ -219,7 +219,7 @@ public class SettingInitialize {
 			}
 		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		pop.setAnimationStyle(R.style.myAnimationPreview);
+		pop.setAnimationStyle(R.style.Animation);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);

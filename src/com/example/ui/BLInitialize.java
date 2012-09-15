@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,12 +67,7 @@ public class BLInitialize{
 				// TODO Auto-generated method stub
 				Intent intent=new Intent();
 				intent.setClass(context, DefineBlackList.class);
-				AnimationSet animationSet = new AnimationSet(true);//创建一个AnimationSet对象
-				AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);//创建一个AlphaAnimation对象
-				alphaAnimation.setDuration(1000);//设置动画执行的时间（单位：毫秒）
-				animationSet.addAnimation(alphaAnimation);//将AlphaAnimation对象添加到AnimationSet当中
-				view.startAnimation(animationSet);//使用view的startAnimation方法开始执行动画
-				fragment.startActivity(intent);
+				context.startActivity(intent);
 				
 			}
 		});
@@ -210,7 +206,12 @@ public class BLInitialize{
 		 * 以便点击manager按钮的时候可以出现CheckBox
 		 */
 		//ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,names);
-		MyAdapter adapter=new MyAdapter(context, names,false);
+		ArrayList<Drawable> icons=new ArrayList<Drawable>();
+		for(int i=0;i<names.size();i++)
+		{
+			icons.add(context.getResources().getDrawable(R.drawable.stop));
+		}
+		MyAdapter adapter=new MyAdapter(context, icons, names,false);
 		blList.setAdapter(adapter);
 		blList.setOnItemClickListener(new OnItemClickListener() {
 			/*

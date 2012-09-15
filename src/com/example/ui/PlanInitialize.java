@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
@@ -172,6 +173,7 @@ public class PlanInitialize{
 					
 				}
 				dpm.lockNow();
+				//dpm.removeActiveAdmin(componentName);
 				Intent intent=new Intent("com.example.skylark.silencemode");
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
@@ -243,7 +245,7 @@ public class PlanInitialize{
 					}
 				});
 				pop=new PopupWindow(snsPopView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				pop.setAnimationStyle(R.style.myAnimationPreview);
+				pop.setAnimationStyle(R.style.Animation);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);
@@ -264,7 +266,8 @@ public class PlanInitialize{
 	private void iniBL()
 	{
 		final ArrayList<String> names=new ArrayList<String>();
-		names.add("");
+		//names.add("");
+		final ArrayList<Drawable> icons=new ArrayList<Drawable>();
 		String blNames = "";
 		FileInputStream fin;
 		try {
@@ -287,16 +290,15 @@ public class PlanInitialize{
 			String name=blNames.substring(0,blNames.indexOf(" "));
 			names.add(name);
 			blNames=blNames.substring(blNames.indexOf(" ")+1);
+			icons.add(context.getResources().getDrawable(R.drawable.stop));
 		}
 		names.add("自定义");
-				
+		icons.add(context.getResources().getDrawable(R.drawable.selfdefine));		
 		bl_sp.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
-				
-				MyAdapter adapter=new MyAdapter(context, names,false);
+				MyAdapter adapter=new MyAdapter(context, icons, names,false);
 				LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 				View blPopView=inflater.inflate(R.layout.sns_pop,null);
 				ListView blList=(ListView)blPopView.findViewById(R.id.sns_list);
@@ -329,10 +331,10 @@ public class PlanInitialize{
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
 				pop=new PopupWindow(blPopView,width*6/7, height*5/7);
-				pop.setAnimationStyle(R.style.myAnimationPreview);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);
+				pop.setAnimationStyle(R.style.Animation);
 				pop.showAtLocation(view, Gravity.CENTER, 0, 0);
 			}
 		});
