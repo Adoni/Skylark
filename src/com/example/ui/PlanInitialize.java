@@ -238,6 +238,7 @@ public class PlanInitialize{
 						SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 						SharedPreferences.Editor editor=setting.edit();
 						editor.putInt("SNS", arg2);
+						editor.putString("snsName", snsName);
 						editor.commit();
 						pop.dismiss();
 						int[] snsBgs=new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina};

@@ -10,6 +10,7 @@ import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.Time;
 import android.util.Log;
@@ -25,6 +26,8 @@ public class WhenFail extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.whenfail);
+		stopService(new Intent("com.example.skylark.monitorservice"));
+		stopService(new Intent("com.example.skylark.silencemode"));
 		setTitle("计划失败！");
 		TextView text=(TextView)findViewById(R.id.messageWhenFail);
 		Button button=(Button)findViewById(R.id.ok);
@@ -73,7 +76,8 @@ public class WhenFail extends Activity{
 	}
 	public void publishInSNS() throws UMSNSException
 	{
-		final String snsName=getIntent().getStringExtra("snsName");
+		//final String snsName=getIntent().getStringExtra("snsName");
+		final String snsName=getSharedPreferences("Setting", 0).getString("snsName", "");
 		if(snsName.equals(""))
 		{
 			return;

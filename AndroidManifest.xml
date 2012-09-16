@@ -122,6 +122,7 @@
                 <action android:name="android.alarm.demo.action" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".AlarmReceiver" android:process=".abc"/>
     <meta-data android:value="4f7046375270156912000011" android:name="UMENG_APPKEY"></meta-data>
     </application>
 

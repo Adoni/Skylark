@@ -26,6 +26,8 @@ public class WhenSucceed extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.whenfail);
+		stopService(new Intent("com.example.skylark.monitorservice"));
+		stopService(new Intent("com.example.skylark.silencemode"));
 		setTitle("计划完成！");
 		TextView text=(TextView)findViewById(R.id.messageWhenFail);
 		Button button=(Button)findViewById(R.id.ok);
@@ -73,7 +75,8 @@ public class WhenSucceed extends Activity{
 	}
 	public void publishInSNS() throws UMSNSException
 	{
-		final String snsName=getIntent().getStringExtra("snsName");
+//		/final String snsName=getIntent().getStringExtra("snsName");
+		final String snsName=getSharedPreferences("Setting", 0).getString("snsName", "");
 		if(snsName.equals(""))
 		{
 			return;
