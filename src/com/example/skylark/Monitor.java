@@ -6,13 +6,6 @@ public class Monitor {
 		
 	}
 	
-	/*
-	 * 用于判断当前Plan的执行情况。
-	 */
-	boolean judgePlan(PlanActivity Plan)
-	{
-		return true;
-	}
 	
 	/*
 	 * 用于在用户触犯规则时，杀死进程，当前先实现提醒和阻碍

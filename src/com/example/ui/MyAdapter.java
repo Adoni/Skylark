@@ -84,6 +84,19 @@ public class MyAdapter extends BaseAdapter
 		this.haveACheckBox=haveACheckBox;
 		iniData();
 	}
+	
+	public MyAdapter(Context context,int iconId, ArrayList<String> names, boolean haveACheckBox)
+	{
+		for(int i=0;i<names.size();i++)
+		{
+			this.icons.add(context.getResources().getDrawable(iconId));
+		}
+		this.names=names;
+		this.context=context;
+		this.haveACheckBox=haveACheckBox;
+		iniData();
+	}
+	
 	/*
 	public MyAdapter(Context context,ArrayList<Integer> iconIDs, ArrayList<String> names, boolean haveACheckBox)
 	{
