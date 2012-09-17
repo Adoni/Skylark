@@ -58,7 +58,7 @@ public class DefineBlackList extends Activity {
 				Intent intent=new Intent();
 				intent.setClass(DefineBlackList.this, MainActivity.class);
 				DefineBlackList.this.startActivity(intent);
-				
+				DefineBlackList.this.finish();
 			}
 			
 		});
@@ -181,6 +181,7 @@ public class DefineBlackList extends Activity {
 				blNames=blNames+blName+" ";
 			}
 			fout.write(blNames.getBytes());
+			fout.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,6 +189,7 @@ public class DefineBlackList extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//DefineBlackList.this.finish();
 		return true;
 	}
 }

@@ -22,6 +22,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -133,6 +135,7 @@ public class BLInitialize{
 			}
 		}
 		updateList();
+		
 	}
 	
 	/*
@@ -164,6 +167,10 @@ public class BLInitialize{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		Editor editor=setting.edit();
+		editor.putInt("BL", 0);
+		editor.commit();
 	}
 	public void iniList()
 	{
