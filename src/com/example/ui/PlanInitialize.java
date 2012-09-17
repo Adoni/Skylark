@@ -62,7 +62,7 @@ public class PlanInitialize{
 	Context context;
 	View view;
 	private PopupWindow pop;
-	public PlanInitialize(View view, TestFragment fragment,Context context,PopupWindow pop)
+	public PlanInitialize(View view, TestFragment fragment,Context context, PopupWindow pop)
 	{
 		this.view=view;
 		this.fragment=fragment;

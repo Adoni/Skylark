@@ -176,7 +176,7 @@ public class DefineBlackList extends Activity {
 			 * 保存黑名单名称到黑名单的大集合列表中
 			 */
 			fout=openFileOutput(getResources().getString(R.string.blListNames),Context.MODE_PRIVATE);
-			if(!blNames.contains("Default"))
+			if(!(blNames.contains("Default") && blNames.equals("Default")))
 			{
 				blNames=blNames+blName+" ";
 			}
