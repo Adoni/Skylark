@@ -55,7 +55,7 @@ public class MainActivity extends BaseSampleActivity {
         if(serviceIsAcitved("MonitorService"))
         {
         	SharedPreferences setting=getSharedPreferences("Setting", 0);
-        	Countdown.Countdown(MainActivity.this,setting.getInt("Hour", 0), setting.getInt("Min", 0));
+        	Countdown.Countdown(MainActivity.this);
         	//return;
         }
         SharedPreferences setting=getSharedPreferences("Setting", 0);

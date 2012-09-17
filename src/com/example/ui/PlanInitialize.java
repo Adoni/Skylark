@@ -23,12 +23,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.text.format.Time;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -88,6 +90,7 @@ public class PlanInitialize{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startMonitor();
+				
 			}
 		});
 		((Button)view.findViewById(R.id.silenceMode)).setOnClickListener(new OnClickListener() {
@@ -112,11 +115,7 @@ public class PlanInitialize{
 		intent.putExtra("hour", tp.getCurrentHour());
 		intent.putExtra("min", tp.getCurrentMinute());
 		
-		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-		SharedPreferences.Editor editor=setting.edit();
-		editor.putInt("Hour", tp.getCurrentHour());
-		editor.putInt("Min",tp.getCurrentMinute());
-		editor.commit();
+		saveTime();
 		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
 		Name.put("renren", SHARE_TO.RENR);
 		Name.put("tencent", SHARE_TO.TENC);
@@ -178,11 +177,7 @@ public class PlanInitialize{
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
 				
-				SharedPreferences setting=context.getSharedPreferences("Setting", 0);
-				SharedPreferences.Editor editor=setting.edit();
-				editor.putInt("Hour", tp.getCurrentHour());
-				editor.putInt("Min",tp.getCurrentMinute());
-				editor.commit();
+				saveTime();
 				context.startService(intent);
 				
 			}
@@ -190,7 +185,18 @@ public class PlanInitialize{
 		.setNegativeButton("否",null)
 		.show();
 	}
-	
+	private void saveTime()
+	{
+		Time t=new Time();
+		t.setToNow();
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		SharedPreferences.Editor editor=setting.edit();
+		editor.putInt("Hour", tp.getCurrentHour());
+		editor.putInt("Min",tp.getCurrentMinute());
+		editor.putInt("sHour", t.hour);
+		editor.putInt("sMin",t.minute);
+		editor.commit();
+	}
 	private void iniTime()
 	{
 		tp=(TimePicker)view.findViewById(R.id.tp);
