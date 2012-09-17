@@ -78,7 +78,7 @@ public class MainActivity extends BaseSampleActivity {
 			}
 		});
         mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(1);
+        mPager.setCurrentItem(getSharedPreferences("Setting", 0).getInt("CurrentItem", 1));
         mPager.setOnTouchListener(new OnTouchListener() {
 			
 			public boolean onTouch(View v, MotionEvent event) {

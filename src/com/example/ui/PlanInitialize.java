@@ -245,7 +245,10 @@ public class PlanInitialize{
 						sns_sp.setBackgroundResource(snsBgs[setting.getInt("SNS", 0)]);
 					}
 				});
-				pop=new PopupWindow(snsPopView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
+				int height = wm.getDefaultDisplay().getHeight();
+				pop=new PopupWindow(snsPopView,width*6/7, LayoutParams.WRAP_CONTENT);
 				pop.setAnimationStyle(R.style.Animation);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
@@ -331,7 +334,7 @@ public class PlanInitialize{
 				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
-				pop=new PopupWindow(blPopView,width*6/7, height*5/7);
+				pop=new PopupWindow(blPopView,width*6/7, LayoutParams.WRAP_CONTENT);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);

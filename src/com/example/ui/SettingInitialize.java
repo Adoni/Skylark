@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -218,7 +219,10 @@ public class SettingInitialize {
 				pop.dismiss();
 			}
 		});
-		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
+		int height = wm.getDefaultDisplay().getHeight();
+		pop=new PopupWindow(popView,width*9/10, LayoutParams.WRAP_CONTENT);
 		pop.setAnimationStyle(R.style.Animation);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
