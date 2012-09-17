@@ -12,6 +12,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -53,6 +54,18 @@ public class MainActivity extends BaseSampleActivity {
         {
         	SharedPreferences setting=getSharedPreferences("Setting", 0);
         	Countdown.Countdown(MainActivity.this,setting.getInt("Hour", 0), setting.getInt("Min", 0));
+        	//return;
+        }
+        SharedPreferences setting=getSharedPreferences("Setting", 0);
+        if(setting.getBoolean("isTheFirstTimeUsed", true))
+        {
+        	Intent intent=new Intent();
+        	intent.setClass(MainActivity.this, HelpPager.class);
+        	MainActivity.this.startActivity(intent);
+        	Editor editor=setting.edit();
+        	editor.putBoolean("isTheFirstTimeUsed", false);
+        	editor.commit();
+        	//return;
         }
         setContentView(R.layout.simple_titles);
         mAdapter = new TestTitleFragmentAdapter(getSupportFragmentManager(),MainActivity.this,pop);
