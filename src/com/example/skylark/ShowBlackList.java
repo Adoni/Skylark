@@ -79,7 +79,7 @@ public class ShowBlackList extends Activity {
 				e.printStackTrace();
 			}
         }
-        MyAdapter adapter=new MyAdapter(this, icons, appNames, false);
+        MyAdapter adapter=new MyAdapter(this, icons, appNames, false, R.layout.nomal_item);
         showBL.setAdapter(adapter);
     }
     @Override

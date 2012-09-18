@@ -232,7 +232,7 @@ public class PlanInitialize{
 				ListView snsList=(ListView)snsPopView.findViewById(R.id.sns_list);
 				MyAdapter adapter=new MyAdapter(MyApplication.getInstance(), 
 				new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina},
-				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false);
+				new String[]{"不发布","人人网","腾讯微博","新浪微博"},false,R.layout.popup_item);
 				snsList.setAdapter(adapter);
 				snsList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -308,7 +308,7 @@ public class PlanInitialize{
 			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				MyAdapter adapter=new MyAdapter(context, icons, names,false);
+				MyAdapter adapter=new MyAdapter(context, icons, names,false,R.layout.popup_item);
 				LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 				View blPopView=inflater.inflate(R.layout.sns_pop,null);
 				ListView blList=(ListView)blPopView.findViewById(R.id.sns_list);
@@ -340,7 +340,13 @@ public class PlanInitialize{
 				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
-				pop=new PopupWindow(blPopView,width*6/7, LayoutParams.WRAP_CONTENT);
+				height=height*6/7;
+				if(height>LayoutParams.WRAP_CONTENT)
+				{
+					height=LayoutParams.WRAP_CONTENT;
+				}
+				Log.v("height", ""+LayoutParams.WRAP_CONTENT);
+				pop=new PopupWindow(blPopView,width*6/7, height);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);

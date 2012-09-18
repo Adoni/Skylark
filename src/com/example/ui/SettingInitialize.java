@@ -49,7 +49,7 @@ public class SettingInitialize {
 		settingList=(ListView)view.findViewById(R.id.settingList);
 		int[] icons=new int[]{R.drawable.account,R.drawable.history,R.drawable.aboutus,R.drawable.help};
 		String[] names=new String[]{"选择账户","历史记录","关于我们","帮助"};
-		MyAdapter adapter=new MyAdapter(context, icons, names, false);
+		MyAdapter adapter=new MyAdapter(context, icons, names, false, R.layout.nomal_item);
 		settingList.setAdapter(adapter);
 		
 		settingList.setOnItemClickListener(new OnItemClickListener() {
@@ -83,6 +83,7 @@ public class SettingInitialize {
 		editor.putInt("SNS", sns);
 		editor.commit();
 	}
+	
 	public void showSNSSetting(View arg1, int arg2)
 	{
 		if(pop!=null && pop.isShowing())
@@ -95,7 +96,7 @@ public class SettingInitialize {
 		final ListView popList=(ListView)popView.findViewById(R.id.popList);
 		int[] icons=new int[]{R.drawable.renren,R.drawable.tencent,R.drawable.sina};
 		String[] names=new String[]{"人人网","腾讯微薄","新浪微波"};
-		MyAdapter adapter=new MyAdapter(context, icons, names, true);
+		MyAdapter adapter=new MyAdapter(context, icons, names, true, R.layout.spinner_item);
 		adapter.setIsSelected(context.getSharedPreferences("Setting", 0)
 				.getInt("SNS", 0)-1);
 		popList.setAdapter(adapter);
@@ -186,7 +187,7 @@ public class SettingInitialize {
 		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View popView=inflater.inflate(R.layout.pop_layout,null);
 		ListView popList=(ListView)popView.findViewById(R.id.popList);
-		MyAdapter adapter=new MyAdapter(context, iconIDs, names, false);
+		MyAdapter adapter=new MyAdapter(context, iconIDs, names, false,R.layout.spinner_item);
 		popList.setAdapter(adapter);
 		popList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -203,6 +204,7 @@ public class SettingInitialize {
 		pop.setOutsideTouchable(true);
 		pop.showAsDropDown(arg1);
 	}
+	
 	public void showAboutUs(View arg1, int arg2)
 	{
 		if(pop!=null && pop.isShowing())

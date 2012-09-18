@@ -14,6 +14,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -31,14 +32,16 @@ public class MyAdapter extends BaseAdapter
 	//private String[] names=new String[1000];
 	private ArrayList<String> names=new ArrayList<String>();
 	private boolean haveACheckBox;
+	private int layoutId;
 	private HashMap<Integer, Boolean> isSelected=new HashMap<Integer, Boolean>();
 	//private CheckBox check;
 	/*
 	 * 用于使用Resources进行构造的构造函数。
 	 */
-	public MyAdapter(Context context,int iconIDs[],String names[],boolean haveACheckBox)
+	public MyAdapter(Context context,int iconIDs[],String names[],boolean haveACheckBox,int layoutId)
 	{
 		Drawable d;
+		this.layoutId=layoutId;
 		this.context=context;
 		for(int i=0;i<iconIDs.length;i++)
 		{
@@ -64,8 +67,9 @@ public class MyAdapter extends BaseAdapter
 	/*
 	 * 用于使用drawable数组进行构造的构造函数
 	 */
-	public MyAdapter(Context context,ArrayList<Drawable> icons,ArrayList<String> names,boolean haveACheckBox)
+	public MyAdapter(Context context,ArrayList<Drawable> icons,ArrayList<String> names,boolean haveACheckBox,int layoutId)
 	{
+		this.layoutId=layoutId;
 		this.context=context;
 		this.icons=icons;
 		this.names=names;
@@ -73,20 +77,22 @@ public class MyAdapter extends BaseAdapter
 		iniData();
 	}
 	
-	public MyAdapter(Context context,ArrayList<String> names, boolean haveACheckBox)
+	public MyAdapter(Context context,ArrayList<String> names, boolean haveACheckBox,int layoutId)
 	{
 		for(int i=0;i<names.size();i++)
 		{
 			this.icons.add(context.getResources().getDrawable(R.drawable.friends));
 		}
+		this.layoutId=layoutId;
 		this.names=names;
 		this.context=context;
 		this.haveACheckBox=haveACheckBox;
 		iniData();
 	}
 	
-	public MyAdapter(Context context,int iconId, ArrayList<String> names, boolean haveACheckBox)
+	public MyAdapter(Context context,int iconId, ArrayList<String> names, boolean haveACheckBox,int layoutId)
 	{
+		this.layoutId=layoutId;
 		for(int i=0;i<names.size();i++)
 		{
 			this.icons.add(context.getResources().getDrawable(iconId));
@@ -168,6 +174,7 @@ public class MyAdapter extends BaseAdapter
 	@SuppressLint("NewApi")
 	public View getView(int position,View convertView,ViewGroup parent)
 	{
+		/*
 		LinearLayout ll=new LinearLayout(context);
 		ViewHolder viewHolder=null;
 		ll.setOrientation(LinearLayout.HORIZONTAL);
@@ -181,8 +188,6 @@ public class MyAdapter extends BaseAdapter
 			icon.setImageDrawable(icons.get(position));
 			icon.setLayoutParams(new ViewGroup.LayoutParams(60,60));
 			ll.addView(icon);
-//			icon.setLeft(100);
-//			icon.setRight(1);
 			viewHolder.img=icon;
 			
 			TextView name=new TextView(context);
@@ -223,6 +228,49 @@ public class MyAdapter extends BaseAdapter
 		convertView.setPadding(0, 10, 0, 10);
 //		convertView.setLeft();
 		//convertView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
+		return convertView;
+		*/
+		LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		ViewHolder viewHolder=null;
+		
+		if(convertView==null)
+		{
+			viewHolder=new ViewHolder();
+			convertView=inflater.inflate(layoutId, null);
+			
+			ImageView icon=(ImageView) convertView.findViewById(R.id.icon);
+			icon.setImageDrawable(icons.get(position));
+			//icon.setLayoutParams(new ViewGroup.LayoutParams(60,60));
+			viewHolder.img=icon;
+			
+			TextView name=(TextView)convertView.findViewById(R.id.name);
+			name.setText(names.get(position));
+		//	name.setPadding(30, 0, 0, 0);
+		//	name.setGravity(Gravity.CENTER);
+		//	name.setTextColor(Color.WHITE);
+			viewHolder.text=name;
+			
+			CheckBox check=(CheckBox) convertView.findViewById(R.id.check);
+			check.setChecked(isSelected.get(position));
+			//check.setGravity(Gravity.CENTER_HORIZONTAL);
+			check.setFocusable(false);
+			check.setClickable(false);
+			if(!haveACheckBox)
+			{
+				check.setVisibility(8);
+			}
+			viewHolder.cb=check;
+			
+			convertView.setTag(viewHolder);
+		}
+		else
+		{
+			viewHolder=(ViewHolder)convertView.getTag();
+			viewHolder.img.setImageDrawable(icons.get(position));
+			viewHolder.text.setText(names.get(position));
+		}
+		convertView.setPadding(0, 10, 0, 10);
+		
 		return convertView;
 	}
 	public HashMap<Integer,Boolean> getIsSelected()

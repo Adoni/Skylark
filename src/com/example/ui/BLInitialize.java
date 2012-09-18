@@ -100,7 +100,7 @@ public class BLInitialize{
 	public void showCheckBox()
 	{
 		manageButton.setText("删除");
-		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names,true);
+		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names,true, R.layout.nomal_item);
 		blList.setAdapter(adapter);
 		blList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -144,7 +144,7 @@ public class BLInitialize{
 	public void updateList()
 	{
 		String nowBlNames="";
-		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names, false);
+		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names, false, R.layout.nomal_item);
 		blList.setAdapter(adapter);
 		manageButton.setText("管理黑名单");
 		for(String name:names)
@@ -213,7 +213,7 @@ public class BLInitialize{
 		 * 以便点击manager按钮的时候可以出现CheckBox
 		 */
 		
-		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names,false);
+		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names,false, R.layout.nomal_item);
 		blList.setAdapter(adapter);
 		blList.setOnItemClickListener(new OnItemClickListener() {
 			/*

@@ -90,7 +90,7 @@ public class DefineBlackList extends Activity {
             icons.add(p.applicationInfo.loadIcon(getPackageManager()));
         }
 		
-		MyAdapter adapter=new MyAdapter(this, icons, names, true);
+		MyAdapter adapter=new MyAdapter(this, icons, names, true, R.layout.nomal_item);
 		
 		defineBL.setAdapter(adapter);
 		//defineBL.setItemsCanFocus(true);

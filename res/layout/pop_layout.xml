@@ -9,5 +9,4 @@
         android:id="@+id/popList"
         android:background="#e0000000"
         ></ListView>
-
 </LinearLayout>
