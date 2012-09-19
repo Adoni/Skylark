@@ -10,10 +10,11 @@ public class Countdown {
 	public static void Countdown(Context context)
 	{
 		Intent intent=new Intent();
-		int sHour,sMin,fHour,fMin;
+		int sHour,sMin,sSec,fHour,fMin;
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		sHour=setting.getInt("sHour", 0);
 		sMin=setting.getInt("sMin", 0);
+		sSec=setting.getInt("sSec", 0);
 		fHour=setting.getInt("Hour", 0);
 		fMin=setting.getInt("Min", 0);
 		
@@ -22,6 +23,7 @@ public class Countdown {
 		list.add(fMin);
 		list.add(sHour);                                     
 		list.add(sMin);
+		list.add(sSec);
 		
 		intent.setClass(context, StartCountdown.class); 
 		

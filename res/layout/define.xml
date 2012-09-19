@@ -9,13 +9,15 @@
         android:id="@+id/defineBL"
         android:layout_width="fill_parent"
         android:layout_height="360dp" 
-        android:cacheColorHint="#00000000">
+        android:cacheColorHint="#00000000"
+        android:layout_weight="6">
     </ListView>
 
     <LinearLayout 
         android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_weight="1"
 	    >
 
         <TextView
@@ -36,6 +38,7 @@
         android:layout_width="fill_parent"
         android:layout_height="67dp"
         android:text="@string/saveDefine"
-        android:textSize="23dp" />
+        android:textSize="23dp" 
+        android:layout_weight="1"/>
 
 </LinearLayout>

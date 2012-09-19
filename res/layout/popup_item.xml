@@ -19,6 +19,7 @@
 	    android:layout_centerVertical="true"
 	    android:layout_toRightOf="@id/icon"
 	    android:paddingLeft="10dp"
+	    android:textStyle="bold"
 	    />
 	<CheckBox
 	    android:id="@+id/check"

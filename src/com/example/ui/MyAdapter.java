@@ -273,6 +273,7 @@ public class MyAdapter extends BaseAdapter
 		
 		return convertView;
 	}
+	
 	public HashMap<Integer,Boolean> getIsSelected()
 	{
 		return isSelected;

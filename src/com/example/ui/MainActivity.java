@@ -6,6 +6,7 @@ package com.example.ui;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.NotificationManager;
@@ -18,10 +19,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
@@ -52,13 +55,13 @@ public class MainActivity extends BaseSampleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);  
-        if(serviceIsAcitved("MonitorService"))
-        {
-        	SharedPreferences setting=getSharedPreferences("Setting", 0);
-        	Countdown.Countdown(MainActivity.this);
-        	//return;
-        }
         SharedPreferences setting=getSharedPreferences("Setting", 0);
+        if(getSharedPreferences("Setting", 0).getBoolean("serviceIsActived", false))
+        {
+        	Countdown.Countdown(MainActivity.this);
+        	finish();
+        }
+        
         if(setting.getBoolean("isTheFirstTimeUsed", true))
         {
         	Intent intent=new Intent();
@@ -101,7 +104,10 @@ public class MainActivity extends BaseSampleActivity {
 				if(pop!=null && pop.isShowing())
 				{
 					pop.dismiss();
-					Toast.makeText(MainActivity.this, "fafa", Toast.LENGTH_LONG).show();
+					WindowManager.LayoutParams lp = (WindowManager.LayoutParams)MainActivity.this.getWindow().getAttributes();
+					lp.alpha = 1f; //0.0-1.0
+			      	MainActivity.this.getWindow().setAttributes(lp);
+					
 				}
 				return false;
 			}
@@ -140,21 +146,35 @@ public class MainActivity extends BaseSampleActivity {
     }
     
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode==KeyEvent.KEYCODE_HOME)
+		{
+			finish();
+		//	Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		if(keyCode==KeyEvent.KEYCODE_BACK)
+		{
+			finish();
+			//Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		//Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
-		Intent intent=new Intent("com.example.skylark.monitorservice");
-		stopService(intent);
-		
+		stopService(new Intent("com.example.skylark.monitorservice"));
+		stopService(new Intent("com.example.skylark.silencemode"));
 		((NotificationManager)getSystemService(NOTIFICATION_SERVICE)).cancelAll();
+		SharedPreferences setting=getSharedPreferences("Setting", 0);
+		Editor editor=setting.edit();
+		editor.putBoolean("serviceIsActived", false);
+		editor.commit();
 		finish();
 		return super.onOptionsItemSelected(item);
-	}
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
-    	Toast.makeText(this,"sf" ,Toast.LENGTH_LONG).show();
-		return super.onTouchEvent(event);
 	}
 	
 	public boolean serviceIsAcitved(String serviceName)
@@ -174,4 +194,12 @@ public class MainActivity extends BaseSampleActivity {
 		}
 		return false;
 	}
+	
+	@Override
+	public void onAttachedToWindow(){ 
+	// TODO Auto-generated method stub 
+	this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+	super.onAttachedToWindow();
+	}
+	
 }

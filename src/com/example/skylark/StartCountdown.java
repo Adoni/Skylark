@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -17,10 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -69,6 +76,7 @@ public class StartCountdown extends Activity{
 					{
 						timerTask = null;
 					}
+					finish();
 				}
 				else 
 				{
@@ -167,8 +175,8 @@ public class StartCountdown extends Activity{
 			second = 0;
 			starthour = times.get(2);
 			startminute = times.get(3);
-			//startsecond = times.get(4);
-			startsecond=0;
+			startsecond = times.get(4);
+			//startsecond=;
 			Calendar c = Calendar.getInstance();
 			int mHour = c.get(Calendar.HOUR_OF_DAY);
           int mMinute = c.get(Calendar.MINUTE);
@@ -189,9 +197,9 @@ public class StartCountdown extends Activity{
           
           if ( starthour > hour )
           {
-      	  starthour = hour + 24 - starthour ;
+        	  starthour = hour + 24 - starthour ;
           }
-        else starthour = hour - starthour;
+          else starthour = hour - starthour;
           
           if ( mSecond > second )
           {
@@ -289,6 +297,48 @@ public class StartCountdown extends Activity{
 	protected void onPause() {
 		Log.v(tag, "log---------->onPause!");
 		super.onPause();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if(keyCode==KeyEvent.KEYCODE_HOME)
+		{
+			finish();
+		//	Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		if(keyCode==KeyEvent.KEYCODE_BACK)
+		{
+			finish();
+			//Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_LONG).show();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.check_bl, menu);
+        return true;
+    }
+    
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		//Toast.makeText(MainActivity.this, "d", Toast.LENGTH_LONG).show();
+		Intent intent=new Intent();
+		intent.setClass(StartCountdown.this, ShowBlackList.class);
+		String blName=getSharedPreferences("Setting", 0).getString("blName", "");
+		if(blName.equals(""))
+		{
+			Toast.makeText(StartCountdown.this, "静默模式下无法查看黑名单", Toast.LENGTH_SHORT).show();
+			return true;
+		}
+		intent.putExtra("BLName", blName);
+		StartCountdown.this.startActivity(intent);
+		return super.onOptionsItemSelected(item);
 	}
 	
 }

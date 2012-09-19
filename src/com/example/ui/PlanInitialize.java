@@ -17,6 +17,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -43,8 +45,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -103,6 +108,12 @@ public class PlanInitialize{
 	
 	private void startMonitor()
 	{
+		if(context.getSharedPreferences("Setting", 0).getBoolean("blChanged", false))
+		{
+			Toast.makeText(context, "黑名单列表已改变，请重新选择黑名单！", Toast.LENGTH_SHORT).show();
+			iniBL();
+			return;
+		}
 		if(blName.equals(""))
 		{
 			Toast.makeText(context, "请选择黑名单", Toast.LENGTH_SHORT).show();
@@ -115,7 +126,7 @@ public class PlanInitialize{
 		intent.putExtra("hour", tp.getCurrentHour());
 		intent.putExtra("min", tp.getCurrentMinute());
 		
-		saveTime();
+		saveStatus();
 		HashMap<String, SHARE_TO> Name=new HashMap<String, UMSnsService.SHARE_TO>();
 		Name.put("renren", SHARE_TO.RENR);
 		Name.put("tencent", SHARE_TO.TENC);
@@ -125,14 +136,27 @@ public class PlanInitialize{
 			UMSnsService.OauthCallbackListener listener = new UMSnsService.OauthCallbackListener(){
 		        public void onComplete(Bundle value, SHARE_TO platform) {
 		        	Toast.makeText(context, "绑定成功", Toast.LENGTH_LONG).show();
+		        	Intent intent=new Intent("com.example.skylark.monitorservice");
+		    		intent.putExtra("blName", blName);
+		    		intent.putExtra("snsName", snsName);
+		    		intent.putExtra("hour", tp.getCurrentHour());
+		    		intent.putExtra("min", tp.getCurrentMinute());
+		    		Toast toast=Toast.makeText(context, "开始", Toast.LENGTH_SHORT);
+					LinearLayout toastView = (LinearLayout) toast.getView();
+					ImageView imageCodeProject = new ImageView(context.getApplicationContext());
+					//imageCodeProject.setImageResource(R.drawable.icon);
+					//toastView.addView(imageCodeProject, 0);
+					toast.show();
+					context.startService(intent);
+					Countdown.Countdown(context);
+					((Activity)context).finish();
 		        }
 		        public void onError(UMSNSException e, SHARE_TO platform) {
 		        	Toast.makeText(context, "对不起，绑定失败，请检查网络设置", Toast.LENGTH_LONG).show();
-		        	//
 		        }
 			};
 			
-			Log.v("my","fore");
+			//Log.v("my","fore");
 			if(snsName.equals("renren"))
 			{
 				//Toast.makeText(context, "asdf", Toast.LENGTH_LONG).show();
@@ -147,9 +171,21 @@ public class PlanInitialize{
 			{
 				UMSnsService.oauthSina(context, listener);
 			}
+			Countdown.Countdown(context);
 			return ;
 		}
-		context.startService(intent);
+		else
+		{
+			Toast toast=Toast.makeText(context, "开始", Toast.LENGTH_SHORT);
+			LinearLayout toastView = (LinearLayout) toast.getView();
+			ImageView imageCodeProject = new ImageView(context.getApplicationContext());
+			//imageCodeProject.setImageResource(R.drawable.icon);
+			//toastView.addView(imageCodeProject, 0);
+			toast.show();
+			context.startService(intent);
+			Countdown.Countdown(context);
+			((Activity)context).finish();
+		}
 		//android.os.Process.killProcess(android.os.Process.myPid());
 	}
 	
@@ -159,7 +195,6 @@ public class PlanInitialize{
 		.setTitle("静默模式")
 		.setMessage("确定要开始静默模式吗？静默模式下你将无法使用手机，否则此次尝试就会失败")
 		.setPositiveButton("是", new DialogInterface.OnClickListener() {
-			
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 				DevicePolicyManager dpm=(DevicePolicyManager)context.getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -176,16 +211,19 @@ public class PlanInitialize{
 				Intent intent=new Intent("com.example.skylark.silencemode");
 				intent.putExtra("hour", tp.getCurrentHour());
 				intent.putExtra("min", tp.getCurrentMinute());
-				
-				saveTime();
+				blName="";
+				saveStatus();
 				context.startService(intent);
-				
+				Countdown.Countdown(context);
+				((Activity)context).finish();
 			}
 		})
 		.setNegativeButton("否",null)
 		.show();
+		
+		
 	}
-	private void saveTime()
+	private void saveStatus()
 	{
 		Time t=new Time();
 		t.setToNow();
@@ -195,6 +233,10 @@ public class PlanInitialize{
 		editor.putInt("Min",tp.getCurrentMinute());
 		editor.putInt("sHour", t.hour);
 		editor.putInt("sMin",t.minute);
+		editor.putInt("sSec", t.second);
+		editor.putBoolean("serviceIsActived", true);
+		
+		editor.putString("blName", blName);
 		editor.commit();
 	}
 	private void iniTime()
@@ -208,16 +250,19 @@ public class PlanInitialize{
 	/*
 	 * 用以初始化SNS Spinner
 	 */
+	@SuppressLint("NewApi")
 	private void iniSNS()
 	{
 		if(pop!=null && pop.isShowing())
 		{
 			pop.dismiss();
+			
 			return;
 		}
 		String[] snsNames={"","renren","tencent","sina"};
 		int position=context.getSharedPreferences("Setting", 0).getInt("SNS", 0);
 		snsName=snsNames[position];
+	    
 		sns_sp.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
@@ -247,23 +292,54 @@ public class PlanInitialize{
 						editor.putString("snsName", snsName);
 						editor.commit();
 						pop.dismiss();
-						int[] snsBgs=new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina};
+						WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+						lp.alpha = 1f; //0.0-1.0
+				      	((Activity) context).getWindow().setAttributes(lp);
+						int[] snsBgs=new int[]{R.drawable.sns_none,R.drawable.sns_renren,R.drawable.sns_tencent,R.drawable.sns_sina};
 						sns_sp.setBackgroundResource(snsBgs[setting.getInt("SNS", 0)]);
 					}
 				});
 				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
+				
 				pop=new PopupWindow(snsPopView,width*6/7, LayoutParams.WRAP_CONTENT);
 				pop.setAnimationStyle(R.style.Animation);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
-				pop.setOutsideTouchable(true);
+				pop.setOnDismissListener(new OnDismissListener() {
+					
+					public void onDismiss() {
+						// TODO Auto-generated method stub
+						//Toast.makeText(context, "asdfads", Toast.LENGTH_LONG).show();
+						WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+						lp.alpha = 1f; //0.0-1.0
+				      	((Activity) context).getWindow().setAttributes(lp);
+					}
+				});
+			//	pop.setOutsideTouchable(true);
 				//pop.showAsDropDown(v);
 				pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+				WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+				lp.alpha = 0.3f; //0.0-1.0
+		      	((Activity) context).getWindow().setAttributes(lp);
+				/*
+				AlertDialog.Builder builder = new Builder(context);
+				builder.setView(snsPopView);
+				AlertDialog dialog;
+				
+				Dialog dialog=new Dialog(context,R.style.dialog);
+//				dialog=builder.create();
+				dialog.setContentView(snsPopView);
+				dialog.setFeatureDrawableResource(0, R.drawable.pop_bg);
+				WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+				lp.alpha = 0.8f; //0.0-1.0
+				dialog.getWindow().setAttributes(lp);
+				dialog.show();
+				*/
 			}
 		});
-		int[] snsBgs=new int[]{0,R.drawable.renren,R.drawable.tencent,R.drawable.sina};
+		int[] snsBgs=new int[]{R.drawable.sns_none,R.drawable.sns_renren,R.drawable.sns_tencent,R.drawable.sns_sina};
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		sns_sp.setBackgroundResource(snsBgs[setting.getInt("SNS", 0)]);
         
@@ -304,10 +380,51 @@ public class PlanInitialize{
 		}
 		names.add("自定义");
 		icons.add(context.getResources().getDrawable(R.drawable.selfdefine));		
+		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+		Editor editor=setting.edit();
+		editor.putBoolean("blChanged", false);
+		editor.commit();
 		bl_sp.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				if(context.getSharedPreferences("Setting", 0).getBoolean("blChanged", false))
+				{
+					names.clear();
+					icons.clear();
+					String blNames = "";
+					FileInputStream fin;
+					try {
+						fin = MyApplication.getInstance().openFileInput(MyApplication.getInstance().getResources().getString(R.string.blListNames));
+						int length = fin.available();   
+					    byte [] buffer = new byte[length];   
+					    fin.read(buffer);       
+					    blNames = ""+EncodingUtils.getString(buffer, "UTF-8");
+					    fin.close();  
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+					}
+							
+					while(blNames.length()>0)
+					{
+						String name=blNames.substring(0,blNames.indexOf(" "));
+						names.add(name);
+						blNames=blNames.substring(blNames.indexOf(" ")+1);
+						icons.add(context.getResources().getDrawable(R.drawable.stop));
+					}
+					names.add("自定义");
+					icons.add(context.getResources().getDrawable(R.drawable.selfdefine));
+					SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+					Editor editor=setting.edit();
+					editor.putBoolean("blChanged", false);
+					editor.commit();
+			      	bl_sp.setText(names.get(setting.getInt("BL", 0)));
+					blName=names.get(setting.getInt("BL", 0));
+				}
+					
 				MyAdapter adapter=new MyAdapter(context, icons, names,false,R.layout.popup_item);
 				LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 				View blPopView=inflater.inflate(R.layout.sns_pop,null);
@@ -334,30 +451,53 @@ public class PlanInitialize{
 							
 						}
 						pop.dismiss();
+						WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+						lp.alpha = 1f; //0.0-1.0
+				      	((Activity) context).getWindow().setAttributes(lp);
 						bl_sp.setText(blName);
 					}
 				});
 				WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 				int width = wm.getDefaultDisplay().getWidth();//屏幕宽度
 				int height = wm.getDefaultDisplay().getHeight();
-				height=height*6/7;
-				if(height>LayoutParams.WRAP_CONTENT)
+				height=height*2/3;
+//				Toast.makeText(context, blList.getHeight()+"", Toast.LENGTH_LONG).show();
+				int nowHeight=0;
+				nowHeight=adapter.getView(0, null, blList).getHeight();
+				nowHeight=120;
+				//Toast.makeText(context, nowHeight+"", Toast.LENGTH_LONG).show();
+				if(height>nowHeight*names.size())
 				{
-					height=LayoutParams.WRAP_CONTENT;
+					//height=blPopView.getHeight();
+					height=nowHeight*names.size();
 				}
-				Log.v("height", ""+LayoutParams.WRAP_CONTENT);
 				pop=new PopupWindow(blPopView,width*6/7, height);
 				pop.setBackgroundDrawable(new BitmapDrawable());
 				pop.setFocusable(true);
 				pop.setOutsideTouchable(true);
 				pop.setAnimationStyle(R.style.Animation);
 				pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+				pop.setOnDismissListener(new OnDismissListener() {
+					
+					public void onDismiss() {
+						// TODO Auto-generated method stub
+						//Toast.makeText(context, "asdfads", Toast.LENGTH_LONG).show();
+						WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+						lp.alpha = 1f; //0.0-1.0
+				      	((Activity) context).getWindow().setAttributes(lp);
+					}
+				});
+				WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+				lp.alpha = 0.3f; //0.0-1.0
+		      	((Activity) context).getWindow().setAttributes(lp);
+		      	
 			}
 		});
 		
 		//bl_sp.setSelection(2);
-		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
+//		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		bl_sp.setText(names.get(setting.getInt("BL", 0)));
 		blName=names.get(setting.getInt("BL", 0));
 	}
+	
 }

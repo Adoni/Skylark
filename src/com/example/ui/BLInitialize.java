@@ -27,6 +27,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -36,6 +37,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 public class BLInitialize{
@@ -46,13 +48,15 @@ public class BLInitialize{
 	private TestFragment fragment;
 	private View view;
 	private ArrayList<String> names=new ArrayList<String>();
+	private PopupWindow pop;
 	
-	public BLInitialize(View view,TestFragment fragment,Context context)
+	public BLInitialize(View view,TestFragment fragment,Context context, PopupWindow pop)
 	{
 		this.view=view;
 		this.fragment=fragment;
 		//context=MyApplication.getInstance();
 		this.context=context;
+		this.pop=pop;
 	}
 	public void initial(){
 		
@@ -114,6 +118,7 @@ public class BLInitialize{
 				viewHolder.cb.toggle();
 				MyAdapter adapter=((MyAdapter)blList.getAdapter());
 				adapter.setIsSelected(arg2);
+//				Toast.makeText(context, ""+arg2+" "+adapter.getIsSelected().get(arg2), Toast.LENGTH_LONG).show();
 				//Toast.makeText(DefineBlackList.this, ""+arg2, Toast.LENGTH_LONG).show();
 				//vHolder vh=(vHolder)arg1.getTag();
 				//vh.cb.setChecked(true);
@@ -127,15 +132,18 @@ public class BLInitialize{
 	public void MultiDeleteBL()
 	{
 		MyAdapter adapter=(MyAdapter)blList.getAdapter();
+//		Toast.makeText(context, names.size()+"", Toast.LENGTH_LONG).show();
+		ArrayList<String> newNames=new ArrayList<String>();
 		for(int i=0;i<names.size();i++)
 		{
 			if(adapter.getIsSelected().get(i))
 			{
-				names.remove(i);
+				continue;
 			}
+			newNames.add(names.get(i));
 		}
+		names=newNames;
 		updateList();
-		
 	}
 	
 	/*
@@ -156,6 +164,7 @@ public class BLInitialize{
 			fout = context.openFileOutput(context.getResources().getString(R.string.blListNames),Context.MODE_PRIVATE);
 			try {
 				fout.write(nowBlNames.getBytes());
+				fout.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -170,6 +179,7 @@ public class BLInitialize{
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		Editor editor=setting.edit();
 		editor.putInt("BL", 0);
+		editor.putBoolean("blChanged", true);
 		editor.commit();
 	}
 	public void iniList()

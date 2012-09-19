@@ -59,7 +59,7 @@ public final class TestFragment extends Fragment {
 		}
 		if(layout==R.layout.blacklist)
 		{
-			BLInitialize bl=new BLInitialize(ans,this,context);
+			BLInitialize bl=new BLInitialize(ans,this,context,pop);
 			bl.initial();
 		}
 		if(layout==R.layout.setting)

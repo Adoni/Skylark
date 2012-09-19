@@ -100,9 +100,12 @@ public class MonitorService extends Service{
 		t.setToNow();
 		int nowHour=t.hour;
 		int nowMin=t.minute;
+		/*
 		if(nowHour>hour) return true;
 		if(nowHour<hour) return false;
 		if(nowMin>=min) return true;
+		*/
+		if(nowHour==hour && nowMin==min) return true;
 		return false;
 	}
 	String getAppNames(String blName)

@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/pop_bg"
+    >
     
 	<ListView 
         android:id="@+id/sns_list"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:background="#A00A0000"
         android:cacheColorHint="#00000000"
+        android:background="@drawable/pop_bg"
         ></ListView>
 </LinearLayout>

@@ -11,6 +11,7 @@ import com.umeng.api.sns.UMSnsService;
 import com.umeng.api.sns.UMSnsService.SHARE_TO;
 
 import android.R.fraction;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -104,7 +106,7 @@ public class SettingInitialize {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
+				//Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
 				saveSetting(arg2+1);
 				pop.dismiss();
 				ArrayList<SHARE_TO> Name=new ArrayList<UMSnsService.SHARE_TO>();
@@ -195,7 +197,7 @@ public class SettingInitialize {
 					long arg3) {
 				// TODO Auto-generated method stub
 				pop.dismiss();
-				Toast.makeText(context, "asdfg", Toast.LENGTH_SHORT).show();
+				
 			}
 		});
 		pop=new PopupWindow(popView,LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -210,6 +212,7 @@ public class SettingInitialize {
 		if(pop!=null && pop.isShowing())
 		{
 			pop.dismiss();
+			
 			return;
 		}
 		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -219,6 +222,7 @@ public class SettingInitialize {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				pop.dismiss();
+				
 			}
 		});
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -229,7 +233,22 @@ public class SettingInitialize {
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);
+		pop.setOnDismissListener(new OnDismissListener() {
+			
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				//Toast.makeText(context, "asdfads", Toast.LENGTH_LONG).show();
+				WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+				lp.alpha = 1f; //0.0-1.0
+		      	((Activity) context).getWindow().setAttributes(lp);
+			}
+		});
 		pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+		//WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+		WindowManager.LayoutParams lp = (WindowManager.LayoutParams)((Activity) context).getWindow().getAttributes();
+		lp.alpha = 0.3f; //0.0-1.0
+      	((Activity) context).getWindow().setAttributes(lp);
+      	
 	}
 	public void showHelp(View arg1, int arg2)
 	{
