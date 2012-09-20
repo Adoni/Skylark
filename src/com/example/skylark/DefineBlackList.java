@@ -22,6 +22,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,6 +106,7 @@ public class DefineBlackList extends Activity {
 				 */
 				ViewHolder viewHolder=(ViewHolder)arg1.getTag();
 				viewHolder.cb.toggle();
+				Log.v("MA",arg2+"");
 				MyAdapter adapter=((MyAdapter)defineBL.getAdapter());
 				adapter.setIsSelected(arg2);
 				//Toast.makeText(DefineBlackList.this, ""+arg2, Toast.LENGTH_LONG).show();
@@ -128,7 +130,7 @@ public class DefineBlackList extends Activity {
 		String blName=((EditText)findViewById(R.id.nameEdit)).getText().toString();
 		if(blName.equals(""))
 		{
-			blName="Default";
+			blName="未命名";
 		}
 		String blNames="";
 		FileInputStream fin;
@@ -176,7 +178,7 @@ public class DefineBlackList extends Activity {
 			 * 保存黑名单名称到黑名单的大集合列表中
 			 */
 			fout=openFileOutput(getResources().getString(R.string.blListNames),Context.MODE_PRIVATE);
-			if(!(blNames.contains("Default") && blNames.equals("Default")))
+			if(!(blNames.contains("未命名") && blNames.equals("未命名")))
 			{
 				blNames=blNames+blName+" ";
 			}

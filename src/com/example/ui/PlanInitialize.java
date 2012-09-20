@@ -114,11 +114,20 @@ public class PlanInitialize{
 			iniBL();
 			return;
 		}
+		if(blName.equals("自定义"))
+		{
+			Toast.makeText(context, "请首先自定义一个黑名单", Toast.LENGTH_SHORT).show();
+			Intent intent=new Intent();
+			intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
+			context.startActivity(intent);
+			return;
+		}
 		if(blName.equals(""))
 		{
 			Toast.makeText(context, "请选择黑名单", Toast.LENGTH_SHORT).show();
 			return;
 		}
+		
 		//startButton.setBackground(MyApplication.getInstance().getResources().getDrawable(R.drawable.friends));
 		Intent intent=new Intent("com.example.skylark.monitorservice");
 		intent.putExtra("blName", blName);
@@ -171,7 +180,6 @@ public class PlanInitialize{
 			{
 				UMSnsService.oauthSina(context, listener);
 			}
-			Countdown.Countdown(context);
 			return ;
 		}
 		else
@@ -204,18 +212,23 @@ public class PlanInitialize{
 					Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
 			        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
 			        ((Activity) context).startActivityForResult(intent, 0);
-					
+			        
 				}
-				dpm.lockNow();
+				else
+				{
+					dpm.lockNow();
 				//dpm.removeActiveAdmin(componentName);
-				Intent intent=new Intent("com.example.skylark.silencemode");
-				intent.putExtra("hour", tp.getCurrentHour());
-				intent.putExtra("min", tp.getCurrentMinute());
-				blName="";
-				saveStatus();
-				context.startService(intent);
-				Countdown.Countdown(context);
-				((Activity)context).finish();
+					Intent intent=new Intent("com.example.skylark.silencemode");
+					intent.putExtra("hour", tp.getCurrentHour());
+					intent.putExtra("min", tp.getCurrentMinute());
+					intent.putExtra("blName", "静默模式");
+					blName="";
+					saveStatus();
+					context.startService(intent);
+					//Countdown.Countdown(context);
+					((Activity)context).finish();
+				}
+				
 			}
 		})
 		.setNegativeButton("否",null)
@@ -229,8 +242,8 @@ public class PlanInitialize{
 		t.setToNow();
 		SharedPreferences setting=context.getSharedPreferences("Setting", 0);
 		SharedPreferences.Editor editor=setting.edit();
-		editor.putInt("Hour", tp.getCurrentHour());
-		editor.putInt("Min",tp.getCurrentMinute());
+		editor.putInt("fHour", tp.getCurrentHour());
+		editor.putInt("fMin",tp.getCurrentMinute());
 		editor.putInt("sHour", t.hour);
 		editor.putInt("sMin",t.minute);
 		editor.putInt("sSec", t.second);
@@ -443,7 +456,7 @@ public class PlanInitialize{
 						{
 							Intent intent=new Intent();
 							intent.setClass(MyApplication.getInstance(), DefineBlackList.class);
-							fragment.startActivity(intent);
+							context.startActivity(intent);
 						}
 						else 
 						{

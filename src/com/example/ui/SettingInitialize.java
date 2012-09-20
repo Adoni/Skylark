@@ -49,7 +49,7 @@ public class SettingInitialize {
 	public void iniSetting()
 	{
 		settingList=(ListView)view.findViewById(R.id.settingList);
-		int[] icons=new int[]{R.drawable.account,R.drawable.history,R.drawable.aboutus,R.drawable.help};
+		int[] icons=new int[]{R.drawable.account,R.drawable.history,R.drawable.aboutus_button,R.drawable.help_button};
 		String[] names=new String[]{"选择账户","历史记录","关于我们","帮助"};
 		MyAdapter adapter=new MyAdapter(context, icons, names, false, R.layout.nomal_item);
 		settingList.setAdapter(adapter);
@@ -93,11 +93,13 @@ public class SettingInitialize {
 			pop.dismiss();
 			return;
 		}
+		final ViewHolder viewHolder=(ViewHolder)arg1.getTag();
+		viewHolder.img.setBackgroundResource(R.drawable.account_pressed);
 		LayoutInflater inflater=(LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View popView=inflater.inflate(R.layout.pop_layout,null);
 		final ListView popList=(ListView)popView.findViewById(R.id.popList);
 		int[] icons=new int[]{R.drawable.renren,R.drawable.tencent,R.drawable.sina};
-		String[] names=new String[]{"人人网","腾讯微薄","新浪微波"};
+		String[] names=new String[]{"人 人 网","腾 讯 微 薄","新 浪 微 博"};
 		MyAdapter adapter=new MyAdapter(context, icons, names, true, R.layout.spinner_item);
 		adapter.setIsSelected(context.getSharedPreferences("Setting", 0)
 				.getInt("SNS", 0)-1);
@@ -109,6 +111,7 @@ public class SettingInitialize {
 				//Toast.makeText(context, "sdf", Toast.LENGTH_LONG).show();
 				saveSetting(arg2+1);
 				pop.dismiss();
+				viewHolder.img.setBackgroundResource(R.drawable.account);
 				ArrayList<SHARE_TO> Name=new ArrayList<UMSnsService.SHARE_TO>();
 				Name.add(SHARE_TO.RENR);
 				Name.add(SHARE_TO.TENC);
@@ -148,6 +151,13 @@ public class SettingInitialize {
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);
+		pop.setOnDismissListener(new OnDismissListener() {
+			
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				viewHolder.img.setBackgroundResource(R.drawable.account);
+			}
+		});
 		pop.showAsDropDown(arg1);
 	}
 	public void showHistory(View arg1, int arg2)
@@ -157,6 +167,8 @@ public class SettingInitialize {
 			pop.dismiss();
 			return;
 		}
+		final ViewHolder viewHolder=(ViewHolder)arg1.getTag();
+		viewHolder.img.setBackgroundResource(R.drawable.history_pressed);
 		ArrayList<Integer> icons=new ArrayList<Integer>();
 		ArrayList<String> items=new ArrayList<String>();
 		RecordTool re=new RecordTool(context);
@@ -204,6 +216,13 @@ public class SettingInitialize {
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.setFocusable(true);
 		pop.setOutsideTouchable(true);
+		pop.setOnDismissListener(new OnDismissListener() {
+			
+			public void onDismiss() {
+				// TODO Auto-generated method stub
+				viewHolder.img.setBackgroundResource(R.drawable.history);
+			}
+		});
 		pop.showAsDropDown(arg1);
 	}
 	

@@ -18,22 +18,32 @@
 	    android:layout_height="fill_parent"
 	    android:orientation="horizontal" 
 	    android:layout_weight="6"
+	    android:background="@drawable/bottome"
+	    android:gravity="center"
         >
         <Button
 	         android:id="@+id/addBL"
 	         android:layout_width="wrap_content"
-	         android:layout_height="fill_parent"
-	         android:text="@string/addBL"
-	         android:textSize="23dip" 
+	         android:layout_height="wrap_content"
+	         android:textSize="23dp" 
+	         android:background="@drawable/add_button"
 	         android:layout_weight="1"/>
-
+        
 		 <Button
 		     android:id="@+id/manageBL"
 		     android:layout_width="wrap_content"
-		     android:layout_height="fill_parent"
-		     android:text="@string/manageBL"
-		     android:textSize="23dip" 
+	         android:layout_height="wrap_content"
+		     android:textSize="23dp" 
+		     android:background="@drawable/delete"
 		     android:layout_weight="1"/>
+		 
+		 <Button
+	         android:id="@+id/deleteall"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:text="清空"
+	         android:textSize="23dp" 
+	         android:layout_weight="1"/>
     </LinearLayout>
      
     

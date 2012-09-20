@@ -61,8 +61,25 @@ public class WhenSucceed extends Activity{
 		String ans="";
 		Time t=new Time();
 		t.setToNow();
-		int hour=getIntent().getIntExtra("hour", 0)-t.hour;
-		int min=getIntent().getIntExtra("min", 0)-t.minute;
+		SharedPreferences setting=getSharedPreferences("Setting", 0);
+		int sHour=setting.getInt("sHour", 0);
+		int sMin=setting.getInt("sMin", 0);
+		int fHour=setting.getInt("fHour", 0);
+		int fMin=setting.getInt("fMin", 0);
+		int hour=0;
+		int min=0;
+		Log.v("myLog",""+fHour+" "+fMin+" "+sHour+" "+sMin);
+		if(fHour>sHour || (fHour==sHour && fMin>=sMin))
+		{
+			hour=fHour-sHour;
+			min=fMin-sMin;
+		}
+		else
+		{
+			hour=fHour-sHour+24;
+			min=fMin-sMin;
+		}
+		
 		if(min<0)
 		{
 			min+=60;
@@ -75,6 +92,10 @@ public class WhenSucceed extends Activity{
 		if(min>0)
 		{
 			ans=ans+min+"分钟";
+		}
+		if(ans.equals(""))
+		{
+			ans="0秒";
 		}
 		RecordTool re=new RecordTool(WhenSucceed.this, true, getIntent().getStringExtra("blName"));
 		ans="计划完成，本次我坚持了"+ans+"。我一共成功了"+re.getTimes("succeed.re")+"次！";

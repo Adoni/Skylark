@@ -58,12 +58,17 @@
         <activity 
             android:name=".WhenFail"
             android:label="@string/showBL"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@style/dialog">
         </activity>
         <activity 
             android:name=".WhenSucceed"
             android:label="@string/showBL"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@style/dialog">
+        </activity>
+        <activity 
+            android:name=".AlertActivity"
+            android:label="@string/showBL"
+            android:theme="@style/dialog">
         </activity>
         <activity 
             android:name="com.example.ui.HelpPager"
@@ -107,6 +112,7 @@
                    android:screenOrientation="unspecified"
                    android:configChanges="orientation|keyboardHidden">
         </activity>
+        
 		<receiver
             android:name=".AdminReceiver"
             android:description="@string/description"

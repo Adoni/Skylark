@@ -89,28 +89,29 @@
 	        android:layout_weight="1"/>
     </LinearLayout>
     -->
-    <RelativeLayout
+    <LinearLayout
         android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:layout_weight="1"
-	    android:gravity="center">
+	    android:layout_weight="1">
 	    <TextView 
 	        android:text="@string/label1"
 	        android:textSize="25dp"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerVertical="true"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="2"
+	        android:gravity="center"
 	        />
-        <TimePicker
-        	android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_alignParentRight="true"
-       		android:id="@+id/tp"
-       		android:layout_centerVertical="true"
-       		
-        />
-    </RelativeLayout>
+
+	    <TimePicker
+	        android:id="@+id/tp"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="2" 
+	        android:layout_marginTop="10dp"
+	        />
+
+    </LinearLayout>
     
     <LinearLayout
     	android:layout_width="fill_parent"

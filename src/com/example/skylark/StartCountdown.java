@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -130,8 +132,8 @@ public class StartCountdown extends Activity{
 			mImageView4.setImageDrawable(getResources().getDrawable(bgs[minute % 10]));
 			mImageView5.setImageDrawable(getResources().getDrawable(bgs[second / 10]));
 			mImageView6.setImageDrawable(getResources().getDrawable(bgs[second % 10]));
-			Degree = (float) ((float)(1-(float)((float)(hour*3600+minute*60+second)/(count)))*(250*((float)1+((float)1/count))));			
-	    	if ( Degree < 250 )
+			Degree = (float) ((float)(1-(float)((float)(hour*3600+minute*60+second)/(count)))*(258*((float)1+((float)1/count))));			
+	    	if ( Degree < 258 )
 	    	{
 			RotateAnimation ra = new RotateAnimation(currentDegree,Degree,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f) ;
 	    	ra.setDuration(1);      
@@ -143,9 +145,9 @@ public class StartCountdown extends Activity{
 	    	else if ( repeat!= 1 )
 	    	{
 	    		repeat=1;
-	    		RotateAnimation ra = new RotateAnimation(currentDegree,250,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f) ;
+	    		RotateAnimation ra = new RotateAnimation(currentDegree,258,Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f) ;
 		    	ra.setDuration(1);      
-	           clock.setAnimation(ra);                   
+	            clock.setAnimation(ra);                   
 		    	 ra.cancel();
 		    	 ra.setFillAfter(true);
 		    	 currentDegree = Degree;

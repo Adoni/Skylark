@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
+import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -49,6 +50,7 @@ public class BLInitialize{
 	private View view;
 	private ArrayList<String> names=new ArrayList<String>();
 	private PopupWindow pop;
+	private boolean checkboxIsShowing=false;
 	
 	public BLInitialize(View view,TestFragment fragment,Context context, PopupWindow pop)
 	{
@@ -74,7 +76,7 @@ public class BLInitialize{
 				Intent intent=new Intent();
 				intent.setClass(context, DefineBlackList.class);
 				context.startActivity(intent);
-				
+				((Activity) context).finish();
 			}
 		});
 		
@@ -86,7 +88,7 @@ public class BLInitialize{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//Toast.makeText(BlackListActivity.this, manageButton.getText().toString(), Toast.LENGTH_LONG).show();
-				if(manageButton.getText().toString().contains("管理"))
+				if(!checkboxIsShowing)
 				{
 					showCheckBox();
 				}
@@ -96,6 +98,25 @@ public class BLInitialize{
 				}
 			}
 		});
+		((Button)view.findViewById(R.id.deleteall)).setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Builder alert= new AlertDialog.Builder(context)
+				.setTitle("删除所有的黑名单")
+				.setMessage("确定删除全部吗？")
+				.setPositiveButton("是", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						names.clear();
+						updateList();
+					}
+				})
+				.setNegativeButton("否", null);
+			AlertDialog ad=alert.create();
+			ad.show();
+			}
+		});
 	}
 	
 	/*
@@ -103,9 +124,14 @@ public class BLInitialize{
 	 */
 	public void showCheckBox()
 	{
-		manageButton.setText("删除");
+		
 		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names,true, R.layout.nomal_item);
 		blList.setAdapter(adapter);
+		if(adapter.getCount()==0)
+		{
+			return;
+		}
+		manageButton.setBackgroundResource(R.drawable.delete_pressed);
 		blList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
@@ -124,6 +150,7 @@ public class BLInitialize{
 				//vh.cb.setChecked(true);
 			}
 		});
+		checkboxIsShowing=true;
 	}
 	
 	/*
@@ -144,6 +171,8 @@ public class BLInitialize{
 		}
 		names=newNames;
 		updateList();
+		checkboxIsShowing=false;
+		manageButton.setBackgroundResource(R.drawable.delete);
 	}
 	
 	/*
@@ -154,7 +183,7 @@ public class BLInitialize{
 		String nowBlNames="";
 		MyAdapter adapter=new MyAdapter(context, R.drawable.stop, names, false, R.layout.nomal_item);
 		blList.setAdapter(adapter);
-		manageButton.setText("管理黑名单");
+		
 		for(String name:names)
 		{
 			nowBlNames=nowBlNames+name+" ";

@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.text.format.Time;
 import android.util.Log;  
@@ -17,7 +18,7 @@ import com.example.ui.MyApplication;
 public class SilenceMode extends Service{  
     private String TAG = "ScreenObserverActivity";  
     private ScreenMonitor mScreenObserver;  
-    private int year,mon,day,hour,min;
+    private int year,mon,day,fHour,fMin,sHour,sMin;
     private Calendar c;
     private Context context;
     
@@ -40,8 +41,11 @@ public class SilenceMode extends Service{
         year=t.year;
         mon=t.month;
         day=t.monthDay;
-        hour=intent.getIntExtra("hour", 0);
-        min=intent.getIntExtra("min", 0);
+        SharedPreferences setting=getSharedPreferences("Setting", 0);
+        int sHour=setting.getInt("sHour", 0);
+		int sMin=setting.getInt("sMin", 0);
+		int fHour=setting.getInt("fHour", 0);
+		int fMin=setting.getInt("fMin", 0);
         startAlarm();
 		Log.v("mysilence","start");
 	}
@@ -62,14 +66,14 @@ public class SilenceMode extends Service{
 	
 	private void doSomethingOnScreenOn() {  
         Log.i("mysilence", "Screen is on");
-        Toast.makeText(this, "Fail", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Fail", Toast.LENGTH_LONG).show();
         Intent intent=new Intent();
-        intent.setClass(SilenceMode.this,WhenFail.class);
+        intent.setClass(SilenceMode.this,AlertActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	intent.putExtra("hour", hour);
-    	intent.putExtra("min", min);
+    	intent.putExtra("hour", fHour);
+    	intent.putExtra("min", fMin);
+    	intent.putExtra("blName", "静默模式");
         MyApplication.getInstance().startActivity(intent);
-        this.stopSelf();
     }  
   
     private void doSomethingOnScreenOff() {  
@@ -79,17 +83,20 @@ public class SilenceMode extends Service{
     private void startAlarm()
     {
     	c=Calendar.getInstance();
-    	 
+    	if(fHour<sHour || (fHour==sHour && fMin<=sMin))
+		{
+			day=day+1;
+		}
         c.set(Calendar.YEAR,year);
         c.set(Calendar.MONTH,mon);//也可以填数字，0-11,一月为0
         c.set(Calendar.DAY_OF_MONTH, day);
-        c.set(Calendar.HOUR_OF_DAY, hour);
-        c.set(Calendar.MINUTE, min);
+        c.set(Calendar.HOUR_OF_DAY, fHour);
+        c.set(Calendar.MINUTE, fMin);
         c.set(Calendar.SECOND, 0);
         //设定时间为 2011年6月28日19点50分0秒
         //c.set(2011, 05,28, 19,50, 0);
         //也可以写在一行里
-        Log.v("myAlarm",""+year+" "+mon+" "+day+" "+hour+" "+min);
+        Log.v("myAlarm",""+year+" "+mon+" "+day+" "+fHour+" "+fMin);
         Intent intent=new Intent(this,AlarmReceiver.class);
         PendingIntent pi=PendingIntent.getBroadcast(this, 0, intent,0);
         //设置一个PendingIntent对象，发送广播

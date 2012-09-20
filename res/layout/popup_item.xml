@@ -8,18 +8,20 @@
 	<ImageView 
 	    android:paddingLeft="20dp"
 	    android:id="@+id/icon"
-	    android:layout_height="60dp"
-	    android:layout_width="60dp"
+	    android:layout_height="65dp"
+	    android:layout_width="65dp"
+	    android:layout_centerVertical="true"
 	    />
 	<TextView 
 	    android:id="@+id/name"
 	    android:layout_height="wrap_content"
 	    android:layout_width="wrap_content"
-	    android:textSize="20dp"
+	    android:textSize="23dp"
 	    android:layout_centerVertical="true"
 	    android:layout_toRightOf="@id/icon"
 	    android:paddingLeft="10dp"
 	    android:textStyle="bold"
+	    android:textColor="@android:color/white"
 	    />
 	<CheckBox
 	    android:id="@+id/check"

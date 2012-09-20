@@ -268,6 +268,7 @@ public class MyAdapter extends BaseAdapter
 			viewHolder=(ViewHolder)convertView.getTag();
 			viewHolder.img.setImageDrawable(icons.get(position));
 			viewHolder.text.setText(names.get(position));
+			viewHolder.cb.setChecked(isSelected.get(position));
 		}
 		convertView.setPadding(0, 10, 0, 10);
 		

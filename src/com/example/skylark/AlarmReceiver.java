@@ -17,6 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		intent=new Intent();
 		intent.setClass(context, WhenSucceed.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.putExtra("blName", "静默模式");
 		context.startActivity(intent);
 		//stopService("com.example.skylark.silencemode");
 		//收到广播后启动Activity,简单起见，直接就跳到了设置alarm的Activity

@@ -157,6 +157,7 @@ public class MainActivity extends BaseSampleActivity {
 		if(keyCode==KeyEvent.KEYCODE_BACK)
 		{
 			finish();
+			Toast.makeText(MainActivity.this, "finish", Toast.LENGTH_LONG).show();
 			//Toast.makeText(MainActivity.this, "asdf", Toast.LENGTH_LONG).show();
 			return false;
 		}
